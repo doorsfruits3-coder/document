@@ -266,7 +266,7 @@
                         </span>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Kho File Document & Sách AI</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
-                            Tất cả file tài liệu hướng dẫn (.txt, .pdf, .zip, hình ảnh...) sẽ tự động cập nhật tại đây.
+                            Tất cả file tài liệu hướng dẫn (.txt, .pdf, hình ảnh...) sẽ tự động cập nhật tại đây.
                         </p>
                     </div>
 
@@ -302,7 +302,7 @@
                         </span>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
-                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
+                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat, .zip...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
                         </p>
                     </div>
 
@@ -472,7 +472,7 @@
         const REPO_NAME = 'document'; 
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
         
-        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw'];
+        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
 
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
@@ -614,7 +614,7 @@
                 const docFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
                 renderFileList(docContainer, docFiles, 'Hiện chưa có file tài liệu/văn bản nào.');
-                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js...) nào.');
+                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js, .zip...) nào.');
             } catch (err) {
                 const errHtml = `
                     <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
