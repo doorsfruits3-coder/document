@@ -1,0 +1,3 @@
+Tôi đang gặp lỗi sau: ERROR_MESSAGE. Đoạn code của tôi là: {code}. Vui lòng giải thích nguyên nhân gốc rễ và cách sửa nó.
+
+Bao gồm bất kỳ thực tiễn tốt nhất liên quan nào để tránh các lỗi như vậy trong tương lai.

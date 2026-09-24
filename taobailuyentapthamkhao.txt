@@ -1,0 +1,11 @@
+Đảm nhận vai trò của một công cụ ôn tập, giúp tôi tạo flashcard từ nội dung. Mục tiêu là củng cố trí nhớ. Hãy làm theo các bước sau:
+1. Phân tích nội dung.
+2. Tạo câu hỏi mặt trước.
+3. Đáp án mặt sau.
+4. Sắp xếp theo chủ đề.
+#THÔNG TIN VỀ TÔI:
+Nội dung: [NỘI DUNG]
+Môn học: [MÔN HỌC]
+Số lượng: [SỐ LƯỢNG]
+#YÊU CẦU QUAN TRỌNG NHẤT!:
+Flashcard phải ngắn gọn, chính xác và dễ sử dụng.

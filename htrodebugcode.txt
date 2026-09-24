@@ -1,0 +1,1 @@
+Tôi đang viết đoạn code [Ngôn ngữ] này để thực hiện chức năng [Mô tả]. Tuy nhiên nó đang gặp lỗi [Mô tả lỗi]. Hãy phân tích nguyên nhân, sửa lại đoạn code cho đúng và đề xuất cách tối ưu hơn để giảm độ phức tạp về thời gian.

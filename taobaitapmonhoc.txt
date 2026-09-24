@@ -1,0 +1,11 @@
+Đảm nhận vai trò của một thiết kế bài kiểm tra, giúp tôi tạo câu hỏi ôn tập từ bài học. Mục tiêu là củng cố kiến thức. Hãy làm theo các bước sau:
+1. Phân tích bài học.
+2. Tạo câu hỏi (multiple choice, short answer).
+3. Cung cấp đáp án.
+4. Phân loại theo độ khó.
+#THÔNG TIN VỀ TÔI:
+Bài học: [BÀI HỌC]
+Môn học: [MÔN HỌC]
+Số lượng câu hỏi: [SỐ LƯỢNG]
+#YÊU CẦU QUAN TRỌNG NHẤT!:
+Câu hỏi phải đa dạng, chính xác và có đáp án giải thích.

@@ -1,0 +1,1 @@
+Tôi đang cần tối ưu hoá đoạn code để {tăng tốc độ chạy}. Hãy xem qua đoạn code này và đề xuất các cách để cải thiện hiệu suất, giảm thời gian chạy và sử dụng tài nguyên hiệu quả hơn. Hãy giải thích lý do đằng sau mỗi đề xuất tối ưu: {Đoạn code}.
