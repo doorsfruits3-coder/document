@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu AI Chuyên Sâu - Nam Anh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glow {
+            box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
+                        NA
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Lab</span></span>
+                </div>
+
+                <!-- Nav Links -->
+                <nav class="hidden md:flex space-x-8 text-sm font-semibold text-slate-300">
+                    <a href="#about" class="hover:text-indigo-400 transition">Giới Thiệu</a>
+                    <a href="#features" class="hover:text-indigo-400 transition">Nội Dung Chính</a>
+                    <a href="#modules" class="hover:text-indigo-400 transition">Lộ Trình Học</a>
+                    <a href="#author" class="hover:text-indigo-400 transition">Tác Giả</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div>
+                    <a href="#download" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-indigo-600/20 transition transform active:scale-95 inline-flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Tải Tài Liệu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl -z-10"></div>
+        <div class="absolute top-1/3 right-10 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl -z-10"></div>
+
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                <i class="fa-solid fa-sparkles"></i> Tài Liệu Cập Nhật Mới Nhất
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                Chinh Phục Trí Tuệ Nhân Tạo Cùng <br>
+                <span class="gradient-text">Bộ Tài Liệu AI của Nam Anh</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+                Tổng hợp kiến thức từ cơ bản đến nâng cao về Machine Learning, Deep Learning, Generative AI và Prompt Engineering. Được đóng gói bài bản giúp bạn tự học và ứng dụng AI ngay lập tức.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#download" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-indigo-600/25 transition transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-file-arrow-down text-lg"></i> Tải Về Miễn Phí
+                </a>
+                <a href="#features" class="bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-semibold px-8 py-4 rounded-xl transition inline-flex items-center justify-center gap-2">
+                    Khám Phá Nội Dung
+                </a>
+            </div>
+
+            <!-- Mini Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto border-t border-slate-800/80 pt-8">
+                <div>
+                    <p class="text-3xl font-extrabold text-white">500+</p>
+                    <p class="text-xs text-slate-400 mt-1">Trang nội dung chi tiết</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-extrabold text-white">20+</p>
+                    <p class="text-xs text-slate-400 mt-1">Dự án thực hành (Source code)</p>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <p class="text-3xl font-extrabold text-white">100%</p>
+                    <p class="text-xs text-slate-400 mt-1">Miễn phí cho cộng đồng</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-slate-900/50 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold tracking-tight mb-4">Điểm Nổi Bật Của Tài Liệu</h2>
+                <p class="text-slate-400">Tài liệu được thiết kế tập trung vào tính ứng dụng cao, dễ hiểu, bỏ qua các lý thuyết quá hàn lâm không cần thiết.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300">
+                    <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Nền Tảng Vững Chắc</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Hệ thống hóa toán học AI, Python chuyên sâu, Machine Learning căn bản đến nâng cao một cách trực quan.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300">
+                    <div class="w-12 h-12 bg-sky-500/10 text-sky-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Generative AI & LLMs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Hướng dẫn làm chủ ChatGPT, Claude, Midjourney, kỹ thuật Prompt Engineering và xây dựng ứng dụng với OpenAI API.
+                    </p>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300">
+                    <div class="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Dự Án Thực Tế</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Kèm theo hơn 20 file Google Colab/Jupyter Notebook mẫu sẵn sàng chạy ngay cho các bài toán nhận diện, dự đoán.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules / Table of Contents -->
+    <section id="modules" class="py-20">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold tracking-tight mb-4">Lộ Trình & Nội Dung Tài Liệu</h2>
+                <p class="text-slate-400">Tài liệu chia thành 4 phần chính được sắp xếp theo cấp độ tăng dần.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl flex items-start gap-4">
+                    <div class="bg-indigo-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">1</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">Phần 1: Nhập Môn AI & Python Cho Machine Learning</h4>
+                        <p class="text-slate-400 text-sm">Cấu trúc dữ liệu, thư viện Numpy, Pandas, Matplotlib và tư duy giải quyết bài toán bằng dữ liệu.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl flex items-start gap-4">
+                    <div class="bg-indigo-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">2</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">Phần 2: Học Máy (Machine Learning) & Deep Learning</h4>
+                        <p class="text-slate-400 text-sm">Thuật toán Phân loại, Hồi quy, Mạng Nơ-ron (Neural Networks), CNN (Xử lý hình ảnh), RNN/Transformer (Xử lý ngôn ngữ).</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl flex items-start gap-4">
+                    <div class="bg-indigo-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">3</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">Phần 3: Kỷ Nguyên Generative AI & LLMs</h4>
+                        <p class="text-slate-400 text-sm">Xây dựng Chabot RAG (Retrieval-Augmented Generation), Fine-tuning mô hình ngôn ngữ lớn, Prompt Engineering nâng cao.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl flex items-start gap-4">
+                    <div class="bg-indigo-600 text-white font-bold w-8 h-8 rounded-lg flex items-center justify-center shrink-0">4</div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-1">Phần 4: Triển Khai & Đưa AI Vào Sản Phẩm (Deployment)</h4>
+                        <p class="text-slate-400 text-sm">Đóng gói mô hình với FastAPI, Docker và đưa ứng dụng AI lên môi trường Cloud (AWS / HuggingFace).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Section -->
+    <section id="author" class="py-20 bg-slate-900/50 border-t border-slate-800">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 glow flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <!-- Author Avatar -->
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-indigo-500 to-sky-400 p-1 shrink-0">
+                    <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl font-bold text-indigo-400">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                </div>
+                
+                <!-- Author Info -->
+                <div class="w-full">
+                    <span class="text-indigo-400 text-sm font-semibold uppercase tracking-wider">Về Tác Giả</span>
+                    <h3 class="text-2xl md:text-3xl font-bold mt-1 mb-3">Nam Anh</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-8">
+                        Kỹ sư / Nhà nghiên cứu ứng dụng AI với kinh nghiệm thực chiến qua nhiều dự án Machine Learning và LLMs. Bộ tài liệu này là tâm huyết được tổng hợp nhằm giúp cộng đồng công nghệ Việt Nam tiếp cận tri thức AI một cách dễ dàng và hệ thống nhất.
+                    </p>
+                    
+                    <!-- Social Buttons Centered -->
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <!-- TikTok Link -->
+                        <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" rel="noopener noreferrer" title="Kênh TikTok Nam Anh" class="w-12 h-12 rounded-full bg-slate-800/90 flex items-center justify-center text-slate-200 hover:bg-black hover:text-white transition-all transform hover:scale-105 border border-slate-700/60 shadow-lg">
+                            <i class="fa-brands fa-tiktok text-xl"></i>
+                        </a>
+
+                        <!-- Zalo Auto-Download Button (Direct Image Download) -->
+                        <a id="zaloDownloadBtn" href="https://cdn.phototourl.com/member/2026-09-24-1157d7fe-dbfa-4d57-8619-594e2837e55f.png" download="Danh_Thiep_Zalo_Nam_Anh.png" title="Nhấn để tải Danh Thiếp Zalo" class="cursor-pointer h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition-all transform hover:scale-105 shadow-lg border border-slate-700/60 font-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-white text-slate-800 flex items-center justify-center font-black text-xs shadow-inner">Z</span>
+                            <span>Tải Danh Thiếp Zalo</span>
+                            <i class="fa-solid fa-download text-xs ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section id="download" class="py-20 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="bg-gradient-to-r from-indigo-900/40 via-purple-900/40 to-slate-900 border border-indigo-500/30 p-10 md:p-16 rounded-3xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Sẵn Sàng Khám Phá Tài Liệu?</h2>
+                <p class="text-slate-300 mb-8 max-w-xl mx-auto">
+                    Tải xuống bộ tài liệu hoàn toàn miễn phí định dạng PDF & Jupyter Notebooks ngay hôm nay.
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Link tải tài liệu đã được gửi về email của bạn.');">
+                    <input type="email" placeholder="Nhập email của bạn..." required class="bg-slate-950 border border-slate-700 text-white px-5 py-3.5 rounded-xl focus:outline-none focus:border-indigo-500 flex-1">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition whitespace-nowrap">
+                        Nhận Link Tải <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
+                <p class="text-xs text-slate-500 mt-4"><i class="fa-solid fa-shield-halved mr-1"></i> Cam kết không spam email của bạn.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Nam Anh AI. Tất cả quyền được bảo lưu.</p>
+            <p class="mt-2">Phát triển và chia sẻ vì cộng đồng AI Việt Nam.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+d('zaloDownloadBtn').addEventListener('click', function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 700;
+            const ctx = canvas.getContext('2d');
+
+            // Draw Card Background
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 600, 700, 30);
+            ctx.fill();
+
+            // Inner White Card
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(40, 60, 520, 580, 20);
+            ctx.fill();
+
+            // Header Text
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 26px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Danh thiếp Zalo', 300, 130);
+
+            // Load and draw QR Image from online source
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                ctx.drawImage(img, 100, 170, 400, 400);
+                
+                // Trigger Auto Download
+                const link = document.createElement('a');
+                link.download = 'Danh_Thiep_Zalo_Nam_Anh.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+            
+            // Online Backup URL for Zalo QR
+            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://zalo.me';
+        });
+    </script>
+</body>
+</html>
