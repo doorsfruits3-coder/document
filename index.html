@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu & Tool Bot AI - Nam Anh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glow { box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3); }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hiệu ứng Animation chuyển trang mượt mà */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade {
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <button onclick="showPage('intro')" class="flex items-center space-x-3 text-left focus:outline-none group">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition transform">
+                        NA
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Lab</span></span>
+                </button>
+
+                <!-- Desktop Nav Links (3 Mục Điều Hướng) -->
+                <nav class="hidden md:flex space-x-2 text-sm font-semibold">
+                    <button onclick="showPage('intro')" id="nav-desk-intro" class="px-4 py-2 rounded-xl transition-all duration-300">
+                        Giới thiệu
+                    </button>
+                    <button onclick="showPage('download')" id="nav-desk-download" class="px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-folder-open text-xs"></i> Tải document
+                    </button>
+                    <button onclick="showPage('bot')" id="nav-desk-bot" class="px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-robot text-xs"></i> Share Tool Bot
+                    </button>
+                </nav>
+
+                <!-- Hamburger Menu Button Mobile -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Menu Mobile -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-slate-900 border-b border-slate-800 shadow-2xl z-50">
+            <div class="flex flex-col p-4 space-y-2">
+                <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-house"></i> Giới thiệu
+                </button>
+                <button onclick="showPage('download')" id="nav-mob-download" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-file-arrow-down"></i> Tải document
+                </button>
+                <button onclick="showPage('bot')" id="nav-mob-bot" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                    <i class="fa-solid fa-robot"></i> Share Tool Bot
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="pt-16 flex-grow">
+
+        <!-- ================= PAGE 1: GIỚI THIỆU ================= -->
+        <div id="page-intro" class="block animate-fade">
+            <!-- Hero Section -->
+            <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
+                <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl -z-10"></div>
+                <div class="max-w-5xl mx-auto px-4 text-center">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                        <i class="fa-solid fa-sparkles"></i> Tài Liệu & Tool Bot Cập Nhật Mới Nhất
+                    </span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                        Chinh Phục Trí Tuệ Nhân Tạo Cùng <br>
+                        <span class="gradient-text">Bộ Tài Liệu & Tool AI Nam Anh</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+                        Tổng hợp kiến thức từ cơ bản đến nâng cao về Machine Learning, Generative AI cùng các Tool Bot tự động hóa công việc hiệu quả nhất.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="showPage('download')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-indigo-600/25 transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-3 active:scale-95">
+                            <i class="fa-solid fa-folder-open text-lg"></i> Xem Document
+                        </button>
+                        <button onclick="showPage('bot')" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-purple-600/25 transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-3 active:scale-95">
+                            <i class="fa-solid fa-robot text-lg"></i> Kho Tool Bot Script
+                        </button>
+                    </div>
+
+                    <!-- Mini Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto border-t border-slate-800/80 pt-8">
+                        <div>
+                            <p class="text-3xl font-extrabold text-white">500+</p>
+                            <p class="text-xs text-slate-400 mt-1">Trang nội dung chi tiết</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-extrabold text-white">20+</p>
+                            <p class="text-xs text-slate-400 mt-1">Dự án & Tool Bot Script</p>
+                        </div>
+                        <div class="col-span-2 md:col-span-1">
+                            <p class="text-3xl font-extrabold text-white">100%</p>
+                            <p class="text-xs text-slate-400 mt-1">Miễn phí cho cộng đồng</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="py-20 bg-slate-900/50 border-y border-slate-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-2xl mx-auto mb-16">
+                        <h2 class="text-3xl font-bold tracking-tight mb-4">Điểm Nổi Bật Của Tài Liệu</h2>
+                        <p class="text-slate-400">Tài liệu được thiết kế tập trung vào tính ứng dụng cao, dễ hiểu, bỏ qua các lý thuyết quá hàn lâm không cần thiết.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
+                            <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Nền Tảng Vững Chắc</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Hệ thống hóa toán học AI, Python chuyên sâu, Machine Learning căn bản đến nâng cao một cách trực quan.</p>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
+                            <div class="w-12 h-12 bg-sky-500/10 text-sky-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Generative AI & LLMs</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Hướng dẫn làm chủ ChatGPT, Claude, Midjourney, kỹ thuật Prompt Engineering và xây dựng ứng dụng với OpenAI API.</p>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
+                            <div class="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Tool Bot Automation</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">Chia sẻ mã nguồn Python, Node.js tự động hóa quy trình, bot cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Author Section -->
+            <section class="py-20 border-t border-slate-800">
+                <div class="max-w-5xl mx-auto px-4">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 glow flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-indigo-500 to-sky-400 p-1 shrink-0">
+                            <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl font-bold text-indigo-400">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full">
+                            <span class="text-indigo-400 text-sm font-semibold uppercase tracking-wider">Về Tác Giả</span>
+                            <h3 class="text-2xl md:text-3xl font-bold mt-1 mb-3">Nam Anh</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                Dev Nam Anh đã có kinh nghiệm viết prompt, làm tool bot. Bộ tài liệu được chia sẻ miễn phí cho cộng đồng công nghệ Việt Nam.
+                            </p>
+                            
+                            <div class="flex items-center justify-center md:justify-start gap-4">
+                                <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-slate-800/90 flex items-center justify-center text-slate-200 hover:bg-black transition border border-slate-700/60 shadow-lg">
+                                    <i class="fa-brands fa-tiktok text-xl"></i>
+                                </a>
+                                <a href="https://cdn.phototourl.com/member/2026-09-24-1157d7fe-dbfa-4d57-8619-594e2837e55f.png" download="Danh_Thiep_Zalo_Nam_Anh.png" class="h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition border border-slate-700/60 font-semibold text-sm shadow-lg">
+                                    <span class="w-6 h-6 rounded-full bg-white text-slate-800 flex items-center justify-center font-black text-xs">Z</span>
+                                    <span>Tải QR Zalo</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tương tác & Khảo sát (Like/Dislike) -->
+            <section class="py-12 bg-slate-950">
+                <div class="max-w-3xl mx-auto px-4 text-center">
+                    <h3 class="text-xl font-bold mb-6">Bạn đánh giá thế nào về trang web này?</h3>
+                    <div class="flex justify-center gap-8">
+                        <button id="btn-like" onclick="handleVote('like')" class="flex flex-col items-center gap-3 text-slate-400 hover:text-emerald-400 transition transform hover:scale-110">
+                            <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center text-2xl shadow-lg border border-slate-800">
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </div>
+                            <span class="text-sm font-semibold"><span id="like-count">0</span> Hữu ích</span>
+                        </button>
+                        <button id="btn-dislike" onclick="handleVote('dislike')" class="flex flex-col items-center gap-3 text-slate-400 hover:text-red-400 transition transform hover:scale-110">
+                            <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center text-2xl shadow-lg border border-slate-800">
+                                <i class="fa-solid fa-thumbs-down"></i>
+                            </div>
+                            <span class="text-sm font-semibold"><span id="dislike-count">0</span> Cần cải thiện</span>
+                        </button>
+                    </div>
+                    <p id="vote-msg" class="text-sm text-indigo-400 mt-4 h-5 opacity-0 transition-opacity duration-300">Cảm ơn bạn đã đánh giá!</p>
+                </div>
+            </section>
+
+            <!-- Form Góp ý & Báo lỗi -->
+            <section class="py-12 border-t border-slate-800 bg-slate-900/30">
+                <div class="max-w-2xl mx-auto px-4">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
+                        <h3 class="text-xl font-bold mb-2 flex items-center gap-3">
+                            <i class="fa-solid fa-envelope-open-text text-indigo-400"></i> Hộp Thư Góp Ý
+                        </h3>
+                        <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
+                        
+                        <!-- Formsubmit.co - API gửi mail không cần backend -->
+                        <form action="https://formsubmit.co/doorsfruits3@gmail.com" method="POST" class="space-y-4">
+                            <!-- Cấu hình ẩn của formsubmit -->
+                            <input type="hidden" name="_subject" value="🔔 Góp ý mới từ Website Nam Anh AI Lab">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_next" value=""> <!-- Bạn có thể để URL web của bạn vào đây nếu muốn nó redirect sau khi gửi -->
+
+                            <div>
+                                <input type="email" name="email" placeholder="Email liên hệ của bạn (Không bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                            </div>
+                            <div>
+                                <textarea name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Gửi Góp Ý Cho Admin
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= PAGE 2: TẢI DOCUMENT (CHỈ HIỂN THỊ FILE VĂN BẢN/TÀI LIỆU) ================= -->
+        <div id="page-download" class="hidden">
+            <section class="py-16 md:py-24">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="text-center mb-10">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-file-text"></i> Tài Liệu Văn Bản
+                        </span>
+                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Kho File Document & Sách AI</h1>
+                        <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
+                            Tất cả file tài liệu hướng dẫn (.txt, .pdf, .zip, hình ảnh...) sẽ tự động cập nhật tại đây.
+                        </p>
+                    </div>
+
+                    <!-- Khung chứa danh sách file tài liệu -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                            <h3 class="font-bold text-lg text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-folder-open text-indigo-400"></i> Danh Sách File Tài Liệu
+                            </h3>
+                            <button onclick="fetchGithubFiles()" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
+                                <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> Làm mới
+                            </button>
+                        </div>
+
+                        <div id="file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="col-span-full text-center py-10 text-slate-500">
+                                <i class="fa-solid fa-spinner fa-spin text-indigo-500 text-2xl mb-3"></i>
+                                <p class="text-sm">Đang tải danh sách tài liệu...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ================= PAGE 3: SHARE TOOL BOT (CHỈ HIỂN THỊ FILE SCRIPT TOOL/BOT) ================= -->
+        <div id="page-bot" class="hidden">
+            <section class="py-16 md:py-24">
+                <div class="max-w-4xl mx-auto px-4">
+                    <div class="text-center mb-10">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-robot"></i> Automation Scripts
+                        </span>
+                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
+                        <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
+                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
+                        </p>
+                    </div>
+
+                    <!-- Khung chứa danh sách file Tool Bot -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
+                            <h3 class="font-bold text-lg text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-code text-purple-400"></i> Kho Mã Nguồn Tool / Bot
+                            </h3>
+                            <button onclick="fetchGithubFiles()" class="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
+                                <i class="fa-solid fa-rotate-right" id="refresh-bot-icon"></i> Làm mới
+                            </button>
+                        </div>
+
+                        <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="col-span-full text-center py-10 text-slate-500">
+                                <i class="fa-solid fa-spinner fa-spin text-purple-500 text-2xl mb-3"></i>
+                                <p class="text-sm">Đang tải danh sách Tool Bot...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <p class="text-sm text-slate-500 mb-4">© 2026 Nam Anh AI. Tất cả quyền được bảo lưu.</p>
+            
+            <!-- View Counter Badge -->
+            <div class="flex items-center gap-2 text-slate-400 text-sm bg-slate-900 border border-slate-800 px-4 py-2 rounded-full shadow-lg">
+                <i class="fa-solid fa-chart-line text-indigo-400"></i> Lượt truy cập web: 
+                <!-- Dùng ảnh SVG của HitCounter tự động đếm dựa trên request URL -->
+                <img src="https://visitor-badge.laobi.icu/badge?page_id=nam-anh-ai-lab.doorsfruits3" alt="Lượt truy cập" class="h-4 ml-1 rounded">
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Xử Lý Động -->
+    <script>
+        // ================= XỬ LÝ LIKE & DISLIKE =================
+        // Lấy dữ liệu từ localStorage (tạo số liệu ảo ngẫu nhiên ban đầu cho trang sinh động)
+        let likes = parseInt(localStorage.getItem('na_likes')) || 245;
+        let dislikes = parseInt(localStorage.getItem('na_dislikes')) || 12;
+        let hasVoted = localStorage.getItem('na_voted');
+
+        // Khởi tạo hiển thị
+        document.getElementById('like-count').innerText = likes;
+        document.getElementById('dislike-count').innerText = dislikes;
+
+        if (hasVoted === 'like') {
+            document.getElementById('btn-like').classList.add('text-emerald-400');
+            document.getElementById('btn-like').classList.remove('text-slate-400');
+        } else if (hasVoted === 'dislike') {
+            document.getElementById('btn-dislike').classList.add('text-red-400');
+            document.getElementById('btn-dislike').classList.remove('text-slate-400');
+        }
+
+        function handleVote(type) {
+            const msgBox = document.getElementById('vote-msg');
+            
+            // Nếu đã vote rồi thì thông báo và dừng
+            if (hasVoted) {
+                msgBox.innerText = "Bạn đã thực hiện đánh giá rồi!";
+                msgBox.classList.remove('opacity-0');
+                msgBox.classList.add('text-amber-400');
+                return;
+            }
+
+            // Xử lý khi vote mới
+            if (type === 'like') {
+                likes++;
+                localStorage.setItem('na_likes', likes);
+                document.getElementById('like-count').innerText = likes;
+                document.getElementById('btn-like').classList.add('text-emerald-400');
+                document.getElementById('btn-like').classList.remove('text-slate-400');
+            } else {
+                dislikes++;
+                localStorage.setItem('na_dislikes', dislikes);
+                document.getElementById('dislike-count').innerText = dislikes;
+                document.getElementById('btn-dislike').classList.add('text-red-400');
+                document.getElementById('btn-dislike').classList.remove('text-slate-400');
+            }
+            
+            hasVoted = type;
+            localStorage.setItem('na_voted', type);
+            
+            msgBox.innerText = "Cảm ơn bạn đã phản hồi đánh giá!";
+            msgBox.classList.remove('opacity-0');
+        }
+
+
+        // ================= XỬ LÝ ĐIỀU HƯỚNG & GITHUB =================
+        const GITHUB_USERNAME = 'doorsfruits3-coder'; 
+        const REPO_NAME = 'document'; 
+        const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
+        
+        // Danh sách các đuôi file thuộc về Tool Bot Script
+        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw'];
+
+        function getFileExtension(filename) {
+            return filename.split('.').pop().toLowerCase();
+        }
+
+        // Cập nhật kiểu dáng nút điều hướng linh hoạt cho 3 mục
+        function updateNavStyles(activePage) {
+            const deskIntro = document.getElementById('nav-desk-intro');
+            const deskDownload = document.getElementById('nav-desk-download');
+            const deskBot = document.getElementById('nav-desk-bot');
+
+            const mobIntro = document.getElementById('nav-mob-intro');
+            const mobDownload = document.getElementById('nav-mob-download');
+            const mobBot = document.getElementById('nav-mob-bot');
+
+            const activeDesk = "text-indigo-400 bg-indigo-500/10 border border-indigo-500/30 shadow-md font-bold";
+            const inactiveDesk = "text-slate-300 hover:text-white hover:bg-slate-800/60 font-medium";
+
+            const activeMob = "text-indigo-400 bg-indigo-500/10 border border-indigo-500/30 font-bold";
+            const inactiveMob = "text-slate-300 hover:text-white hover:bg-slate-800/40 font-medium";
+
+            // Reset tất cả về trạng thái ẩn/không active
+            deskIntro.className = `px-4 py-2 rounded-xl transition-all duration-300 ${inactiveDesk}`;
+            deskDownload.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
+            deskBot.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
+
+            mobIntro.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
+            mobDownload.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
+            mobBot.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
+
+            if (activePage === 'intro') {
+                deskIntro.className = `px-4 py-2 rounded-xl transition-all duration-300 ${activeDesk}`;
+                mobIntro.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+            } else if (activePage === 'download') {
+                deskDownload.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
+                mobDownload.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+            } else if (activePage === 'bot') {
+                deskBot.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
+                mobBot.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+            }
+        }
+
+        // Chuyển trang + Animation
+        function showPage(pageName) {
+            const pageIntro = document.getElementById('page-intro');
+            const pageDownload = document.getElementById('page-download');
+            const pageBot = document.getElementById('page-bot');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            // Ẩn tất cả các page
+            pageIntro.classList.add('hidden');
+            pageDownload.classList.add('hidden');
+            pageBot.classList.add('hidden');
+
+            let targetPage = null;
+            if (pageName === 'intro') targetPage = pageIntro;
+            else if (pageName === 'download') targetPage = pageDownload;
+            else if (pageName === 'bot') targetPage = pageBot;
+
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.remove('animate-fade');
+                void targetPage.offsetWidth; // Trigger reflow
+                targetPage.classList.add('animate-fade');
+            }
+
+            if (pageName === 'download' || pageName === 'bot') {
+                fetchGithubFiles();
+            }
+
+            updateNavStyles(pageName);
+            mobileMenu.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle Mobile Menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Icon tương ứng đuôi file
+        function getIconForFile(filename) {
+            const ext = getFileExtension(filename);
+            switch (ext) {
+                case 'txt': return '<i class="fa-solid fa-file-lines text-amber-300 text-xl"></i>';
+                case 'py': case 'pyw': return '<i class="brands fa-python text-amber-400 text-xl"></i>';
+                case 'js': return '<i class="fa-brands fa-js text-yellow-400 text-xl"></i>';
+                case 'sh': case 'bat': return '<i class="fa-solid fa-terminal text-emerald-400 text-xl"></i>';
+                case 'pdf': return '<i class="fa-solid fa-file-pdf text-red-400 text-xl"></i>';
+                case 'zip': case 'rar': case '7z': return '<i class="fa-solid fa-file-zipper text-purple-400 text-xl"></i>';
+                case 'png': case 'jpg': case 'jpeg': return '<i class="fa-solid fa-file-image text-emerald-400 text-xl"></i>';
+                default: return '<i class="fa-solid fa-file text-indigo-400 text-xl"></i>';
+            }
+        }
+
+        // HÀM ÉP TRÌNH DUYỆT TẢI FILE VỀ MÁY (KHÔNG MỞ TAB MỚI)
+        async function forceDownload(event, fileUrl, fileName) {
+            event.preventDefault();
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-[10px]"></i> Đang tải...`;
+            btn.classList.add('opacity-70', 'pointer-events-none');
+
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) throw new Error('Lỗi kết nối mạng');
+                
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const tempAnchor = document.createElement('a');
+                tempAnchor.href = blobUrl;
+                tempAnchor.download = fileName;
+                document.body.appendChild(tempAnchor);
+                tempAnchor.click();
+                document.body.removeChild(tempAnchor);
+                
+                setTimeout(() => window.URL.revokeObjectURL(blobUrl), 200);
+            } catch (error) {
+                console.error('Lỗi khi tải file:', error);
+                window.open(fileUrl, '_blank');
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('opacity-70', 'pointer-events-none');
+            }
+        }
+
+        // Đọc danh sách file và phân loại tự động
+        async function fetchGithubFiles() {
+            const docContainer = document.getElementById('file-list-container');
+            const botContainer = document.getElementById('bot-file-list-container');
+            const refreshIcon = document.getElementById('refresh-icon');
+            const refreshBotIcon = document.getElementById('refresh-bot-icon');
+
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
+            if (refreshBotIcon) refreshBotIcon.classList.add('fa-spin');
+
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`);
+                
+                if (!response.ok) {
+                    throw new Error('Lỗi kết nối Repository');
+                }
+
+                const files = await response.json();
+                const validFiles = files.filter(f => f.type === 'file' && !IGNORED_FILES.includes(f.name));
+
+                // Phân loại: File Bot vs File Document
+                const botFiles = validFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                const docFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+
+                // Hiển thị danh sách Document
+                renderFileList(docContainer, docFiles, 'Hiện chưa có file tài liệu/văn bản nào.');
+
+                // Hiển thị danh sách Tool Bot
+                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js...) nào.');
+
+            } catch (err) {
+                const errHtml = `
+                    <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể đọc dữ liệu từ Repository <code class="bg-black/40 px-1 py-0.5 rounded text-red-300">${GITHUB_USERNAME}/${REPO_NAME}</code>.
+                    </div>
+                `;
+                if (docContainer) docContainer.innerHTML = errHtml;
+                if (botContainer) botContainer.innerHTML = errHtml;
+            } finally {
+                if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+                if (refreshBotIcon) refreshBotIcon.classList.remove('fa-spin');
+            }
+        }
+
+        // Hàm render danh sách file ra giao diện
+        function renderFileList(container, fileArray, emptyMessage) {
+            if (!container) return;
+
+            if (fileArray.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-8 text-slate-500 text-sm">
+                        ${emptyMessage}
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            fileArray.forEach(file => {
+                const icon = getIconForFile(file.name);
+                const size = (file.size / 1024).toFixed(1);
+
+                html += `
+                    <div class="flex items-center justify-between p-4 bg-slate-950 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition duration-300 group hover:-translate-y-0.5 animate-fade">
+                        <div class="flex items-center gap-3 min-w-0 pr-2">
+                            ${icon}
+                            <div class="min-w-0">
+                                <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${file.name}</p>
+                                <p class="text-[11px] text-slate-500">${size} KB</p>
+                            </div>
+                        </div>
+                        <button onclick="forceDownload(event, '${file.download_url}', '${file.name}')" class="text-xs bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
+                            Tải về <i class="fa-solid fa-download text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Mặc định khởi chạy khi vừa vào trang
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavStyles('intro');
+        });
+    </script>
+</body>
+</html>
