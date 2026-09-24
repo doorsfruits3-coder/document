@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài Liệu AI Chuyên Sâu - Nam Anh</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glow { box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3); }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white relative">
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
+                        NA
+                    </div>
+                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Lab</span></span>
+                </div>
+
+                <!-- Nav Links Desktop -->
+                <nav class="hidden md:flex space-x-8 text-sm font-semibold text-slate-300">
+                    <a href="#about" class="hover:text-indigo-400 transition">Giới Thiệu</a>
+                    <a href="#features" class="hover:text-indigo-400 transition">Nội Dung Chính</a>
+                    <a href="#download-section" class="hover:text-indigo-400 transition">Danh Sách Document</a>
+                    <a href="#author" class="hover:text-indigo-400 transition">Tác Giả</a>
+                </nav>
+
+                <!-- Hamburger Menu Button (Mobile) -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dropdown Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-slate-900 border-b border-slate-800 shadow-xl z-40">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#about" class="text-lg font-semibold text-slate-200 hover:text-indigo-400 border-b border-slate-800 pb-3">Giới thiệu</a>
+                
+                <div class="text-sm font-bold text-indigo-400 uppercase tracking-wider">Tải Document (Tự động từ Repo)</div>
+                <!-- Danh sách file tự động nạp vào đây cho Mobile -->
+                <div id="mobile-file-list" class="flex flex-col gap-2 max-h-60 overflow-y-auto">
+                    <p class="text-xs text-slate-500 italic">Đang tải danh sách file...</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="about" class="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl -z-10"></div>
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-6">
+                <i class="fa-solid fa-sparkles"></i> Tài Liệu Cập Nhật Mới Nhất
+            </span>
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                Chinh Phục Trí Tuệ Nhân Tạo Cùng <br>
+                <span class="gradient-text">Bộ Tài Liệu AI của Nam Anh</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
+                Tổng hợp kiến thức từ cơ bản đến nâng cao về Machine Learning, Deep Learning, Generative AI và Prompt Engineering.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section Hiển thị Danh Sách File Tự Động Tải Từ GitHub -->
+    <section id="download-section" class="py-12 bg-slate-900/60 border-y border-slate-800">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight mb-2">Kho Document & Code Mẫu</h2>
+                <p class="text-sm text-slate-400">Danh sách các file tài liệu (.py, .js, .txt, .pdf...) tự động đồng bộ từ GitHub Repository.</p>
+            </div>
+
+            <!-- Khung chứa danh sách file -->
+            <div id="github-file-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="col-span-full text-center py-6 text-slate-500">
+                    <i class="fa-solid fa-circle-notch fa-spin text-indigo-500 text-xl mb-2"></i>
+                    <p class="text-sm">Đang đọc danh sách file từ GitHub...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Section -->
+    <section id="author" class="py-20 bg-slate-900/30">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 glow flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-indigo-500 to-sky-400 p-1 shrink-0">
+                    <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl font-bold text-indigo-400">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                </div>
+                
+                <div class="w-full">
+                    <span class="text-indigo-400 text-sm font-semibold uppercase tracking-wider">Về Tác Giả</span>
+                    <h3 class="text-2xl md:text-3xl font-bold mt-1 mb-3">Nam Anh</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Kỹ sư / Nhà nghiên cứu ứng dụng AI. Bộ tài liệu này được cập nhật liên tục thông qua repository mã nguồn mở.
+                    </p>
+                    
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" class="w-12 h-12 rounded-full bg-slate-800/90 flex items-center justify-center text-slate-200 hover:bg-black transition border border-slate-700/60">
+                            <i class="fa-brands fa-tiktok text-xl"></i>
+                        </a>
+                        <a href="https://cdn.phototourl.com/member/2026-09-24-1157d7fe-dbfa-4d57-8619-594e2837e55f.png" download="Danh_Thiep_Zalo_Nam_Anh.png" class="h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition border border-slate-700/60 font-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-white text-slate-800 flex items-center justify-center font-black text-xs">Z</span>
+                            <span>Tải QR Zalo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Nam Anh AI. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT TỰ ĐỘNG LẤY TOÀN BỘ FILE TỪ GITHUB -->
+    <script>
+        // === 1. THAY ĐỔI CẤU HÌNH GITHUB CỦA BẠN TẠI ĐÂY ===
+        const GITHUB_USERNAME = 'TÊN_TÀI_KHOẢN_GITHUB_CỦA_BẠN'; // Ví dụ: 'namanh-dev'
+        const REPO_NAME = 'TÊN_REPOSITORY_CỦA_BẠN';             // Ví dụ: 'ai-documents'
+        const FOLDER_PATH = '';                                  // Để trống nếu file nằm ở thư mục gốc
+
+        // Lọc các file không muốn cho người dùng tải (file code web)
+        const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
+
+        // Hàm chọn Icon theo đuôi File
+        function getFileIcon(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            switch (ext) {
+                case 'py': return '<i class="fa-brands fa-python text-amber-400 text-lg"></i>';
+                case 'js': return '<i class="fa-brands fa-js text-yellow-400 text-lg"></i>';
+                case 'txt': return '<i class="fa-solid fa-file-lines text-slate-300 text-lg"></i>';
+                case 'pdf': return '<i class="fa-solid fa-file-pdf text-red-400 text-lg"></i>';
+                case 'zip':
+                case 'rar':
+                case '7z': return '<i class="fa-solid fa-file-zipper text-purple-400 text-lg"></i>';
+                case 'png':
+                case 'jpg':
+                case 'jpeg': return '<i class="fa-solid fa-file-image text-emerald-400 text-lg"></i>';
+                default: return '<i class="fa-solid fa-file text-indigo-400 text-lg"></i>';
+            }
+        }
+
+        // Hàm gọi GitHub API để tải danh sách File
+        async function loadGithubFiles() {
+            const desktopContainer = document.getElementById('github-file-list');
+            const mobileContainer = document.getElementById('mobile-file-list');
+
+            try {
+                const apiUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${FOLDER_PATH}`;
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) throw new Error('Không thể lấy danh sách file từ GitHub.');
+
+                const files = await response.json();
+
+                // Lọc bỏ thư mục và các file hệ thống
+                const validFiles = files.filter(file => 
+                    file.type === 'file' && !IGNORED_FILES.includes(file.name)
+                );
+
+                if (validFiles.length === 0) {
+                    const emptyHTML = `<div class="col-span-full text-center text-slate-500 text-sm py-4">Chưa có file tài liệu nào trong Repo.</div>`;
+                    desktopContainer.innerHTML = emptyHTML;
+                    mobileContainer.innerHTML = emptyHTML;
+                    return;
+                }
+
+                let desktopHTML = '';
+                let mobileHTML = '';
+
+                validFiles.forEach(file => {
+                    const icon = getFileIcon(file.name);
+                    const sizeKB = (file.size / 1024).toFixed(1);
+
+                    // Thẻ hiển thị ngoài giao diện chính
+                    desktopHTML += `
+                        <a href="${file.download_url}" download="${file.name}" class="flex items-center justify-between p-3.5 bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition group">
+                            <div class="flex items-center gap-3 min-w-0 pr-2">
+                                ${icon}
+                                <div class="min-w-0">
+                                    <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${file.name}</p>
+                                    <p class="text-[10px] text-slate-500">${sizeKB} KB</p>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-indigo-600/20 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium">
+                                Tải về <i class="fa-solid fa-download text-[10px]"></i>
+                            </span>
+                        </a>
+                    `;
+
+                    // Thẻ hiển thị trong menu 3 gạch Mobile
+                    mobileHTML += `
+                        <a href="${file.download_url}" download="${file.name}" class="flex items-center justify-between p-2.5 bg-slate-950 rounded-lg border border-slate-800 hover:border-indigo-500">
+                            <div class="flex items-center gap-2 min-w-0 pr-2">
+                                ${icon}
+                                <span class="text-xs text-slate-200 truncate">${file.name}</span>
+                            </div>
+                            <i class="fa-solid fa-download text-xs text-indigo-400 shrink-0"></i>
+                        </a>
+                    `;
+                });
+
+                desktopContainer.innerHTML = desktopHTML;
+                mobileContainer.innerHTML = mobileHTML;
+
+            } catch (error) {
+                console.error(error);
+                const errorHTML = `<div class="col-span-full text-center text-red-400 text-xs py-4">Lỗi: Kiểm tra lại GITHUB_USERNAME và REPO_NAME trong script.</div>`;
+                desktopContainer.innerHTML = errorHTML;
+                mobileContainer.innerHTML = errorHTML;
+            }
+        }
+
+        // Đóng/Mở Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+        // Chạy hàm khi trang web load xong
+        document.addEventListener('DOMContentLoaded', loadGithubFiles);
+    </script>
+</body>
+</html>
+nt-semibold text-sm">
+                            <span class="w-6 h-6 rounded-full bg-white text-slate-800 flex items-center justify-center font-black text-xs shadow-inner">Z</span>
+                            <span>Tải Danh Thiếp Zalo</span>
+                            <i class="fa-solid fa-download text-xs ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section id="download" class="py-20 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="bg-gradient-to-r from-indigo-900/40 via-purple-900/40 to-slate-900 border border-indigo-500/30 p-10 md:p-16 rounded-3xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Sẵn Sàng Khám Phá Tài Liệu?</h2>
+                <p class="text-slate-300 mb-8 max-w-xl mx-auto">
+                    Tải xuống bộ tài liệu hoàn toàn miễn phí định dạng PDF & Jupyter Notebooks ngay hôm nay.
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Link tải tài liệu đã được gửi về email của bạn.');">
+                    <input type="email" placeholder="Nhập email của bạn..." required class="bg-slate-950 border border-slate-700 text-white px-5 py-3.5 rounded-xl focus:outline-none focus:border-indigo-500 flex-1">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg transition whitespace-nowrap">
+                        Nhận Link Tải <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
+                <p class="text-xs text-slate-500 mt-4"><i class="fa-solid fa-shield-halved mr-1"></i> Cam kết không spam email của bạn.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Nam Anh AI. Tất cả quyền được bảo lưu.</p>
+            <p class="mt-2">Phát triển và chia sẻ vì cộng đồng AI Việt Nam.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+d('zaloDownloadBtn').addEventListener('click', function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 700;
+            const ctx = canvas.getContext('2d');
+
+            // Draw Card Background
+            ctx.fillStyle = '#1e293b';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 600, 700, 30);
+            ctx.fill();
+
+            // Inner White Card
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(40, 60, 520, 580, 20);
+            ctx.fill();
+
+            // Header Text
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 26px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Danh thiếp Zalo', 300, 130);
+
+            // Load and draw QR Image from online source
+            const img = new Image();
+            img.crossOrigin = 'Anonymous';
+            img.onload = function() {
+                ctx.drawImage(img, 100, 170, 400, 400);
+                
+                // Trigger Auto Download
+                const link = document.createElement('a');
+                link.download = 'Danh_Thiep_Zalo_Nam_Anh.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+            
+            // Online Backup URL for Zalo QR
+            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://zalo.me';
+        });
+    </script>
+</body>
+</html>
