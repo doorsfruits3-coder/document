@@ -136,6 +136,20 @@
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tải về các kịch bản tự động hóa, tool cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc (Python, Node.js).</p>
                             <span class="text-xs font-medium text-zinc-300 group-hover:text-white transition flex items-center gap-1">Xem mã nguồn <i class="fa-solid fa-arrow-right"></i></span>
                         </button>
+
+                        <button onclick="showPage('docmember')" class="group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 transition duration-300">
+                            <i class="fa-solid fa-users text-2xl text-indigo-400 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Document Member Share</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tài liệu do chính thành viên cộng đồng tự đóng góp — ai cũng có thể ném file của mình vào chia sẻ.</p>
+                            <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1">Xem & đóng góp <i class="fa-solid fa-arrow-right"></i></span>
+                        </button>
+
+                        <button onclick="showPage('botmember')" class="group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 transition duration-300">
+                            <i class="fa-solid fa-people-arrows text-2xl text-indigo-400 mb-4"></i>
+                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Tool Bot Member Share</h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Script, tool do thành viên tự phát triển và chia sẻ lại cho cộng đồng cùng dùng.</p>
+                            <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1">Xem & đóng góp <i class="fa-solid fa-arrow-right"></i></span>
+                        </button>
                     </div>
                 </div>
 
@@ -185,9 +199,14 @@
         <!-- ================= PAGE 2: TẢI DOCUMENT ================= -->
         <div id="page-download" class="hidden pt-28 pb-16">
             <section class="max-w-5xl mx-auto px-4">
-                <div class="mb-10">
-                    <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Tài Liệu & Sách</h1>
-                    <p class="text-zinc-400 text-sm">Kho lưu trữ tự động đồng bộ tài liệu hướng dẫn và lý thuyết chuyên môn.</p>
+                <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Tài Liệu & Sách</h1>
+                        <p class="text-zinc-400 text-sm">Kho lưu trữ tự động đồng bộ tài liệu hướng dẫn và lý thuyết chuyên môn (do Admin đăng).</p>
+                    </div>
+                    <button onclick="showPage('docmember')" class="text-xs font-medium text-indigo-300 hover:text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-4 py-2 rounded-lg transition flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-users"></i> Xem Document Member Share <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
 
                 <div class="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6">
@@ -220,9 +239,14 @@
         <!-- ================= PAGE 3: SHARE TOOL BOT ================= -->
         <div id="page-bot" class="hidden pt-28 pb-16">
             <section class="max-w-5xl mx-auto px-4">
-                <div class="mb-10">
-                    <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Mã Nguồn & Công Cụ</h1>
-                    <p class="text-zinc-400 text-sm">Các kịch bản tự động hóa, ứng dụng thực thi và dự án mẫu.</p>
+                <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Mã Nguồn & Công Cụ</h1>
+                        <p class="text-zinc-400 text-sm">Các kịch bản tự động hóa, ứng dụng thực thi và dự án mẫu (do Admin đăng).</p>
+                    </div>
+                    <button onclick="showPage('botmember')" class="text-xs font-medium text-indigo-300 hover:text-white bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/30 px-4 py-2 rounded-lg transition flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-users"></i> Xem Tool Bot Member Share <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
 
                 <div class="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6">
@@ -243,6 +267,114 @@
                     </div>
 
                     <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="col-span-full text-center py-10 text-zinc-500">
+                            <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
+                            <p class="text-sm">Đang tải danh sách Script...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE: DOCUMENT MEMBER SHARE ================= -->
+        <div id="page-docmember" class="hidden pt-28 pb-16">
+            <section class="max-w-5xl mx-auto px-4">
+                <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Document Member Share</h1>
+                        <p class="text-zinc-400 text-sm">Tài liệu do chính thành viên cộng đồng đóng góp — file tự động được phân loại theo đuôi file.</p>
+                    </div>
+                    <button onclick="showPage('download')" class="text-xs font-medium text-zinc-400 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg transition flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-arrow-left"></i> Về Tài Liệu Admin
+                    </button>
+                </div>
+
+                <!-- Khối upload -->
+                <div class="bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-8">
+                    <h3 class="text-sm font-semibold text-zinc-100 mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i> Đóng góp file của bạn</h3>
+                    <p class="text-xs text-zinc-500 mb-4">Chọn file bất kỳ để chia sẻ — hệ thống sẽ tự động nhận diện đuôi file và xếp đúng danh mục (Document hoặc Tool Bot).</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="docmember-nickname" placeholder="Tên của bạn (không bắt buộc)" class="w-full sm:w-48 bg-[#09090b] border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-indigo-500 transition">
+                        <input type="file" id="docmember-file-input" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:bg-zinc-800 file:text-zinc-200 file:text-sm hover:file:bg-zinc-700 file:cursor-pointer cursor-pointer bg-[#09090b] border border-zinc-800 rounded-lg">
+                        <button id="docmember-upload-btn" onclick="submitMemberFile('docmember')" class="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition active:scale-95 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-share-from-square"></i> Chia sẻ
+                        </button>
+                    </div>
+                    <p id="docmember-upload-status" class="text-xs mt-3 h-4"></p>
+                </div>
+
+                <div class="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <div class="relative flex-grow">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
+                            <input type="text" id="docmember-search-input" placeholder="Tìm kiếm tài liệu member..." class="w-full bg-[#09090b] border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-zinc-500 transition">
+                        </div>
+                        <select id="docmember-sort-select" class="bg-[#09090b] border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-zinc-500 transition">
+                            <option value="name-asc">Tên (A-Z)</option>
+                            <option value="name-desc">Tên (Z-A)</option>
+                            <option value="size-asc">Dung lượng (Tăng dần)</option>
+                            <option value="size-desc">Dung lượng (Giảm dần)</option>
+                        </select>
+                        <button onclick="loadMemberFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-right" id="docmember-refresh-icon"></i> Làm mới
+                        </button>
+                    </div>
+
+                    <div id="docmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="col-span-full text-center py-10 text-zinc-500">
+                            <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
+                            <p class="text-sm">Đang tải danh sách dữ liệu...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE: TOOL BOT MEMBER SHARE ================= -->
+        <div id="page-botmember" class="hidden pt-28 pb-16">
+            <section class="max-w-5xl mx-auto px-4">
+                <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Tool Bot Member Share</h1>
+                        <p class="text-zinc-400 text-sm">Script, tool do thành viên tự phát triển — file tự động được phân loại theo đuôi file.</p>
+                    </div>
+                    <button onclick="showPage('bot')" class="text-xs font-medium text-zinc-400 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 border border-zinc-700 px-4 py-2 rounded-lg transition flex items-center gap-2 shrink-0">
+                        <i class="fa-solid fa-arrow-left"></i> Về Tool Bot Admin
+                    </button>
+                </div>
+
+                <!-- Khối upload -->
+                <div class="bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-8">
+                    <h3 class="text-sm font-semibold text-zinc-100 mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i> Đóng góp file của bạn</h3>
+                    <p class="text-xs text-zinc-500 mb-4">Chọn file bất kỳ để chia sẻ — hệ thống sẽ tự động nhận diện đuôi file và xếp đúng danh mục (Document hoặc Tool Bot).</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" id="botmember-nickname" placeholder="Tên của bạn (không bắt buộc)" class="w-full sm:w-48 bg-[#09090b] border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-indigo-500 transition">
+                        <input type="file" id="botmember-file-input" class="w-full text-sm text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:bg-zinc-800 file:text-zinc-200 file:text-sm hover:file:bg-zinc-700 file:cursor-pointer cursor-pointer bg-[#09090b] border border-zinc-800 rounded-lg">
+                        <button id="botmember-upload-btn" onclick="submitMemberFile('botmember')" class="shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition active:scale-95 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-share-from-square"></i> Chia sẻ
+                        </button>
+                    </div>
+                    <p id="botmember-upload-status" class="text-xs mt-3 h-4"></p>
+                </div>
+
+                <div class="bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6">
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <div class="relative flex-grow">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
+                            <input type="text" id="botmember-search-input" placeholder="Tìm kiếm script, tool member..." class="w-full bg-[#09090b] border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-zinc-500 transition">
+                        </div>
+                        <select id="botmember-sort-select" class="bg-[#09090b] border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-zinc-500 transition">
+                            <option value="name-asc">Tên (A-Z)</option>
+                            <option value="name-desc">Tên (Z-A)</option>
+                            <option value="size-asc">Dung lượng (Tăng dần)</option>
+                            <option value="size-desc">Dung lượng (Giảm dần)</option>
+                        </select>
+                        <button onclick="loadMemberFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-rotate-right" id="botmember-refresh-icon"></i> Làm mới
+                        </button>
+                    </div>
+
+                    <div id="botmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="col-span-full text-center py-10 text-zinc-500">
                             <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
                             <p class="text-sm">Đang tải danh sách Script...</p>
@@ -309,12 +441,26 @@
         const REPO_NAME = 'document';
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
         const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
-        const PAGE_IDS = ['intro', 'about', 'download', 'bot'];
+        const PAGE_IDS = ['intro', 'about', 'download', 'bot', 'docmember', 'botmember'];
+
+        // ---- Cấu hình Member Share (upload cộng đồng, không qua duyệt) ----
+        // Nơi lưu file member up: catbox.moe (ẩn danh, miễn phí, VĨNH VIỄN không hết hạn)
+        const CATBOX_API_URL = 'https://catbox.moe/user/api.php';
+        // Nơi lưu "danh sách" (tên file, link, người up) để mọi người cùng thấy — dùng
+        // Firebase Realtime Database (miễn phí, KHÔNG tự xóa dữ liệu do ít người dùng như jsonblob).
+        // Cần tạo 1 lần: xem hướng dẫn đi kèm, rồi dán URL Database vào đây.
+        const FIREBASE_DB_URL = 'https://nanh-11cc6-default-rtdb.firebaseio.com/';
+        const MEMBER_SHARE_API_URL = FIREBASE_DB_URL && FIREBASE_DB_URL !== 'PASTE_YOUR_FIREBASE_DATABASE_URL_HERE'
+            ? `${FIREBASE_DB_URL.replace(/\/$/, '')}/member_files.json`
+            : null;
+        const MAX_MEMBER_FILE_SIZE = 200 * 1024 * 1024; // 200MB, giới hạn ẩn danh của catbox
 
         let hasVoted = localStorage.getItem('na_voted');
         let voteStreams = [];
         let allDocFiles = [];
         let allBotFiles = [];
+        let allMemberDocFiles = [];
+        let allMemberBotFiles = [];
 
         // ================= TIỆN ÍCH =================
         function escapeHtml(str) {
@@ -347,8 +493,11 @@
             [deskIntro, deskDownload, deskBot].forEach(el => el.className = `px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`);
             [mobIntro, mobDownload, mobBot].forEach(el => el.className = `w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all ${inactiveDesk}`);
 
-            // Trang "about" là phần mở rộng của Tổng quan nên vẫn làm nổi mục "Tổng quan"
-            const navTarget = activePage === 'about' ? 'intro' : activePage;
+            // Các trang phụ (about/member share) vẫn làm nổi mục nav gốc tương ứng
+            let navTarget = activePage;
+            if (activePage === 'about') navTarget = 'intro';
+            if (activePage === 'docmember') navTarget = 'download';
+            if (activePage === 'botmember') navTarget = 'bot';
 
             if (navTarget === 'intro') { deskIntro.classList.add('text-white', 'bg-zinc-800'); deskIntro.classList.remove('text-zinc-400'); mobIntro.classList.add('text-white', 'bg-zinc-800'); }
             if (navTarget === 'download') { deskDownload.classList.add('text-white', 'bg-zinc-800'); deskDownload.classList.remove('text-zinc-400'); mobDownload.classList.add('text-white', 'bg-zinc-800'); }
@@ -374,6 +523,7 @@
             }
 
             if (pageName === 'download' || pageName === 'bot') fetchGithubFiles();
+            if (pageName === 'docmember' || pageName === 'botmember') loadMemberFiles();
             updateNavStyles(pageName);
             document.getElementById('mobile-menu').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -678,6 +828,183 @@
             } finally {
                 if (refreshIcon) refreshIcon.classList.remove('fa-spin');
                 if (refreshBotIcon) refreshBotIcon.classList.remove('fa-spin');
+            }
+        }
+
+        // ================= MEMBER SHARE (cộng đồng tự đóng góp file) =================
+        // Danh sách hiển thị theo đúng logic phân loại đuôi file như 2 mục của Admin.
+        document.getElementById('docmember-search-input').addEventListener('input', applyMemberDocFilters);
+        document.getElementById('docmember-sort-select').addEventListener('change', applyMemberDocFilters);
+        document.getElementById('botmember-search-input').addEventListener('input', applyMemberBotFilters);
+        document.getElementById('botmember-sort-select').addEventListener('change', applyMemberBotFilters);
+
+        function renderMemberFileList(container, fileArray, emptyMessage) {
+            if (!container) return;
+            if (fileArray.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-zinc-500 text-sm">${escapeHtml(emptyMessage)}</div>`;
+                return;
+            }
+
+            let html = '';
+            fileArray.forEach(file => {
+                const safeName = escapeHtml(file.name);
+                const safeUploader = escapeHtml(file.uploader || 'Ẩn danh');
+                const sizeStr = file.size < 1048576 ? (file.size / 1024).toFixed(1) + " KB" : (file.size / 1048576).toFixed(2) + " MB";
+                let dateStr = '';
+                try { dateStr = new Date(file.uploaded_at).toLocaleDateString('vi-VN'); } catch (e) { }
+
+                html += `
+                    <div class="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 hover:border-indigo-500/50 rounded-xl transition duration-200 group animate-fade">
+                        <div class="flex items-center gap-3 min-w-0 pr-2">
+                            ${getIconForFile(file.name)}
+                            <div class="min-w-0">
+                                <p class="text-sm font-medium text-zinc-200 truncate group-hover:text-white transition">${safeName}</p>
+                                <p class="text-[11px] text-zinc-500">${sizeStr} · bởi ${safeUploader}${dateStr ? ' · ' + dateStr : ''}</p>
+                            </div>
+                        </div>
+                        <a href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer" class="text-xs bg-indigo-600 text-white hover:bg-indigo-500 px-3 py-1.5 rounded-md transition shrink-0 font-medium active:scale-95">
+                            Tải về
+                        </a>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function applyMemberDocFilters() {
+            const keyword = document.getElementById('docmember-search-input').value.trim().toLowerCase();
+            const sortValue = document.getElementById('docmember-sort-select').value;
+            const filtered = allMemberDocFiles.filter(f => f.name.toLowerCase().includes(keyword));
+            const sorted = sortFiles(filtered, sortValue);
+            renderMemberFileList(document.getElementById('docmember-list-container'), sorted, keyword ? 'Không tìm thấy file.' : 'Chưa có ai đóng góp tài liệu. Hãy là người đầu tiên!');
+        }
+
+        function applyMemberBotFilters() {
+            const keyword = document.getElementById('botmember-search-input').value.trim().toLowerCase();
+            const sortValue = document.getElementById('botmember-sort-select').value;
+            const filtered = allMemberBotFiles.filter(f => f.name.toLowerCase().includes(keyword));
+            const sorted = sortFiles(filtered, sortValue);
+            renderMemberFileList(document.getElementById('botmember-list-container'), sorted, keyword ? 'Không tìm thấy file.' : 'Chưa có ai đóng góp tool/script. Hãy là người đầu tiên!');
+        }
+
+        // Tải danh sách file member từ kho lưu chung, rồi tự động phân loại theo đuôi file
+        // (dùng chung BOT_EXTENSIONS như 2 mục Admin) trước khi hiển thị.
+        async function loadMemberFiles() {
+            const docIcon = document.getElementById('docmember-refresh-icon');
+            const botIcon = document.getElementById('botmember-refresh-icon');
+            if (docIcon) docIcon.classList.add('fa-spin');
+            if (botIcon) botIcon.classList.add('fa-spin');
+
+            if (!MEMBER_SHARE_API_URL) {
+                const warnHtml = `<div class="col-span-full p-4 text-center bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-300 text-xs">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Chưa cấu hình kho lưu danh sách Member Share (FIREBASE_DB_URL) trong file.
+                </div>`;
+                const dc = document.getElementById('docmember-list-container');
+                const bc = document.getElementById('botmember-list-container');
+                if (dc) dc.innerHTML = warnHtml;
+                if (bc) bc.innerHTML = warnHtml;
+                if (docIcon) docIcon.classList.remove('fa-spin');
+                if (botIcon) botIcon.classList.remove('fa-spin');
+                return;
+            }
+
+            try {
+                const res = await fetchWithTimeout(MEMBER_SHARE_API_URL, 8000);
+                if (!res.ok) throw new Error('Không tải được danh sách');
+                const data = await res.json();
+                // Firebase Realtime Database trả về object { "-Nx...": {...}, "-Ny...": {...} } hoặc null nếu rỗng
+                const allMemberFiles = data ? Object.values(data) : [];
+
+                allMemberBotFiles = allMemberFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                allMemberDocFiles = allMemberFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+
+                applyMemberDocFilters();
+                applyMemberBotFilters();
+            } catch (err) {
+                const errHtml = `<div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải danh sách file member. Vui lòng thử lại sau.
+                </div>`;
+                const dc = document.getElementById('docmember-list-container');
+                const bc = document.getElementById('botmember-list-container');
+                if (dc) dc.innerHTML = errHtml;
+                if (bc) bc.innerHTML = errHtml;
+            } finally {
+                if (docIcon) docIcon.classList.remove('fa-spin');
+                if (botIcon) botIcon.classList.remove('fa-spin');
+            }
+        }
+
+        // Upload file member: đẩy lên catbox.moe rồi ghi metadata vào kho danh sách chung.
+        // prefix là 'docmember' hoặc 'botmember' — chỉ dùng để biết đọc input/nút nào,
+        // còn việc file rơi vào danh sách Document hay Tool Bot là HOÀN TOÀN tự động theo đuôi file.
+        async function submitMemberFile(prefix) {
+            const fileInput = document.getElementById(`${prefix}-file-input`);
+            const nicknameInput = document.getElementById(`${prefix}-nickname`);
+            const statusEl = document.getElementById(`${prefix}-upload-status`);
+            const btn = document.getElementById(`${prefix}-upload-btn`);
+            const file = fileInput.files[0];
+
+            const setStatus = (msg, ok) => {
+                statusEl.textContent = msg;
+                statusEl.className = `text-xs mt-3 h-4 ${ok ? 'text-emerald-400' : 'text-red-400'}`;
+            };
+
+            if (!MEMBER_SHARE_API_URL) {
+                setStatus('Chức năng chia sẻ chưa được cấu hình, vui lòng liên hệ Admin.', false);
+                return;
+            }
+            if (!file) {
+                setStatus('Vui lòng chọn một file trước khi chia sẻ.', false);
+                return;
+            }
+            if (file.size > MAX_MEMBER_FILE_SIZE) {
+                setStatus('File vượt quá 200MB, không thể chia sẻ ẩn danh.', false);
+                return;
+            }
+
+            const originalBtnHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.classList.add('opacity-60', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tải lên...';
+            setStatus('Đang tải file lên kho lưu trữ...', true);
+
+            try {
+                const form = new FormData();
+                form.append('reqtype', 'fileupload');
+                form.append('fileToUpload', file);
+
+                const uploadRes = await fetch(CATBOX_API_URL, { method: 'POST', body: form });
+                if (!uploadRes.ok) throw new Error('Upload thất bại');
+                const fileUrl = (await uploadRes.text()).trim();
+                if (!fileUrl.startsWith('http')) throw new Error('Phản hồi không hợp lệ từ kho lưu trữ');
+
+                setStatus('Đang cập nhật danh sách chia sẻ...', true);
+
+                // Ghi thêm 1 bản ghi mới (Firebase tự sinh key riêng cho mỗi lần POST),
+                // KHÔNG đọc rồi đè lại toàn bộ danh sách — nên nhiều người up cùng lúc
+                // sẽ không bao giờ làm mất dữ liệu của nhau.
+                const putRes = await fetch(MEMBER_SHARE_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: file.name,
+                        size: file.size,
+                        url: fileUrl,
+                        uploader: (nicknameInput.value || '').trim().slice(0, 40) || 'Ẩn danh',
+                        uploaded_at: new Date().toISOString()
+                    })
+                });
+                if (!putRes.ok) throw new Error('Không thể cập nhật danh sách');
+
+                setStatus('Chia sẻ thành công! Cảm ơn bạn đã đóng góp.', true);
+                fileInput.value = '';
+                loadMemberFiles();
+            } catch (err) {
+                setStatus('Có lỗi khi chia sẻ file, vui lòng thử lại.', false);
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                btn.innerHTML = originalBtnHtml;
             }
         }
 
