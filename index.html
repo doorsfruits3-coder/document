@@ -191,10 +191,11 @@
                                 <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-slate-800/90 flex items-center justify-center text-slate-200 hover:bg-black transition border border-slate-700/60 shadow-lg">
                                     <i class="fa-brands fa-tiktok text-xl"></i>
                                 </a>
-                                <a href="https://cdn.phototourl.com/member/2026-09-24-1157d7fe-dbfa-4d57-8619-594e2837e55f.png" download="Danh_Thiep_Zalo_Nam_Anh.png" class="h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition border border-slate-700/60 font-semibold text-sm shadow-lg">
+                                <!-- Sửa nút tải QR Zalo tại đây -->
+                                <button onclick="forceDownload(event, './Danh_Thiep_Zalo_Nam_Anh.png', 'Danh_Thiep_Zalo_Nam_Anh.png')" class="h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition border border-slate-700/60 font-semibold text-sm shadow-lg cursor-pointer">
                                     <span class="w-6 h-6 rounded-full bg-white text-slate-800 flex items-center justify-center font-black text-xs">Z</span>
                                     <span>Tải QR Zalo</span>
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -790,7 +791,14 @@
             let html = '';
             fileArray.forEach(file => {
                 const icon = getIconForFile(file.name);
-                const size = (file.size / 1024).toFixed(1);
+                
+                // Sửa logic tính hiển thị dung lượng file tại đây
+                let sizeStr = "";
+                if (file.size < 1024 * 1024) {
+                    sizeStr = (file.size / 1024).toFixed(1) + " KB";
+                } else {
+                    sizeStr = (file.size / (1024 * 1024)).toFixed(2) + " MB";
+                }
 
                 html += `
                     <div class="flex items-center justify-between p-4 bg-slate-950 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition duration-300 group hover:-translate-y-0.5 animate-fade">
@@ -798,7 +806,7 @@
                             ${icon}
                             <div class="min-w-0">
                                 <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${file.name}</p>
-                                <p class="text-[11px] text-slate-500">${size} KB</p>
+                                <p class="text-[11px] text-slate-500">${sizeStr}</p>
                             </div>
                         </div>
                         <button onclick="forceDownload(event, '${file.download_url}', '${file.name}')" class="text-xs bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
