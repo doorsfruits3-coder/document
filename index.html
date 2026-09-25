@@ -102,8 +102,15 @@
                         Nền tảng chia sẻ kiến thức thực tiễn và các kịch bản tự động hóa (Bot Scripts). Được thiết kế tối giản, tập trung vào tính ứng dụng cao để hỗ trợ cộng đồng làm việc hiệu quả hơn.
                     </p>
 
-                    <!-- 3 mục giới thiệu nhanh trước khi vào chi tiết -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 max-w-3xl mx-auto text-left">
+                    <div class="flex justify-center mb-10">
+                        <!-- Nút vào web sâu hơn: mở trang chi tiết thay vì cuộn xuống -->
+                        <button onclick="showPage('about')" class="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-8 py-3.5 rounded-full transition transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95 shadow-lg">
+                            Khám phá chi tiết <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </button>
+                    </div>
+
+                    <!-- 3 mục giới thiệu nhanh -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
                         <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5">
                             <i class="fa-solid fa-file-text text-xl text-zinc-100 mb-3"></i>
                             <h3 class="text-sm font-semibold text-zinc-100 mb-1">Tài liệu chuyên sâu</h3>
@@ -119,13 +126,6 @@
                             <h3 class="text-sm font-semibold text-zinc-100 mb-1">Cộng đồng chia sẻ</h3>
                             <p class="text-xs text-zinc-400 leading-relaxed">Thành viên cùng đóng góp tài liệu và tool cho nhau sử dụng.</p>
                         </div>
-                    </div>
-
-                    <div class="flex justify-center">
-                        <!-- Nút vào web sâu hơn: mở trang chi tiết thay vì cuộn xuống -->
-                        <button onclick="showPage('about')" class="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-8 py-3.5 rounded-full transition transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95 shadow-lg">
-                            Khám phá chi tiết <i class="fa-solid fa-arrow-right text-sm"></i>
-                        </button>
                     </div>
                 </div>
             </section>
