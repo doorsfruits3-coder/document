@@ -9,17 +9,11 @@
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glow { box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3); }
-        .gradient-text {
-            color: #ffffff; /* fallback nếu trình duyệt không hỗ trợ background-clip: text */
-            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        body { font-family: 'IBM Plex Sans', sans-serif; }
+        .font-display { font-family: 'IBM Plex Mono', monospace; }
+        .glow { box-shadow: 0 0 50px -10px rgba(245, 158, 11, 0.25); }
         
         /* Hiệu ứng Animation chuyển trang mượt mà */
         @keyframes fadeInUp {
@@ -37,7 +31,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-amber-500 selection:text-white min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-lg shadow-black/40">
@@ -45,21 +39,21 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <button onclick="showPage('intro')" class="flex items-center space-x-3 text-left focus:outline-none group">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition transform">
+                    <div class="font-display w-10 h-10 rounded-md border border-amber-400/40 bg-amber-400/10 flex items-center justify-center text-amber-400 font-bold text-sm group-hover:border-amber-400 transition">
                         NA
                     </div>
-                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Web</span></span>
+                    <span class="font-display font-bold text-lg tracking-tight">nam-anh<span class="text-slate-500">/</span>ai-lab</span>
                 </button>
 
                 <!-- Desktop Nav Links (3 Mục Điều Hướng) -->
                 <nav class="hidden md:flex space-x-2 text-sm font-semibold">
-                    <button onclick="showPage('intro')" id="nav-desk-intro" class="px-4 py-2 rounded-xl transition-all duration-300">
+                    <button onclick="showPage('intro')" id="nav-desk-intro" class="font-display px-4 py-2 rounded-md transition-all duration-300">
                         Giới thiệu
                     </button>
-                    <button onclick="showPage('download')" id="nav-desk-download" class="px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2">
+                    <button onclick="showPage('download')" id="nav-desk-download" class="font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2">
                         <i class="fa-solid fa-folder-open text-xs"></i> Tải document
                     </button>
-                    <button onclick="showPage('bot')" id="nav-desk-bot" class="px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2">
+                    <button onclick="showPage('bot')" id="nav-desk-bot" class="font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2">
                         <i class="fa-solid fa-robot text-xs"></i> Share Tool Bot
                     </button>
                 </nav>
@@ -76,13 +70,13 @@
         <!-- Dropdown Menu Mobile -->
         <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-slate-900 border-b border-slate-800 shadow-2xl z-50">
             <div class="flex flex-col p-4 space-y-2">
-                <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                <button onclick="showPage('intro')" id="nav-mob-intro" class="font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all">
                     <i class="fa-solid fa-house"></i> Giới thiệu
                 </button>
-                <button onclick="showPage('download')" id="nav-mob-download" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                <button onclick="showPage('download')" id="nav-mob-download" class="font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all">
                     <i class="fa-solid fa-file-arrow-down"></i> Share Tài Liệu 
                 </button>
-                <button onclick="showPage('bot')" id="nav-mob-bot" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
+                <button onclick="showPage('bot')" id="nav-mob-bot" class="font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all">
                     <i class="fa-solid fa-robot"></i> Share Tool Bot
                 </button>
             </div>
@@ -95,43 +89,63 @@
         <!-- ================= PAGE 1: GIỚI THIỆU ================= -->
         <div id="page-intro" class="block animate-fade">
             <!-- Hero Section -->
-            <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
-                <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl -z-10"></div>
-                <div class="max-w-5xl mx-auto px-4 text-center">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-6">
-                        <i class="fa-solid fa-sparkles"></i> Tài Liệu & Tool Bot Cập Nhật Mới Nhất
-                    </span>
-                    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                        Dùng Thành Thạo Trí Tuệ Nhân Tạo Cùng <br>
-                        <span class="gradient-text">Bộ Tài Liệu & Tool AI Nam Anh</span>
-                    </h1>
-                    <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
-                        Tổng hợp kiến thức từ cơ bản đến nâng cao về Machine Learning, Generative AI cùng các Tool Bot tự động hóa công việc hiệu quả nhất.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <button onclick="showPage('download')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-indigo-600/25 transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-3 active:scale-95">
-                            <i class="fa-solid fa-folder-open text-lg"></i> Xem Document
-                        </button>
-                        <button onclick="showPage('bot')" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-purple-600/25 transition transform hover:-translate-y-1 inline-flex items-center justify-center gap-3 active:scale-95">
-                            <i class="fa-solid fa-robot text-lg"></i> Kho Tool Bot Script
-                        </button>
+            <section class="relative pt-16 pb-16 md:pt-20 md:pb-24 overflow-hidden">
+                <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-semibold mb-6">
+                            <i class="fa-solid fa-sparkles"></i> Cập nhật thường xuyên
+                        </span>
+                        <h1 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
+                            Dùng thành thạo AI cùng bộ tài liệu & tool của Nam Anh
+                        </h1>
+                        <p class="text-base md:text-lg text-slate-400 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed">
+                            Tổng hợp kiến thức từ cơ bản đến nâng cao về Machine Learning, Generative AI cùng các Tool Bot tự động hóa công việc hiệu quả nhất.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row justify-center md:justify-start gap-4 mb-14 md:mb-0">
+                            <button onclick="showPage('download')" class="font-display bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold px-8 py-4 rounded-md shadow-xl shadow-amber-500/20 transition hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95">
+                                <i class="fa-solid fa-folder-open text-lg"></i> Xem Document
+                            </button>
+                            <button onclick="showPage('bot')" class="font-display bg-transparent hover:bg-emerald-400/10 text-emerald-400 font-bold px-8 py-4 rounded-md border border-emerald-400/50 transition hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95">
+                                <i class="fa-solid fa-robot text-lg"></i> Kho Tool Bot Script
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Mini Stats -->
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto border-t border-slate-800/80 pt-8">
-                        <div>
-                            <p class="text-3xl font-extrabold text-white">500+</p>
-                            <p class="text-xs text-slate-400 mt-1">Trang nội dung chi tiết</p>
+                    <!-- Terminal mockup: thay cho khối blur trang trí, gắn trực tiếp với nội dung site -->
+                    <div class="rounded-lg border border-slate-800 bg-[#0D0D11] shadow-2xl shadow-black/50 overflow-hidden">
+                        <div class="flex items-center gap-1.5 px-4 py-3 border-b border-slate-800 bg-slate-900/60">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-700"></span>
+                            <span class="ml-3 text-[11px] text-slate-500 font-display">nam-anh-ai-lab — zsh</span>
                         </div>
-                        <div>
-                            <p class="text-3xl font-extrabold text-white">20+</p>
-                            <p class="text-xs text-slate-400 mt-1">Dự án & Tool Bot Script</p>
+                        <div class="p-5 font-display text-[13px] leading-relaxed text-left">
+                            <p class="text-slate-500">$ ls tai-lieu/</p>
+                            <p class="text-slate-300">machine-learning.pdf&nbsp;&nbsp;prompt-engineering.pdf</p>
+                            <p class="text-slate-300">llm-tu-co-ban-den-nang-cao.pdf</p>
+                            <p class="text-slate-500 mt-3">$ ls tool-bot/</p>
+                            <p class="text-emerald-400">auto-crawler.py&nbsp;&nbsp;telegram-bot.py&nbsp;&nbsp;ocr-tool.py</p>
+                            <p class="text-slate-500 mt-3">$ echo "500+ trang · 20+ tool · miễn phí"</p>
+                            <p class="text-amber-400">500+ trang · 20+ tool · miễn phí<span class="inline-block w-2 h-4 bg-amber-400 ml-1 align-middle animate-pulse"></span></p>
                         </div>
-                        <div class="col-span-2 md:col-span-1">
-                            <p class="text-3xl font-extrabold text-white">100%</p>
-                            <p class="text-xs text-slate-400 mt-1">Miễn phí cho cộng đồng</p>
-                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Mini Stats -->
+                <div class="max-w-5xl mx-auto px-4 grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-slate-800/80">
+                    <div class="text-center md:text-left">
+                        <p class="font-display text-3xl font-bold text-white">500+</p>
+                        <p class="text-xs text-slate-400 mt-1">Trang nội dung chi tiết</p>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <p class="font-display text-3xl font-bold text-white">20+</p>
+                        <p class="text-xs text-slate-400 mt-1">Dự án & Tool Bot Script</p>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <p class="font-display text-3xl font-bold text-white">100%</p>
+                        <p class="text-xs text-slate-400 mt-1">Miễn phí cho cộng đồng</p>
                     </div>
                 </div>
             </section>
@@ -140,32 +154,36 @@
             <section class="py-20 bg-slate-900/50 border-y border-slate-800">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center max-w-2xl mx-auto mb-16">
-                        <h2 class="text-3xl font-bold tracking-tight mb-4">Điểm Nổi Bật Của Tài Liệu</h2>
+                        <h2 class="font-display text-3xl font-bold tracking-tight mb-4">Điểm Nổi Bật Của Tài Liệu</h2>
                         <p class="text-slate-400">Tài liệu được thiết kế tập trung vào tính ứng dụng cao, dễ hiểu, bỏ qua các lý thuyết quá hàn lâm không cần thiết.</p>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
-                            <div class="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Card nổi bật: Generative AI & LLMs, chiếm trọn cột trái, cao hơn 2 card kia -->
+                        <div class="md:row-span-2 bg-slate-900 border border-sky-500/30 p-8 md:p-10 rounded-lg hover:border-sky-500/60 transition duration-300 flex flex-col justify-between">
+                            <div>
+                                <div class="w-12 h-12 bg-sky-500/10 text-sky-400 rounded-md flex items-center justify-center text-xl mb-6">
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                </div>
+                                <h3 class="font-display text-2xl font-bold mb-3">Generative AI & LLMs</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed">Hướng dẫn làm chủ ChatGPT, Claude, Gemini, Deepseek kỹ thuật viết Prompt Engineering và xây dựng ứng dụng với OpenAI API.</p>
+                            </div>
+                            <span class="font-display text-xs text-sky-400 mt-8">trọng tâm bộ tài liệu →</span>
+                        </div>
+
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-amber-500/50 transition duration-300">
+                            <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-md flex items-center justify-center text-lg mb-4">
                                 <i class="fa-solid fa-brain"></i>
                             </div>
-                            <h3 class="text-xl font-bold mb-3">Nền Tảng Vững Chắc</h3>
+                            <h3 class="font-display text-lg font-bold mb-2">Nền Tảng Vững Chắc</h3>
                             <p class="text-slate-400 text-sm leading-relaxed">Hệ thống hóa toán học AI, Python chuyên sâu, Machine Learning căn bản đến nâng cao một cách trực quan.</p>
                         </div>
 
-                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
-                            <div class="w-12 h-12 bg-sky-500/10 text-sky-400 rounded-xl flex items-center justify-center text-xl mb-6">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Generative AI & LLMs</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Hướng dẫn làm chủ ChatGPT, Claude, Gemini, Deepseek kỹ thuật viết Prompt Engineering và xây dựng ứng dụng với OpenAI API.</p>
-                        </div>
-
-                        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
-                            <div class="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center text-xl mb-6">
+                        <div class="bg-slate-900 border border-slate-800 p-6 rounded-lg hover:border-emerald-500/50 transition duration-300">
+                            <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-md flex items-center justify-center text-lg mb-4">
                                 <i class="fa-solid fa-robot"></i>
                             </div>
-                            <h3 class="text-xl font-bold mb-3">Tool Bot Automation</h3>
+                            <h3 class="font-display text-lg font-bold mb-2">Tool Bot Automation</h3>
                             <p class="text-slate-400 text-sm leading-relaxed">Chia sẻ mã nguồn Python, Node.js tự động hóa quy trình, bot cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc.</p>
                         </div>
                     </div>
@@ -175,16 +193,16 @@
             <!-- Author Section -->
             <section class="py-20 border-t border-slate-800">
                 <div class="max-w-5xl mx-auto px-4">
-                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8 md:p-12 glow flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
-                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-indigo-500 to-sky-400 p-1 shrink-0">
-                            <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl font-bold text-indigo-400">
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-8 md:p-12 glow flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-tr from-amber-500 to-sky-400 p-1 shrink-0">
+                            <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl font-bold text-amber-400">
                                 <i class="fa-solid fa-user-gear"></i>
                             </div>
                         </div>
                         
                         <div class="w-full">
-                            <span class="text-indigo-400 text-sm font-semibold uppercase tracking-wider">Về Tác Giả</span>
-                            <h3 class="text-2xl md:text-3xl font-bold mt-1 mb-3">Nam Anh</h3>
+                            <span class="font-display text-amber-400 text-xs font-semibold">Về Tác Giả</span>
+                            <h3 class="font-display text-2xl md:text-3xl font-bold mt-1 mb-3">Nam Anh</h3>
                             <p class="text-slate-400 text-sm leading-relaxed mb-6">
                                 Dev Nam Anh đã có kinh nghiệm viết prompt, làm tool bot. Bộ tài liệu được chia sẻ miễn phí cho cộng đồng công nghệ Việt Nam.
                             </p>
@@ -210,7 +228,7 @@
             <!-- Tương tác & Khảo sát (Like/Dislike - Đồng bộ Server Online) -->
             <section class="py-12 bg-slate-950">
                 <div class="max-w-3xl mx-auto px-4 text-center">
-                    <h3 class="text-xl font-bold mb-6">Bạn đánh giá thế nào về trang web này?</h3>
+                    <h3 class="font-display text-xl font-bold mb-6">Bạn đánh giá thế nào về trang web này?</h3>
                     <div class="flex justify-center gap-8">
                         <button id="btn-like" onclick="handleVote('like')" aria-label="Đánh giá hữu ích" class="flex flex-col items-center gap-3 text-slate-400 hover:text-emerald-400 transition transform hover:scale-110 disabled:opacity-50 disabled:pointer-events-none">
                             <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center text-2xl shadow-lg border border-slate-800">
@@ -225,7 +243,7 @@
                             <span class="text-sm font-semibold"><span id="dislike-count">...</span> Cần cải thiện</span>
                         </button>
                     </div>
-                    <p id="vote-msg" class="text-sm text-indigo-400 mt-4 h-5 opacity-0 transition-opacity duration-300">Cảm ơn bạn đã đánh giá!</p>
+                    <p id="vote-msg" class="text-sm text-amber-400 mt-4 h-5 opacity-0 transition-opacity duration-300">Cảm ơn bạn đã đánh giá!</p>
                 </div>
             </section>
         </div>
@@ -236,21 +254,21 @@
             <section class="py-16 md:py-24">
                 <div class="max-w-4xl mx-auto px-4">
                     <div class="text-center mb-10">
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-semibold mb-4">
                             <i class="fa-solid fa-file-text"></i> Tài Liệu Văn Bản
                         </span>
-                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Kho File Document & Sách AI</h1>
+                        <h1 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Kho File Document & Sách AI</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
                             Tất cả file tài liệu hướng dẫn (.txt, .pdf, .zip, hình ảnh...) sẽ tự động cập nhật tại đây.
                         </p>
                     </div>
 
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 shadow-2xl">
                         <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                            <h3 class="font-bold text-lg text-slate-200 flex items-center gap-2">
-                                <i class="fa-solid fa-folder-open text-indigo-400"></i> Danh Sách File Tài Liệu
+                            <h3 class="font-display font-bold text-lg text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-folder-open text-amber-400"></i> Danh Sách File Tài Liệu
                             </h3>
-                            <button onclick="fetchGithubFiles()" class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
+                            <button onclick="fetchGithubFiles()" class="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
                                 <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> Làm mới
                             </button>
                         </div>
@@ -259,9 +277,9 @@
                         <div class="flex flex-col sm:flex-row gap-3 mb-6">
                             <div class="relative flex-grow">
                                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                                <input type="text" id="doc-search-input" placeholder="Tìm file theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                                <input type="text" id="doc-search-input" placeholder="Tìm file theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
                             </div>
-                            <select id="doc-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                            <select id="doc-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
                                 <option value="name-asc">Tên (A-Z)</option>
                                 <option value="name-desc">Tên (Z-A)</option>
                                 <option value="size-asc">Dung lượng (nhỏ → lớn)</option>
@@ -271,7 +289,7 @@
 
                         <div id="file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div class="col-span-full text-center py-10 text-slate-500">
-                                <i class="fa-solid fa-spinner fa-spin text-indigo-500 text-2xl mb-3"></i>
+                                <i class="fa-solid fa-spinner fa-spin text-amber-500 text-2xl mb-3"></i>
                                 <p class="text-sm">Đang tải danh sách tài liệu...</p>
                             </div>
                         </div>
@@ -286,21 +304,21 @@
             <section class="py-16 md:py-24">
                 <div class="max-w-4xl mx-auto px-4">
                     <div class="text-center mb-10">
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-4">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-4">
                             <i class="fa-solid fa-robot"></i> Automation Scripts
                         </span>
-                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
+                        <h1 class="font-display text-3xl md:text-5xl font-bold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
                             Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat, .zip...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
                         </p>
                     </div>
 
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+                    <div class="bg-slate-900 border border-slate-800 rounded-lg p-6 shadow-2xl">
                         <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-6">
-                            <h3 class="font-bold text-lg text-slate-200 flex items-center gap-2">
-                                <i class="fa-solid fa-code text-purple-400"></i> Kho Mã Nguồn Tool / Bot
+                            <h3 class="font-display font-bold text-lg text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-code text-emerald-400"></i> Kho Mã Nguồn Tool / Bot
                             </h3>
-                            <button onclick="fetchGithubFiles()" class="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
+                            <button onclick="fetchGithubFiles()" class="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
                                 <i class="fa-solid fa-rotate-right" id="refresh-bot-icon"></i> Làm mới
                             </button>
                         </div>
@@ -309,9 +327,9 @@
                         <div class="flex flex-col sm:flex-row gap-3 mb-6">
                             <div class="relative flex-grow">
                                 <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
-                                <input type="text" id="bot-search-input" placeholder="Tìm tool/bot theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                                <input type="text" id="bot-search-input" placeholder="Tìm tool/bot theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
                             </div>
-                            <select id="bot-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                            <select id="bot-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
                                 <option value="name-asc">Tên (A-Z)</option>
                                 <option value="name-desc">Tên (Z-A)</option>
                                 <option value="size-asc">Dung lượng (nhỏ → lớn)</option>
@@ -321,7 +339,7 @@
 
                         <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div class="col-span-full text-center py-10 text-slate-500">
-                                <i class="fa-solid fa-spinner fa-spin text-purple-500 text-2xl mb-3"></i>
+                                <i class="fa-solid fa-spinner fa-spin text-emerald-500 text-2xl mb-3"></i>
                                 <p class="text-sm">Đang tải danh sách Tool Bot...</p>
                             </div>
                         </div>
@@ -339,38 +357,38 @@
             
             <!-- View Counter Badge -->
             <div class="flex items-center gap-2 text-slate-400 text-sm bg-slate-900 border border-slate-800 px-4 py-2 rounded-full shadow-lg">
-                <i class="fa-solid fa-chart-line text-indigo-400"></i> Lượt truy cập web: 
+                <i class="fa-solid fa-chart-line text-amber-400"></i> Lượt truy cập web: 
                 <img src="https://visitor-badge.laobi.icu/badge?page_id=nam-anh-ai-lab.doorsfruits3" alt="Lượt truy cập" class="h-4 ml-1 rounded">
             </div>
         </div>
     </footer>
 
     <!-- Nút Góp Ý nổi cố định góc màn hình -->
-    <button onclick="openFeedbackModal()" aria-label="Góp ý / Báo lỗi" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center shadow-xl shadow-indigo-600/40 transition transform hover:-translate-y-1 active:scale-95">
+    <button onclick="openFeedbackModal()" aria-label="Góp ý / Báo lỗi" class="font-display fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 flex items-center justify-center shadow-xl shadow-amber-500/30 transition hover:-translate-y-1 active:scale-95">
         <i class="fa-solid fa-envelope-open-text text-xl"></i>
     </button>
 
     <!-- Modal Góp Ý & Báo Lỗi -->
     <div id="feedback-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
         <div onclick="closeFeedbackModal()" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-        <div class="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade">
+        <div class="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-lg p-6 md:p-8 shadow-2xl animate-fade">
             <button onclick="closeFeedbackModal()" aria-label="Đóng" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h3 class="text-xl font-bold mb-2 flex items-center gap-3">
-                <i class="fa-solid fa-envelope-open-text text-indigo-400"></i> Hộp Thư Góp Ý
+            <h3 class="font-display text-xl font-bold mb-2 flex items-center gap-3">
+                <i class="fa-solid fa-envelope-open-text text-amber-400"></i> Hộp Thư Góp Ý
             </h3>
             <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
 
             <form id="feedback-form" novalidate class="space-y-4">
                 <input type="text" id="feedback-honey" name="_honeypot" tabindex="-1" autocomplete="off" class="!absolute !w-px !h-px !p-0 !-m-px !overflow-hidden !whitespace-nowrap" style="clip:rect(0,0,0,0); border:0;" aria-hidden="true">
                 <div>
-                    <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                    <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition">
                 </div>
                 <div>
-                    <textarea id="feedback-message" name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
+                    <textarea id="feedback-message" name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition resize-none"></textarea>
                 </div>
-                <button type="submit" id="feedback-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                <button type="submit" id="feedback-submit-btn" class="font-display w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold py-3.5 rounded-md shadow-lg shadow-amber-500/20 transition active:scale-95 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-paper-plane"></i> Gửi Góp Ý Cho Admin
                 </button>
             </form>
@@ -472,7 +490,7 @@
 
             if (hasVoted) {
                 msgBox.innerText = "Bạn đã thực hiện đánh giá rồi, không thể spam nhé!";
-                msgBox.classList.remove('opacity-0', 'text-indigo-400', 'text-red-400');
+                msgBox.classList.remove('opacity-0', 'text-amber-400', 'text-red-400');
                 msgBox.classList.add('text-amber-400');
                 return;
             }
@@ -482,7 +500,7 @@
 
             msgBox.innerText = "Đang đồng bộ đánh giá lên Server...";
             msgBox.classList.remove('opacity-0', 'text-amber-400', 'text-red-400');
-            msgBox.classList.add('text-indigo-400');
+            msgBox.classList.add('text-amber-400');
 
             try {
                 const res = await fetchWithTimeout(`${COUNTAPI_BASE}/hit/${SITE_ID}/${type}s`);
@@ -497,13 +515,13 @@
 
                 msgBox.innerText = "Cảm ơn bạn đã phản hồi đánh giá!";
                 msgBox.classList.remove('text-amber-400', 'text-red-400');
-                msgBox.classList.add('text-indigo-400');
+                msgBox.classList.add('text-amber-400');
             } catch (error) {
                 document.getElementById('btn-like').disabled = false;
                 document.getElementById('btn-dislike').disabled = false;
 
                 msgBox.innerText = "Lỗi kết nối mạng, vui lòng thử lại sau!";
-                msgBox.classList.remove('text-indigo-400');
+                msgBox.classList.remove('text-amber-400');
                 msgBox.classList.add('text-red-400');
             }
         }
@@ -574,29 +592,29 @@
             const mobDownload = document.getElementById('nav-mob-download');
             const mobBot = document.getElementById('nav-mob-bot');
 
-            const activeDesk = "text-indigo-400 bg-indigo-500/10 border border-indigo-500/30 shadow-md font-bold";
+            const activeDesk = "text-amber-400 bg-amber-500/10 border border-amber-500/30 shadow-md font-bold";
             const inactiveDesk = "text-slate-300 hover:text-white hover:bg-slate-800/60 font-medium";
 
-            const activeMob = "text-indigo-400 bg-indigo-500/10 border border-indigo-500/30 font-bold";
+            const activeMob = "text-amber-400 bg-amber-500/10 border border-amber-500/30 font-bold";
             const inactiveMob = "text-slate-300 hover:text-white hover:bg-slate-800/40 font-medium";
 
-            deskIntro.className = `px-4 py-2 rounded-xl transition-all duration-300 ${inactiveDesk}`;
-            deskDownload.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
-            deskBot.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
+            deskIntro.className = `font-display px-4 py-2 rounded-md transition-all duration-300 ${inactiveDesk}`;
+            deskDownload.className = `font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
+            deskBot.className = `font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`;
 
-            mobIntro.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
-            mobDownload.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
-            mobBot.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${inactiveMob}`;
+            mobIntro.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${inactiveMob}`;
+            mobDownload.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${inactiveMob}`;
+            mobBot.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${inactiveMob}`;
 
             if (activePage === 'intro') {
-                deskIntro.className = `px-4 py-2 rounded-xl transition-all duration-300 ${activeDesk}`;
-                mobIntro.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+                deskIntro.className = `font-display px-4 py-2 rounded-md transition-all duration-300 ${activeDesk}`;
+                mobIntro.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${activeMob}`;
             } else if (activePage === 'download') {
-                deskDownload.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
-                mobDownload.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+                deskDownload.className = `font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
+                mobDownload.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${activeMob}`;
             } else if (activePage === 'bot') {
-                deskBot.className = `px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
-                mobBot.className = `w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all ${activeMob}`;
+                deskBot.className = `font-display px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${activeDesk}`;
+                mobBot.className = `font-display w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${activeMob}`;
             }
         }
 
@@ -674,9 +692,9 @@
                 case 'js': return '<i class="fa-brands fa-js text-yellow-400 text-xl"></i>';
                 case 'sh': case 'bat': return '<i class="fa-solid fa-terminal text-emerald-400 text-xl"></i>';
                 case 'pdf': return '<i class="fa-solid fa-file-pdf text-red-400 text-xl"></i>';
-                case 'zip': case 'rar': case '7z': return '<i class="fa-solid fa-file-zipper text-purple-400 text-xl"></i>';
+                case 'zip': case 'rar': case '7z': return '<i class="fa-solid fa-file-zipper text-emerald-400 text-xl"></i>';
                 case 'png': case 'jpg': case 'jpeg': return '<i class="fa-solid fa-file-image text-emerald-400 text-xl"></i>';
-                default: return '<i class="fa-solid fa-file text-indigo-400 text-xl"></i>';
+                default: return '<i class="fa-solid fa-file text-amber-400 text-xl"></i>';
             }
         }
 
@@ -826,15 +844,15 @@
                 }
 
                 html += `
-                    <div class="flex items-center justify-between p-4 bg-slate-950 hover:bg-slate-800/80 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition duration-300 group hover:-translate-y-0.5 animate-fade">
+                    <div class="flex items-center justify-between p-4 bg-slate-950 hover:bg-slate-800/80 border border-slate-800 hover:border-amber-500/50 rounded-xl transition duration-300 group hover:-translate-y-0.5 animate-fade">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${icon}
                             <div class="min-w-0">
-                                <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${safeName}</p>
+                                <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-amber-400 transition">${safeName}</p>
                                 <p class="text-[11px] text-slate-500">${sizeStr}</p>
                             </div>
                         </div>
-                        <button data-url="${escapeHtml(file.download_url)}" data-name="${safeName}" class="btn-file-download text-xs bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
+                        <button data-url="${escapeHtml(file.download_url)}" data-name="${safeName}" class="btn-file-download text-xs bg-amber-500/15 text-amber-400 hover:bg-amber-400 hover:text-slate-950 px-3 py-1.5 rounded-md transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
                             Tải về <i class="fa-solid fa-download text-[10px]"></i>
                         </button>
                     </div>
