@@ -232,9 +232,7 @@
                         </h3>
                         <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
                         
-                        <!-- Formsubmit.co - Chuyển sang dùng AJAX qua Javascript -->
                         <form id="feedback-form" novalidate class="space-y-4">
-                            <!-- Honeypot: trường ẩn chỉ bot mới điền, người dùng thật không thấy -->
                             <input type="text" id="feedback-honey" name="_honeypot" tabindex="-1" autocomplete="off" class="!absolute !w-px !h-px !p-0 !-m-px !overflow-hidden !whitespace-nowrap" style="clip:rect(0,0,0,0); border:0;" aria-hidden="true">
                             <div>
                                 <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
@@ -312,7 +310,7 @@
                         </span>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
-                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
+                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat, .zip...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
                         </p>
                     </div>
 
@@ -502,11 +500,8 @@
         const REPO_NAME = 'document'; 
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
         
-        // Đã thêm 'zip' vào danh sách BOT_EXTENSIONS để chuyển sang mục Share Tool Bot
         const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
 
-        // Lưu danh sách file gốc (chưa lọc) để tìm kiếm/sắp xếp phía client
-        // mà không cần gọi lại GitHub API mỗi lần người dùng gõ hoặc đổi cách sắp xếp.
         let allDocFiles = [];
         let allBotFiles = [];
 
@@ -592,9 +587,6 @@
             }
         }
 
-        // showPage: điểm gọi từ giao diện (onclick) -> chỉ cập nhật URL hash.
-        // Việc render thực sự nằm ở renderPage(), được kích hoạt qua sự kiện hashchange
-        // (hoặc gọi trực tiếp nếu người dùng bấm lại đúng trang đang đứng).
         function showPage(pageName) {
             const targetHash = pageName === 'intro' ? '' : pageName;
             const currentHash = window.location.hash.replace('#', '');
@@ -637,8 +629,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Điều hướng bằng URL hash: cho phép share link thẳng tới từng trang,
-        // và nút back/forward của trình duyệt hoạt động đúng.
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.replace('#', '');
             const page = (hash === 'download' || hash === 'bot') ? hash : 'intro';
@@ -650,7 +640,6 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
-        // Đóng menu mobile khi bấm ra ngoài vùng menu
         document.addEventListener('click', (e) => {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
@@ -705,6 +694,34 @@
             }
         }
 
+        // Hàm lấy danh sách các file đính kèm từ mục Releases (dành cho file > 25MB)
+        async function fetchGithubReleases() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/releases`);
+                if (!response.ok) return [];
+
+                const releases = await response.json();
+                let releaseFiles = [];
+
+                releases.forEach(rel => {
+                    if (rel.assets && rel.assets.length > 0) {
+                        rel.assets.forEach(asset => {
+                            releaseFiles.push({
+                                name: asset.name,
+                                size: asset.size,
+                                download_url: asset.browser_download_url,
+                                type: 'file'
+                            });
+                        });
+                    }
+                });
+                return releaseFiles;
+            } catch (e) {
+                console.warn('Không thể lấy file từ Releases:', e);
+                return [];
+            }
+        }
+
         async function fetchGithubFiles() {
             const docContainer = document.getElementById('file-list-container');
             const botContainer = document.getElementById('bot-file-list-container');
@@ -715,14 +732,32 @@
             if (refreshBotIcon) refreshBotIcon.classList.add('fa-spin');
 
             try {
-                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`);
-                if (!response.ok) throw new Error('Lỗi kết nối Repository');
+                // Gọi song song cả API lấy file thông thường và API lấy file từ Releases
+                const [repoResponse, releaseFiles] = await Promise.all([
+                    fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`),
+                    fetchGithubReleases()
+                ]);
 
-                const files = await response.json();
-                const validFiles = files.filter(f => f.type === 'file' && !IGNORED_FILES.includes(f.name));
+                let normalFiles = [];
+                if (repoResponse.ok) {
+                    const files = await repoResponse.json();
+                    normalFiles = files.filter(f => f.type === 'file' && !IGNORED_FILES.includes(f.name));
+                }
 
-                allBotFiles = validFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
-                allDocFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                // Gộp danh sách file từ Repo và Release lại với nhau, ưu tiên lọc file trùng tên
+                const combinedFilesMap = new Map();
+                
+                [...normalFiles, ...releaseFiles].forEach(file => {
+                    if (!combinedFilesMap.has(file.name)) {
+                        combinedFilesMap.set(file.name, file);
+                    }
+                });
+
+                const allFiles = Array.from(combinedFilesMap.values());
+
+                // Tách file theo extension vào 2 danh sách
+                allBotFiles = allFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                allDocFiles = allFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
                 applyDocFilters();
                 applyBotFilters();
@@ -788,7 +823,6 @@
             const icon = document.getElementById('toast-icon');
             const msgEl = document.getElementById('toast-message');
 
-            // Xóa các class màu cũ
             toast.classList.remove('translate-y-20', 'opacity-0', 'bg-red-900/90', 'border-red-500/50', 'text-red-200', 'bg-emerald-900/90', 'border-emerald-500/50', 'text-emerald-200');
             
             if (type === 'error') {
@@ -800,9 +834,8 @@
             }
 
             msgEl.innerText = message;
-            toast.classList.add('translate-y-0', 'opacity-100'); // Hiện thông báo
+            toast.classList.add('translate-y-0', 'opacity-100');
 
-            // Tự động ẩn sau 3.5 giây
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-20', 'opacity-0');
@@ -810,42 +843,37 @@
         }
 
         document.getElementById('feedback-form').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Chặn hành vi chuyển trang mặc định
+            e.preventDefault();
             
             const email = document.getElementById('feedback-email').value.trim();
             const message = document.getElementById('feedback-message').value.trim();
             const honey = document.getElementById('feedback-honey').value.trim();
             const btn = document.getElementById('feedback-submit-btn');
 
-            // Honeypot: nếu trường ẩn bị điền tức là bot -> giả vờ thành công, không gửi đi đâu cả
             if (honey) {
                 showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
                 this.reset();
                 return;
             }
 
-            // Kiểm tra nếu chưa điền nội dung
             if (!message) {
                 showToast('Vui lòng nhập nội dung góp ý!', 'error');
                 document.getElementById('feedback-message').focus();
                 return;
             }
 
-            // Kiểm tra nếu chưa điền email
             if (!email) {
                 showToast('Bắt buộc phải điền email', 'error');
                 document.getElementById('feedback-email').focus();
                 return;
             }
 
-            // Đổi trạng thái nút bấm trong lúc đang gửi
             const originalBtnHtml = btn.innerHTML;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
             btn.disabled = true;
             btn.classList.add('opacity-70', 'cursor-not-allowed');
 
             try {
-                // Gọi API của Formsubmit bằng JS Fetch
                 const response = await fetch("https://formsubmit.co/ajax/doorsfruits3@gmail.com", {
                     method: "POST",
                     headers: { 
@@ -862,14 +890,13 @@
 
                 if (response.ok) {
                     showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
-                    this.reset(); // Xóa trắng form sau khi gửi thành công
+                    this.reset();
                 } else {
                     showToast('Có lỗi xảy ra, vui lòng thử lại sau!', 'error');
                 }
             } catch (error) {
                 showToast('Lỗi kết nối mạng, vui lòng kiểm tra lại!', 'error');
             } finally {
-                // Trả lại nút bấm về trạng thái ban đầu
                 btn.innerHTML = originalBtnHtml;
                 btn.disabled = false;
                 btn.classList.remove('opacity-70', 'cursor-not-allowed');
