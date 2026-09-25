@@ -46,7 +46,7 @@
                     <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition transform">
                         NA
                     </div>
-                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Lab</span></span>
+                    <span class="font-bold text-xl tracking-tight">Nam Anh <span class="gradient-text">AI Web</span></span>
                 </button>
 
                 <!-- Desktop Nav Links (3 Mục Điều Hướng) -->
@@ -78,7 +78,7 @@
                     <i class="fa-solid fa-house"></i> Giới thiệu
                 </button>
                 <button onclick="showPage('download')" id="nav-mob-download" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
-                    <i class="fa-solid fa-file-arrow-down"></i> Tải document
+                    <i class="fa-solid fa-file-arrow-down"></i> Share Tài Liệu 
                 </button>
                 <button onclick="showPage('bot')" id="nav-mob-bot" class="w-full text-left py-3 px-4 rounded-xl flex items-center gap-3 transition-all">
                     <i class="fa-solid fa-robot"></i> Share Tool Bot
@@ -100,7 +100,7 @@
                         <i class="fa-solid fa-sparkles"></i> Tài Liệu & Tool Bot Cập Nhật Mới Nhất
                     </span>
                     <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                        Chinh Phục Trí Tuệ Nhân Tạo Cùng <br>
+                        Dùng Thành Thạo Trí Tuệ Nhân Tạo Cùng <br>
                         <span class="gradient-text">Bộ Tài Liệu & Tool AI Nam Anh</span>
                     </h1>
                     <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-3xl mx-auto font-light leading-relaxed">
@@ -156,7 +156,7 @@
                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                             </div>
                             <h3 class="text-xl font-bold mb-3">Generative AI & LLMs</h3>
-                            <p class="text-slate-400 text-sm leading-relaxed">Hướng dẫn làm chủ ChatGPT, Claude, Midjourney, kỹ thuật Prompt Engineering và xây dựng ứng dụng với OpenAI API.</p>
+                            <p class="text-slate-400 text-sm leading-relaxed">Hướng dẫn làm chủ ChatGPT, Claude, Gemini, Deepseek kỹ thuật viết Prompt Engineering và xây dựng ứng dụng với OpenAI API.</p>
                         </div>
 
                         <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl hover:border-indigo-500/50 transition duration-300 hover:-translate-y-1">
@@ -266,7 +266,7 @@
                         </span>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Kho File Document & Sách AI</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
-                            Tất cả file tài liệu hướng dẫn (.txt, .pdf, hình ảnh...) sẽ tự động cập nhật tại đây.
+                            Tất cả file tài liệu hướng dẫn (.txt, .pdf, .zip, hình ảnh...) sẽ tự động cập nhật tại đây.
                         </p>
                     </div>
 
@@ -302,7 +302,7 @@
                         </span>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">Share Tool & Bot Scripts</h1>
                         <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">
-                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat, .zip...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
+                            Tất cả file mã nguồn Tool/Bot (.py, .js, .sh, .bat...) sẽ được phân bổ riêng tại mục này để tiện quản lý và tải về.
                         </p>
                     </div>
 
@@ -472,7 +472,7 @@
         const REPO_NAME = 'document'; 
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
         
-        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
+        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw'];
 
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
@@ -614,7 +614,7 @@
                 const docFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
                 renderFileList(docContainer, docFiles, 'Hiện chưa có file tài liệu/văn bản nào.');
-                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js, .zip...) nào.');
+                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js...) nào.');
             } catch (err) {
                 const errHtml = `
                     <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
