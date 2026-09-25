@@ -472,7 +472,8 @@
         const REPO_NAME = 'document'; 
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
         
-        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw'];
+        // Đã thêm 'zip' vào danh sách BOT_EXTENSIONS để chuyển sang mục Share Tool Bot
+        const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
 
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
@@ -614,7 +615,7 @@
                 const docFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
                 renderFileList(docContainer, docFiles, 'Hiện chưa có file tài liệu/văn bản nào.');
-                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js...) nào.');
+                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js, .zip...) nào.');
             } catch (err) {
                 const errHtml = `
                     <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
