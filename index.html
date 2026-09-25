@@ -38,7 +38,7 @@
 <body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80">
+    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-lg shadow-black/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -88,7 +88,7 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="pt-16 flex-grow">
+    <main class="pt-16 flex-grow bg-slate-950">
 
         <!-- ================= PAGE 1: GIỚI THIỆU ================= -->
         <div id="page-intro" class="block animate-fade">
@@ -188,17 +188,16 @@
                             </p>
                             
                             <div class="flex items-center justify-center md:justify-start gap-4">
-                                <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-full bg-slate-800/90 flex items-center justify-center text-slate-200 hover:bg-black transition border border-slate-700/60 shadow-lg">
-                                    <i class="fa-brands fa-tiktok text-xl"></i>
+                                <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" rel="noopener noreferrer" class="h-12 px-5 rounded-full bg-slate-800/90 flex items-center gap-2 text-slate-200 hover:bg-black transition border border-slate-700/60 font-semibold text-sm shadow-lg">
+                                    <i class="fa-brands fa-tiktok text-lg"></i>
+                                    <span>TikTok</span>
                                 </a>
                                 <!-- Sửa nút tải QR Zalo tại đây -->
-                                <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" class="h-12 px-6 rounded-full bg-slate-800/90 hover:bg-black text-slate-200 flex items-center gap-3 transition border border-slate-700/60 font-semibold text-sm shadow-lg cursor-pointer">
-                                    <span class="w-6 h-6 rounded-full bg-[#0068FF] flex items-center justify-center shrink-0">
-                                        <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6 6H18L6 18H18" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </span>
-                                    <span>Tải QR Zalo</span>
+                                <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" class="h-12 px-5 rounded-full bg-slate-800/90 flex items-center gap-2 text-slate-200 hover:bg-black transition border border-slate-700/60 font-semibold text-sm shadow-lg cursor-pointer">
+                                    <svg viewBox="0 0 24 24" class="w-5 h-5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6 6H18L6 18H18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>Zalo</span>
                                 </button>
                             </div>
                         </div>
@@ -357,7 +356,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center">
+    <footer class="border-t-2 border-slate-800 bg-slate-900 py-10 text-center shadow-inner shadow-black/30">
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
             <p class="text-sm text-slate-500 mb-4">© 2026 Nam Anh AI. Tất cả quyền được bảo lưu.</p>
             
