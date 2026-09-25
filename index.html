@@ -232,21 +232,15 @@
                         </h3>
                         <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
                         
-                        <!-- Formsubmit.co - API gửi mail không cần backend -->
-                        <form action="https://formsubmit.co/doorsfruits3@gmail.com" method="POST" class="space-y-4">
-                            <!-- Cấu hình ẩn của formsubmit -->
-                            <input type="hidden" name="_subject" value="🔔 Góp ý mới từ Website Nam Anh AI Lab">
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_template" value="table">
-                            <input type="hidden" name="_next" value="">
-
+                        <!-- Formsubmit.co - Chuyển sang dùng AJAX qua Javascript -->
+                        <form id="feedback-form" novalidate class="space-y-4">
                             <div>
-                                <input type="email" name="email" placeholder="Email liên hệ của bạn (Không bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                                <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
                             </div>
                             <div>
-                                <textarea name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
+                                <textarea id="feedback-message" name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                            <button type="submit" id="feedback-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-paper-plane"></i> Gửi Góp Ý Cho Admin
                             </button>
                         </form>
@@ -341,6 +335,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Tab thông báo (Toast) -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl border pointer-events-none">
+        <div id="toast-icon" class="text-xl"></div>
+        <p id="toast-message" class="text-sm font-medium"></p>
+    </div>
 
     <!-- JavaScript Xử Lý Động -->
     <script>
@@ -667,6 +667,92 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateNavStyles('intro');
             loadVotes(); 
+        });
+
+        // ================= XỬ LÝ FORM GÓP Ý (AJAX) =================
+        function showToast(message, type = 'error') {
+            const toast = document.getElementById('toast-notification');
+            const icon = document.getElementById('toast-icon');
+            const msgEl = document.getElementById('toast-message');
+
+            // Xóa các class màu cũ
+            toast.classList.remove('translate-y-20', 'opacity-0', 'bg-red-900/90', 'border-red-500/50', 'text-red-200', 'bg-emerald-900/90', 'border-emerald-500/50', 'text-emerald-200');
+            
+            if (type === 'error') {
+                toast.classList.add('bg-red-900/90', 'border-red-500/50', 'text-red-200');
+                icon.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i>';
+            } else {
+                toast.classList.add('bg-emerald-900/90', 'border-emerald-500/50', 'text-emerald-200');
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            }
+
+            msgEl.innerText = message;
+            toast.classList.add('translate-y-0', 'opacity-100'); // Hiện thông báo
+
+            // Tự động ẩn sau 3.5 giây
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        document.getElementById('feedback-form').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Chặn hành vi chuyển trang mặc định
+            
+            const email = document.getElementById('feedback-email').value.trim();
+            const message = document.getElementById('feedback-message').value.trim();
+            const btn = document.getElementById('feedback-submit-btn');
+
+            // Kiểm tra nếu chưa điền nội dung
+            if (!message) {
+                showToast('Vui lòng nhập nội dung góp ý!', 'error');
+                document.getElementById('feedback-message').focus();
+                return;
+            }
+
+            // Kiểm tra nếu chưa điền email
+            if (!email) {
+                showToast('Bắt buộc phải điền email', 'error');
+                document.getElementById('feedback-email').focus();
+                return;
+            }
+
+            // Đổi trạng thái nút bấm trong lúc đang gửi
+            const originalBtnHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            try {
+                // Gọi API của Formsubmit bằng JS Fetch
+                const response = await fetch("https://formsubmit.co/ajax/doorsfruits3@gmail.com", {
+                    method: "POST",
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        message: message,
+                        _subject: "🔔 Góp ý mới từ Website Nam Anh AI Lab",
+                        _template: "table"
+                    })
+                });
+
+                if (response.ok) {
+                    showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
+                    this.reset(); // Xóa trắng form sau khi gửi thành công
+                } else {
+                    showToast('Có lỗi xảy ra, vui lòng thử lại sau!', 'error');
+                }
+            } catch (error) {
+                showToast('Lỗi kết nối mạng, vui lòng kiểm tra lại!', 'error');
+            } finally {
+                // Trả lại nút bấm về trạng thái ban đầu
+                btn.innerHTML = originalBtnHtml;
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
         });
     </script>
 </body>
