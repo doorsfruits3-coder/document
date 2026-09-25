@@ -226,31 +226,6 @@
                     <p id="vote-msg" class="text-sm text-indigo-400 mt-4 h-5 opacity-0 transition-opacity duration-300">Cảm ơn bạn đã đánh giá!</p>
                 </div>
             </section>
-
-            <!-- Form Góp ý & Báo lỗi -->
-            <section class="py-12 border-t border-slate-800 bg-slate-900/30">
-                <div class="max-w-2xl mx-auto px-4">
-                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
-                        <h3 class="text-xl font-bold mb-2 flex items-center gap-3">
-                            <i class="fa-solid fa-envelope-open-text text-indigo-400"></i> Hộp Thư Góp Ý
-                        </h3>
-                        <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
-                        
-                        <form id="feedback-form" novalidate class="space-y-4">
-                            <input type="text" id="feedback-honey" name="_honeypot" tabindex="-1" autocomplete="off" class="!absolute !w-px !h-px !p-0 !-m-px !overflow-hidden !whitespace-nowrap" style="clip:rect(0,0,0,0); border:0;" aria-hidden="true">
-                            <div>
-                                <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
-                            </div>
-                            <div>
-                                <textarea id="feedback-message" name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
-                            </div>
-                            <button type="submit" id="feedback-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-paper-plane"></i> Gửi Góp Ý Cho Admin
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </section>
         </div>
 
 
@@ -367,6 +342,38 @@
             </div>
         </div>
     </footer>
+
+    <!-- Nút Góp Ý nổi cố định góc màn hình -->
+    <button onclick="openFeedbackModal()" aria-label="Góp ý / Báo lỗi" class="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center shadow-xl shadow-indigo-600/40 transition transform hover:-translate-y-1 active:scale-95">
+        <i class="fa-solid fa-envelope-open-text text-xl"></i>
+    </button>
+
+    <!-- Modal Góp Ý & Báo Lỗi -->
+    <div id="feedback-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div onclick="closeFeedbackModal()" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div class="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl animate-fade">
+            <button onclick="closeFeedbackModal()" aria-label="Đóng" class="absolute top-4 right-4 text-slate-500 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-xl font-bold mb-2 flex items-center gap-3">
+                <i class="fa-solid fa-envelope-open-text text-indigo-400"></i> Hộp Thư Góp Ý
+            </h3>
+            <p class="text-sm text-slate-400 mb-6">Mọi ý kiến đóng góp, báo lỗi tài liệu/web hoặc đề xuất tính năng mới sẽ được gửi trực tiếp về Admin để nâng cấp hệ thống.</p>
+
+            <form id="feedback-form" novalidate class="space-y-4">
+                <input type="text" id="feedback-honey" name="_honeypot" tabindex="-1" autocomplete="off" class="!absolute !w-px !h-px !p-0 !-m-px !overflow-hidden !whitespace-nowrap" style="clip:rect(0,0,0,0); border:0;" aria-hidden="true">
+                <div>
+                    <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                </div>
+                <div>
+                    <textarea id="feedback-message" name="message" rows="4" placeholder="Nhập nội dung góp ý hoặc báo lỗi của bạn vào đây..." required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition resize-none"></textarea>
+                </div>
+                <button type="submit" id="feedback-submit-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-indigo-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-paper-plane"></i> Gửi Góp Ý Cho Admin
+                </button>
+            </form>
+        </div>
+    </div>
 
     <!-- Tab thông báo (Toast) -->
     <div id="toast-notification" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-xl shadow-2xl border pointer-events-none">
@@ -829,6 +836,19 @@
         });
 
         // ================= XỬ LÝ FORM GÓP Ý (AJAX) =================
+        // ================= MODAL GÓP Ý (icon nổi góc màn hình) =================
+        function openFeedbackModal() {
+            document.getElementById('feedback-modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        function closeFeedbackModal() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeFeedbackModal();
+        });
+
         function showToast(message, type = 'error') {
             const toast = document.getElementById('toast-notification');
             const icon = document.getElementById('toast-icon');
@@ -902,6 +922,7 @@
                 if (response.ok) {
                     showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
                     this.reset();
+                    setTimeout(closeFeedbackModal, 900);
                 } else {
                     showToast('Có lỗi xảy ra, vui lòng thử lại sau!', 'error');
                 }
