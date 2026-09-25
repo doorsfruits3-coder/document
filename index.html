@@ -127,6 +127,17 @@
                             <p class="text-xs text-zinc-400 leading-relaxed">Thành viên cùng đóng góp tài liệu và tool cho nhau sử dụng.</p>
                         </div>
                     </div>
+
+                    <!-- Bảng lượt truy cập (to, dễ nhìn, cùng phong cách với 3 bảng giới thiệu) -->
+                    <div class="max-w-3xl mx-auto mt-4">
+                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6 flex items-center justify-center gap-4">
+                            <i class="fa-solid fa-chart-line text-3xl text-zinc-100 shrink-0"></i>
+                            <div class="text-left">
+                                <p id="visit-count" class="text-3xl font-bold text-zinc-100 leading-tight">...</p>
+                                <p class="text-xs text-zinc-400">Lượt truy cập trang web</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
@@ -391,11 +402,7 @@
     <!-- Footer -->
     <footer class="border-t border-zinc-800/50 bg-[#09090b] py-8 text-center mt-auto">
         <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
-            <p class="text-sm text-zinc-500 mb-3">© 2026 Nam Anh Web AI. Dành cho mục đích nghiên cứu & giáo dục.</p>
-            <div class="flex items-center gap-2 text-zinc-400 text-xs bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md">
-                Lượt truy cập hệ thống: 
-                <img src="https://visitor-badge.laobi.icu/badge?page_id=nam-anh-web-ai.doorsfruits3" alt="Views" class="h-3 ml-1 opacity-80">
-            </div>
+            <p class="text-sm text-zinc-500">© 2026 Nam Anh Web AI. Dành cho mục đích nghiên cứu & giáo dục.</p>
         </div>
     </footer>
 
@@ -438,6 +445,8 @@
     <!-- JS (Giữ nguyên toàn bộ logic xử lý Github, View và Navigation như bản gốc) -->
     <script>
         // ================= CẤU HÌNH CHUNG =================
+        const VISIT_SITE_ID = 'nam-anh-web-ai-doorsfruits3';
+        const COUNTAPI_BASE = 'https://abacus.jasoncameron.dev';
         const GITHUB_USERNAME = 'doorsfruits3-coder';
         const REPO_NAME = 'document';
         const IGNORED_FILES = ['index.html', 'README.md', '.gitignore', 'package.json', 'CNAME'];
@@ -476,6 +485,20 @@
 
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
+        }
+
+        // ================= LƯỢT TRUY CẬP TRANG WEB =================
+        async function loadVisitCount() {
+            const el = document.getElementById('visit-count');
+            try {
+                // Mỗi lần tải trang tính là 1 lượt truy cập mới (hit = tăng + trả về số hiện tại)
+                const res = await fetchWithTimeout(`${COUNTAPI_BASE}/hit/${VISIT_SITE_ID}/visits`);
+                if (!res.ok) throw new Error('Lỗi server counter');
+                const data = await res.json();
+                el.innerText = (data.value ?? 0).toLocaleString('vi-VN');
+            } catch (error) {
+                el.innerText = '—';
+            }
         }
 
         // ================= ĐIỀU HƯỚNG (SPA) =================
@@ -548,6 +571,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const hash = window.location.hash.replace('#', '');
             renderPage(PAGE_IDS.includes(hash) ? hash : 'intro');
+            loadVisitCount();
         });
 
         // ================= DANH SÁCH FILE (GITHUB) =================
