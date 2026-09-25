@@ -14,7 +14,9 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .glow { box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3); }
         .gradient-text {
+            color: #ffffff; /* fallback nếu trình duyệt không hỗ trợ background-clip: text */
             background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -64,7 +66,7 @@
 
                 <!-- Hamburger Menu Button Mobile -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                    <button id="mobile-menu-btn" aria-label="Mở menu điều hướng" aria-expanded="false" aria-controls="mobile-menu" class="text-slate-300 hover:text-white focus:outline-none p-2">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -193,9 +195,9 @@
                                     <span>TikTok</span>
                                 </a>
                                 <!-- Sửa nút tải QR Zalo tại đây -->
-                                <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" class="h-12 px-5 rounded-full bg-slate-800/90 flex items-center gap-2 text-slate-200 hover:bg-black transition border border-slate-700/60 font-semibold text-sm shadow-lg cursor-pointer">
-                                    <svg viewBox="0 0 24 24" class="w-5 h-5 shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6 6H18L6 18H18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" aria-label="Tải mã QR Zalo" class="h-12 px-5 rounded-full bg-slate-800/90 flex items-center gap-2 text-slate-200 hover:bg-black transition border border-slate-700/60 font-semibold text-sm shadow-lg cursor-pointer">
+                                    <svg viewBox="0 0 24 24" class="w-5 h-5 shrink-0" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2C6.48 2 2 5.94 2 10.8c0 2.77 1.46 5.24 3.74 6.87-.16.76-.6 2.19-1.17 3.08a.4.4 0 0 0 .48.6c1.5-.55 3-1.36 3.7-1.79.98.24 2.03.37 3.25.37 5.52 0 10-3.94 10-8.8C22 5.94 17.52 2 12 2z"/>
                                     </svg>
                                     <span>Zalo</span>
                                 </button>
@@ -210,13 +212,13 @@
                 <div class="max-w-3xl mx-auto px-4 text-center">
                     <h3 class="text-xl font-bold mb-6">Bạn đánh giá thế nào về trang web này?</h3>
                     <div class="flex justify-center gap-8">
-                        <button id="btn-like" onclick="handleVote('like')" class="flex flex-col items-center gap-3 text-slate-400 hover:text-emerald-400 transition transform hover:scale-110 disabled:opacity-50 disabled:pointer-events-none">
+                        <button id="btn-like" onclick="handleVote('like')" aria-label="Đánh giá hữu ích" class="flex flex-col items-center gap-3 text-slate-400 hover:text-emerald-400 transition transform hover:scale-110 disabled:opacity-50 disabled:pointer-events-none">
                             <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center text-2xl shadow-lg border border-slate-800">
                                 <i class="fa-solid fa-thumbs-up"></i>
                             </div>
                             <span class="text-sm font-semibold"><span id="like-count">...</span> Hữu ích</span>
                         </button>
-                        <button id="btn-dislike" onclick="handleVote('dislike')" class="flex flex-col items-center gap-3 text-slate-400 hover:text-red-400 transition transform hover:scale-110 disabled:opacity-50 disabled:pointer-events-none">
+                        <button id="btn-dislike" onclick="handleVote('dislike')" aria-label="Đánh giá cần cải thiện" class="flex flex-col items-center gap-3 text-slate-400 hover:text-red-400 transition transform hover:scale-110 disabled:opacity-50 disabled:pointer-events-none">
                             <div class="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center text-2xl shadow-lg border border-slate-800">
                                 <i class="fa-solid fa-thumbs-down"></i>
                             </div>
@@ -637,6 +639,7 @@
 
             updateNavStyles(pageName);
             mobileMenu.classList.add('hidden');
+            document.getElementById('mobile-menu-btn').setAttribute('aria-expanded', 'false');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -648,7 +651,10 @@
 
         document.getElementById('mobile-menu-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            const isHidden = menu.classList.toggle('hidden');
+            btn.setAttribute('aria-expanded', String(!isHidden));
         });
 
         document.addEventListener('click', (e) => {
@@ -656,6 +662,7 @@
             const btn = document.getElementById('mobile-menu-btn');
             if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
                 menu.classList.add('hidden');
+                btn.setAttribute('aria-expanded', 'false');
             }
         });
 
@@ -786,13 +793,20 @@
             }
         }
 
+        // Escape ký tự đặc biệt HTML để chống injection khi render tên file lấy từ GitHub API
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = String(str ?? '');
+            return div.innerHTML;
+        }
+
         function renderFileList(container, fileArray, emptyMessage) {
             if (!container) return;
 
             if (fileArray.length === 0) {
                 container.innerHTML = `
                     <div class="col-span-full text-center py-8 text-slate-500 text-sm">
-                        ${emptyMessage}
+                        ${escapeHtml(emptyMessage)}
                     </div>
                 `;
                 return;
@@ -801,6 +815,7 @@
             let html = '';
             fileArray.forEach(file => {
                 const icon = getIconForFile(file.name);
+                const safeName = escapeHtml(file.name);
                 
                 // Sửa logic tính hiển thị dung lượng file tại đây
                 let sizeStr = "";
@@ -815,17 +830,24 @@
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${icon}
                             <div class="min-w-0">
-                                <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${file.name}</p>
+                                <p class="text-sm font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition">${safeName}</p>
                                 <p class="text-[11px] text-slate-500">${sizeStr}</p>
                             </div>
                         </div>
-                        <button onclick="forceDownload(event, '${file.download_url}', '${file.name}')" class="text-xs bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
+                        <button data-url="${escapeHtml(file.download_url)}" data-name="${safeName}" class="btn-file-download text-xs bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white px-3 py-1.5 rounded-lg transition shrink-0 flex items-center gap-1 font-medium active:scale-95 cursor-pointer">
                             Tải về <i class="fa-solid fa-download text-[10px]"></i>
                         </button>
                     </div>
                 `;
             });
             container.innerHTML = html;
+
+            // Gắn sự kiện download qua addEventListener thay vì onclick nhét chuỗi, tránh vỡ khi tên/URL chứa dấu nháy
+            container.querySelectorAll('.btn-file-download').forEach(btn => {
+                btn.addEventListener('click', (event) => {
+                    forceDownload(event, btn.dataset.url, btn.dataset.name);
+                });
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
