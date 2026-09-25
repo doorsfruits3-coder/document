@@ -234,6 +234,8 @@
                         
                         <!-- Formsubmit.co - Chuyển sang dùng AJAX qua Javascript -->
                         <form id="feedback-form" novalidate class="space-y-4">
+                            <!-- Honeypot: trường ẩn chỉ bot mới điền, người dùng thật không thấy -->
+                            <input type="text" id="feedback-honey" name="_honeypot" tabindex="-1" autocomplete="off" class="!absolute !w-px !h-px !p-0 !-m-px !overflow-hidden !whitespace-nowrap" style="clip:rect(0,0,0,0); border:0;" aria-hidden="true">
                             <div>
                                 <input type="email" id="feedback-email" name="email" placeholder="Email liên hệ của bạn (Bắt buộc)" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
                             </div>
@@ -274,6 +276,20 @@
                             </button>
                         </div>
 
+                        <!-- Thanh tìm kiếm & sắp xếp -->
+                        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                            <div class="relative flex-grow">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <input type="text" id="doc-search-input" placeholder="Tìm file theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                            </div>
+                            <select id="doc-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                                <option value="name-asc">Tên (A-Z)</option>
+                                <option value="name-desc">Tên (Z-A)</option>
+                                <option value="size-asc">Dung lượng (nhỏ → lớn)</option>
+                                <option value="size-desc">Dung lượng (lớn → nhỏ)</option>
+                            </select>
+                        </div>
+
                         <div id="file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div class="col-span-full text-center py-10 text-slate-500">
                                 <i class="fa-solid fa-spinner fa-spin text-indigo-500 text-2xl mb-3"></i>
@@ -308,6 +324,20 @@
                             <button onclick="fetchGithubFiles()" class="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 active:scale-95 transition">
                                 <i class="fa-solid fa-rotate-right" id="refresh-bot-icon"></i> Làm mới
                             </button>
+                        </div>
+
+                        <!-- Thanh tìm kiếm & sắp xếp -->
+                        <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                            <div class="relative flex-grow">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"></i>
+                                <input type="text" id="bot-search-input" placeholder="Tìm tool/bot theo tên..." class="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                            </div>
+                            <select id="bot-sort-select" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition">
+                                <option value="name-asc">Tên (A-Z)</option>
+                                <option value="name-desc">Tên (Z-A)</option>
+                                <option value="size-asc">Dung lượng (nhỏ → lớn)</option>
+                                <option value="size-desc">Dung lượng (lớn → nhỏ)</option>
+                            </select>
                         </div>
 
                         <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -475,9 +505,57 @@
         // Đã thêm 'zip' vào danh sách BOT_EXTENSIONS để chuyển sang mục Share Tool Bot
         const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
 
+        // Lưu danh sách file gốc (chưa lọc) để tìm kiếm/sắp xếp phía client
+        // mà không cần gọi lại GitHub API mỗi lần người dùng gõ hoặc đổi cách sắp xếp.
+        let allDocFiles = [];
+        let allBotFiles = [];
+
         function getFileExtension(filename) {
             return filename.split('.').pop().toLowerCase();
         }
+
+        function sortFiles(files, sortValue) {
+            const sorted = [...files];
+            switch (sortValue) {
+                case 'name-desc':
+                    sorted.sort((a, b) => b.name.localeCompare(a.name, 'vi'));
+                    break;
+                case 'size-asc':
+                    sorted.sort((a, b) => a.size - b.size);
+                    break;
+                case 'size-desc':
+                    sorted.sort((a, b) => b.size - a.size);
+                    break;
+                case 'name-asc':
+                default:
+                    sorted.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+                    break;
+            }
+            return sorted;
+        }
+
+        function applyDocFilters() {
+            const keyword = document.getElementById('doc-search-input').value.trim().toLowerCase();
+            const sortValue = document.getElementById('doc-sort-select').value;
+            const filtered = allDocFiles.filter(f => f.name.toLowerCase().includes(keyword));
+            const sorted = sortFiles(filtered, sortValue);
+            renderFileList(document.getElementById('file-list-container'), sorted,
+                keyword ? `Không tìm thấy file nào khớp với "${keyword}".` : 'Hiện chưa có file tài liệu/văn bản nào.');
+        }
+
+        function applyBotFilters() {
+            const keyword = document.getElementById('bot-search-input').value.trim().toLowerCase();
+            const sortValue = document.getElementById('bot-sort-select').value;
+            const filtered = allBotFiles.filter(f => f.name.toLowerCase().includes(keyword));
+            const sorted = sortFiles(filtered, sortValue);
+            renderFileList(document.getElementById('bot-file-list-container'), sorted,
+                keyword ? `Không tìm thấy file nào khớp với "${keyword}".` : 'Hiện chưa có file Tool Bot (.py, .js, .zip...) nào.');
+        }
+
+        document.getElementById('doc-search-input').addEventListener('input', applyDocFilters);
+        document.getElementById('doc-sort-select').addEventListener('change', applyDocFilters);
+        document.getElementById('bot-search-input').addEventListener('input', applyBotFilters);
+        document.getElementById('bot-sort-select').addEventListener('change', applyBotFilters);
 
         function updateNavStyles(activePage) {
             const deskIntro = document.getElementById('nav-desk-intro');
@@ -514,7 +592,21 @@
             }
         }
 
+        // showPage: điểm gọi từ giao diện (onclick) -> chỉ cập nhật URL hash.
+        // Việc render thực sự nằm ở renderPage(), được kích hoạt qua sự kiện hashchange
+        // (hoặc gọi trực tiếp nếu người dùng bấm lại đúng trang đang đứng).
         function showPage(pageName) {
+            const targetHash = pageName === 'intro' ? '' : pageName;
+            const currentHash = window.location.hash.replace('#', '');
+
+            if (currentHash === targetHash) {
+                renderPage(pageName);
+            } else {
+                window.location.hash = targetHash;
+            }
+        }
+
+        function renderPage(pageName) {
             const pageIntro = document.getElementById('page-intro');
             const pageDownload = document.getElementById('page-download');
             const pageBot = document.getElementById('page-bot');
@@ -545,8 +637,26 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+        // Điều hướng bằng URL hash: cho phép share link thẳng tới từng trang,
+        // và nút back/forward của trình duyệt hoạt động đúng.
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            const page = (hash === 'download' || hash === 'bot') ? hash : 'intro';
+            renderPage(page);
+        });
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
             document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Đóng menu mobile khi bấm ra ngoài vùng menu
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('mobile-menu');
+            const btn = document.getElementById('mobile-menu-btn');
+            if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
         });
 
         function getIconForFile(filename) {
@@ -611,11 +721,11 @@
                 const files = await response.json();
                 const validFiles = files.filter(f => f.type === 'file' && !IGNORED_FILES.includes(f.name));
 
-                const botFiles = validFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
-                const docFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                allBotFiles = validFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
+                allDocFiles = validFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
-                renderFileList(docContainer, docFiles, 'Hiện chưa có file tài liệu/văn bản nào.');
-                renderFileList(botContainer, botFiles, 'Hiện chưa có file Tool Bot (.py, .js, .zip...) nào.');
+                applyDocFilters();
+                applyBotFilters();
             } catch (err) {
                 const errHtml = `
                     <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
@@ -666,7 +776,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            updateNavStyles('intro');
+            const hash = window.location.hash.replace('#', '');
+            const initialPage = (hash === 'download' || hash === 'bot') ? hash : 'intro';
+            renderPage(initialPage);
             loadVotes(); 
         });
 
@@ -702,7 +814,15 @@
             
             const email = document.getElementById('feedback-email').value.trim();
             const message = document.getElementById('feedback-message').value.trim();
+            const honey = document.getElementById('feedback-honey').value.trim();
             const btn = document.getElementById('feedback-submit-btn');
+
+            // Honeypot: nếu trường ẩn bị điền tức là bot -> giả vờ thành công, không gửi đi đâu cả
+            if (honey) {
+                showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
+                this.reset();
+                return;
+            }
 
             // Kiểm tra nếu chưa điền nội dung
             if (!message) {
