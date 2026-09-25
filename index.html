@@ -919,10 +919,15 @@
                     })
                 });
 
-                if (response.ok) {
+                const data = await response.json().catch(() => null);
+
+                if (response.ok && data && data.success !== false) {
                     showToast('Cảm ơn bạn đã góp ý web sẽ nhanh chóng được update.', 'success');
                     this.reset();
                     setTimeout(closeFeedbackModal, 900);
+                } else if (data && data.message && /activat/i.test(data.message)) {
+                    // FormSubmit chưa được kích hoạt cho email nhận
+                    showToast('Hòm thư nhận chưa được kích hoạt trên FormSubmit. Vui lòng kiểm tra email xác nhận (Confirm) gửi tới hòm thư nhận và bấm xác nhận.', 'error');
                 } else {
                     showToast('Có lỗi xảy ra, vui lòng thử lại sau!', 'error');
                 }
