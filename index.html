@@ -73,6 +73,44 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.08); }
         }
+
+        /* Nút 3 gạch tự biến hình thành dấu X */
+        .hamburger-icon {
+            width: 22px;
+            height: 16px;
+            position: relative;
+        }
+        .hamburger-icon span {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            border-radius: 2px;
+            background: currentColor;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hamburger-icon span:nth-child(1) { top: 0; }
+        .hamburger-icon span:nth-child(2) { top: 7px; }
+        .hamburger-icon span:nth-child(3) { top: 14px; }
+        .hamburger-icon.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+        .hamburger-icon.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger-icon.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+        /* Khung menu mobile trượt + mờ dần khi mở/đóng */
+        .mobile-menu-panel {
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-8px);
+            overflow: hidden;
+            pointer-events: none;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu-panel.open {
+            max-height: 320px;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
         
         /* Tùy chỉnh thanh cuộn tinh tế hơn */
         ::-webkit-scrollbar { width: 8px; }
@@ -111,14 +149,16 @@
                 <!-- Hamburger Menu Button Mobile -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-zinc-400 hover:text-white focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-xl"></i>
+                        <div class="hamburger-icon">
+                            <span></span><span></span><span></span>
+                        </div>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Dropdown Menu Mobile -->
-        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-[#09090b] border-b border-zinc-800 z-50">
+        <div id="mobile-menu" class="mobile-menu-panel absolute top-16 left-0 w-full bg-[#09090b] border-b border-zinc-800 z-50">
             <div class="flex flex-col p-4 space-y-1">
                 <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all">
                     Tổng quan
@@ -623,8 +663,13 @@
             if (pageName === 'download' || pageName === 'bot') fetchGithubFiles();
             if (pageName === 'docmember' || pageName === 'botmember') loadMemberFiles();
             updateNavStyles(pageName);
-            document.getElementById('mobile-menu').classList.add('hidden');
+            closeMobileMenu();
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobile-menu').classList.remove('open');
+            document.getElementById('mobile-menu-btn').querySelector('.hamburger-icon').classList.remove('open');
         }
 
         // ================= HIỆU ỨNG XUẤT HIỆN KHI CUỘN (SCROLL REVEAL) =================
@@ -648,13 +693,14 @@
 
         document.getElementById('mobile-menu-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('open');
+            document.getElementById('mobile-menu-btn').querySelector('.hamburger-icon').classList.toggle('open');
         });
         document.addEventListener('click', (e) => {
             const menu = document.getElementById('mobile-menu');
             const btn = document.getElementById('mobile-menu-btn');
-            if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
-                menu.classList.add('hidden');
+            if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+                closeMobileMenu();
             }
         });
 
