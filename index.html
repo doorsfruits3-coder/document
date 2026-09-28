@@ -7,6 +7,13 @@
     <link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
     <link rel="shortcut icon" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
     <link rel="apple-touch-icon" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
+    <!-- Kết nối sớm tới các CDN để giảm độ trễ tải -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://api.github.com" crossorigin>
+    <link rel="preload" as="image" href="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" fetchpriority="high">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
@@ -14,107 +21,127 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Hiệu ứng Animation chuyển trang mượt mà */
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; text-rendering: optimizeSpeed; }
+        button, a, select, input { touch-action: manipulation; }
+
+        :root { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* ========= ANIMATION (chỉ dùng transform + opacity => chạy trên GPU, không gây reflow) =========
+           Dùng fill-mode "backwards" thay vì "both": sau khi chạy xong, phần tử trở về trạng thái
+           tự nhiên, không bị giữ transform vĩnh viễn (tránh tạo layer GPU khổng lồ cho cả trang). */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translate3d(0, 12px, 0); }
+            to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
-        .animate-fade {
-            animation: fadeInUp 0.5s ease-out both;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
+        .animate-fade { animation: fadeInUp 0.45s var(--ease-out) backwards; }
 
         /* Xuất hiện lần lượt (stagger) cho các khối trên hero */
-        .stagger-item {
-            opacity: 0;
-            animation: fadeInUp 0.7s ease-out both;
-        }
+        .stagger-item { animation: fadeInUp 0.7s var(--ease-out) backwards; }
         .stagger-item:nth-child(1) { animation-delay: 0.05s; }
-        .stagger-item:nth-child(2) { animation-delay: 0.15s; }
-        .stagger-item:nth-child(3) { animation-delay: 0.25s; }
-        .stagger-item:nth-child(4) { animation-delay: 0.35s; }
-        .stagger-item:nth-child(5) { animation-delay: 0.45s; }
-        .stagger-item:nth-child(6) { animation-delay: 0.55s; }
+        .stagger-item:nth-child(2) { animation-delay: 0.13s; }
+        .stagger-item:nth-child(3) { animation-delay: 0.21s; }
+        .stagger-item:nth-child(4) { animation-delay: 0.29s; }
+        .stagger-item:nth-child(5) { animation-delay: 0.37s; }
+        .stagger-item:nth-child(6) { animation-delay: 0.45s; }
 
-        /* Ảnh nền tự zoom rất chậm cho web đỡ tĩnh */
+        /* Ảnh nền zoom rất chậm — được đẩy lên layer GPU riêng */
         @keyframes kenburns {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+            from { transform: scale3d(1, 1, 1); }
+            to   { transform: scale3d(1.08, 1.08, 1); }
         }
         .bg-kenburns {
-            animation: kenburns 20s ease-in-out infinite alternate;
+            animation: kenburns 24s ease-in-out infinite alternate;
+            will-change: transform;
+            backface-visibility: hidden;
+            transform-origin: center;
         }
 
-        /* Xuất hiện khi cuộn tới (scroll reveal) */
+        /* Xuất hiện khi cuộn tới (scroll reveal).
+           will-change chỉ bật lúc đang chờ/đang chạy, sau đó JS gỡ class để giải phóng bộ nhớ GPU
+           và để hiệu ứng hover của thẻ không bị delay. */
         .reveal-up {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transform: translate3d(0, 24px, 0);
+            transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out) !important;
+            transition-delay: var(--reveal-delay, 0s) !important;
+            will-change: opacity, transform;
         }
         .reveal-up.in-view {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate3d(0, 0, 0);
         }
 
-        /* Thanh gạch chân link mượt hơn */
-        .link-underline {
-            position: relative;
-        }
+        /* Thanh gạch chân link (dùng scaleX thay vì width) */
+        .link-underline { position: relative; }
         .link-underline::after {
             content: '';
             position: absolute;
             left: 0; bottom: -2px;
-            width: 0; height: 1px;
+            width: 100%; height: 1px;
             background: currentColor;
-            transition: width 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease-out);
         }
-        .link-underline:hover::after { width: 100%; }
+        .link-underline:hover::after { transform: scaleX(1); }
 
-        /* Logo nảy nhẹ khi hover */
-        @keyframes softPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-        }
-
-        /* Nút 3 gạch tự biến hình thành dấu X */
-        .hamburger-icon {
-            width: 22px;
-            height: 16px;
-            position: relative;
-        }
+        /* Nút 3 gạch biến hình thành dấu X (chỉ dùng transform) */
+        .hamburger-icon { width: 22px; height: 16px; position: relative; }
         .hamburger-icon span {
             position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
+            left: 0; top: 7px;
+            width: 100%; height: 2px;
             border-radius: 2px;
             background: currentColor;
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.35s var(--ease-out), opacity 0.2s ease;
+            will-change: transform;
         }
-        .hamburger-icon span:nth-child(1) { top: 0; }
-        .hamburger-icon span:nth-child(2) { top: 7px; }
-        .hamburger-icon span:nth-child(3) { top: 14px; }
-        .hamburger-icon.open span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+        .hamburger-icon span:nth-child(1) { transform: translate3d(0, -7px, 0); }
+        .hamburger-icon span:nth-child(3) { transform: translate3d(0, 7px, 0); }
+        .hamburger-icon.open span:nth-child(1) { transform: translate3d(0, 0, 0) rotate(45deg); }
         .hamburger-icon.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .hamburger-icon.open span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+        .hamburger-icon.open span:nth-child(3) { transform: translate3d(0, 0, 0) rotate(-45deg); }
 
-        /* Khung menu mobile trượt + mờ dần khi mở/đóng */
+        /* Menu mobile: trượt + mờ dần bằng transform/opacity (không animate max-height => không reflow) */
         .mobile-menu-panel {
-            max-height: 0;
             opacity: 0;
-            transform: translateY(-8px);
-            overflow: hidden;
+            visibility: hidden;
+            transform: translate3d(0, -8px, 0);
             pointer-events: none;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: opacity 0.25s ease, transform 0.35s var(--ease-out), visibility 0s linear 0.35s;
         }
         .mobile-menu-panel.open {
-            max-height: 320px;
             opacity: 1;
-            transform: translateY(0);
+            visibility: visible;
+            transform: translate3d(0, 0, 0);
             pointer-events: auto;
+            transition: opacity 0.25s ease, transform 0.35s var(--ease-out), visibility 0s;
         }
-        
+
+        /* Thẻ file: chỉ animate khi vừa tải xong danh sách (stagger nhẹ, tối đa 10 thẻ),
+           còn khi gõ tìm kiếm/sắp xếp thì hiện tức thì cho khỏi giật */
+        .item-enter { animation: fadeInUp 0.4s var(--ease-out) backwards; }
+        .file-card { content-visibility: auto; contain-intrinsic-size: auto 76px; }
+
+        /* Modal + overlay */
+        .modal-overlay { animation: fadeIn 0.2s ease-out backwards; }
+
+        /* Tôn trọng người dùng bật "giảm chuyển động" trong hệ điều hành */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto !important; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                transition-delay: 0s !important;
+            }
+            .reveal-up { opacity: 1; transform: none; }
+        }
+
         /* Tùy chỉnh thanh cuộn tinh tế hơn */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #09090b; }
@@ -125,7 +152,7 @@
 <body class="bg-[#09090b] text-zinc-300 antialiased selection:bg-zinc-200 selection:text-zinc-900 min-h-screen flex flex-col justify-between">
 
     <!-- Header / Navigation (Làm mỏng và tinh tế hơn) -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#09090b]/80 backdrop-blur-md border-b border-zinc-800/50 transition-all">
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#09090b]/95 border-b border-zinc-800/50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -138,13 +165,13 @@
 
                 <!-- Desktop Nav Links -->
                 <nav class="hidden md:flex space-x-1 text-sm font-medium">
-                    <button onclick="showPage('intro')" id="nav-desk-intro" class="px-4 py-2 rounded-lg transition-all duration-300">
+                    <button onclick="showPage('intro')" id="nav-desk-intro" class="px-4 py-2 rounded-lg transition-colors duration-200">
                         Tổng quan
                     </button>
-                    <button onclick="showPage('download')" id="nav-desk-download" class="px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2">
+                    <button onclick="showPage('download')" id="nav-desk-download" class="px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
                         Tài liệu
                     </button>
-                    <button onclick="showPage('bot')" id="nav-desk-bot" class="px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2">
+                    <button onclick="showPage('bot')" id="nav-desk-bot" class="px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
                         Công cụ Bot
                     </button>
                 </nav>
@@ -163,13 +190,13 @@
         <!-- Dropdown Menu Mobile -->
         <div id="mobile-menu" class="mobile-menu-panel absolute top-16 left-0 w-full bg-[#09090b] border-b border-zinc-800 z-50">
             <div class="flex flex-col p-4 space-y-1">
-                <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all">
+                <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200">
                     Tổng quan
                 </button>
-                <button onclick="showPage('download')" id="nav-mob-download" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all">
+                <button onclick="showPage('download')" id="nav-mob-download" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200">
                     Tài liệu
                 </button>
-                <button onclick="showPage('bot')" id="nav-mob-bot" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all">
+                <button onclick="showPage('bot')" id="nav-mob-bot" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200">
                     Công cụ Bot
                 </button>
             </div>
@@ -184,7 +211,7 @@
             
             <!-- Hero Section (Giới thiệu khái quát lúc mới vào) -->
             <section class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
-                <img src="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" alt="Background" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns">
+                <img src="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" alt="" fetchpriority="high" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns">
                 <div class="absolute inset-0 bg-gradient-to-b from-[#09090b]/60 via-[#09090b]/55 to-[#09090b] -z-10"></div>
                 <div class="max-w-4xl mx-auto px-4 text-center">
                     <span class="stagger-item inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-700/50 bg-zinc-800/30 text-zinc-300 text-xs font-medium tracking-wide mb-8">
@@ -240,7 +267,7 @@
 
         <!-- ================= PAGE: KHÁM PHÁ CHI TIẾT (ABOUT) ================= -->
         <div id="page-about" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-0cfaeacb-8148-45fa-a31e-908b556febc7.jpg" alt="Background" class="absolute top-0 left-0 w-full h-screen object-cover -z-20">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-0cfaeacb-8148-45fa-a31e-908b556febc7.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20">
             <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
             <div class="max-w-5xl mx-auto px-4 mb-8">
                 <button onclick="showPage('intro')" class="text-sm text-zinc-400 hover:text-white transition inline-flex items-center gap-2">
@@ -258,21 +285,21 @@
                             <span class="text-xs font-medium text-zinc-300 group-hover:text-white transition flex items-center gap-1">Mở thư mục <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
                         </button>
 
-                        <button onclick="showPage('bot')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-600 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="transition-delay: 0.08s">
+                        <button onclick="showPage('bot')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-600 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.08s">
                             <i class="fa-solid fa-terminal text-2xl text-zinc-100 mb-4"></i>
                             <h3 class="text-xl font-semibold text-zinc-100 mb-2">Mã Nguồn Tool & Bot</h3>
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tải về các kịch bản tự động hóa, tool cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc (Python, Node.js).</p>
                             <span class="text-xs font-medium text-zinc-300 group-hover:text-white transition flex items-center gap-1">Xem mã nguồn <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
                         </button>
 
-                        <button onclick="showPage('docmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="transition-delay: 0.16s">
+                        <button onclick="showPage('docmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.16s">
                             <i class="fa-solid fa-users text-2xl text-indigo-400 mb-4"></i>
                             <h3 class="text-xl font-semibold text-zinc-100 mb-2">Document Member Share</h3>
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tài liệu do chính thành viên cộng đồng tự đóng góp — ai cũng có thể ném file của mình vào chia sẻ.</p>
                             <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1">Xem & đóng góp <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
                         </button>
 
-                        <button onclick="showPage('botmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="transition-delay: 0.24s">
+                        <button onclick="showPage('botmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.24s">
                             <i class="fa-solid fa-people-arrows text-2xl text-indigo-400 mb-4"></i>
                             <h3 class="text-xl font-semibold text-zinc-100 mb-2">Tool Bot Member Share</h3>
                             <p class="text-zinc-400 text-sm leading-relaxed mb-4">Script, tool do thành viên tự phát triển và chia sẻ lại cho cộng đồng cùng dùng.</p>
@@ -285,7 +312,7 @@
                 <section class="max-w-5xl mx-auto px-4 mb-24">
                     <div class="reveal-up border border-zinc-800 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 text-center md:text-left bg-gradient-to-b from-zinc-900/50 to-transparent">
                         <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border border-zinc-700 bg-zinc-800 overflow-hidden shrink-0">
-                            <img src="https://cdn.phototourl.com/member/2026-09-27-9736cbf4-f547-4ab9-a02c-209e1c1c2398.jpg" alt="Nam Anh" class="w-full h-full object-cover">
+                            <img src="https://cdn.phototourl.com/member/2026-09-27-9736cbf4-f547-4ab9-a02c-209e1c1c2398.jpg" alt="Nam Anh" loading="lazy" decoding="async" width="160" height="160" class="w-full h-full object-cover">
                         </div>
                         
                         <div class="w-full">
@@ -310,7 +337,7 @@
 
         <!-- ================= PAGE 2: TẢI DOCUMENT ================= -->
         <div id="page-download" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="Background" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
             <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -335,7 +362,7 @@
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
                             <option value="size-desc">Dung lượng (Giảm dần)</option>
                         </select>
-                        <button onclick="fetchGithubFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                        <button onclick="fetchGithubFiles(true)" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-rotate-right" id="refresh-icon"></i> Làm mới
                         </button>
                     </div>
@@ -352,7 +379,7 @@
 
         <!-- ================= PAGE 3: SHARE TOOL BOT ================= -->
         <div id="page-bot" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="Background" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
             <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -377,7 +404,7 @@
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
                             <option value="size-desc">Dung lượng (Giảm dần)</option>
                         </select>
-                        <button onclick="fetchGithubFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                        <button onclick="fetchGithubFiles(true)" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-rotate-right" id="refresh-bot-icon"></i> Làm mới
                         </button>
                     </div>
@@ -394,7 +421,7 @@
 
         <!-- ================= PAGE: DOCUMENT MEMBER SHARE ================= -->
         <div id="page-docmember" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="Background" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
             <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -433,7 +460,7 @@
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
                             <option value="size-desc">Dung lượng (Giảm dần)</option>
                         </select>
-                        <button onclick="loadMemberFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                        <button onclick="loadMemberFiles(true)" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-rotate-right" id="docmember-refresh-icon"></i> Làm mới
                         </button>
                     </div>
@@ -450,7 +477,7 @@
 
         <!-- ================= PAGE: TOOL BOT MEMBER SHARE ================= -->
         <div id="page-botmember" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="Background" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
             <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -489,7 +516,7 @@
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
                             <option value="size-desc">Dung lượng (Giảm dần)</option>
                         </select>
-                        <button onclick="loadMemberFiles()" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
+                        <button onclick="loadMemberFiles(true)" class="text-sm bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2.5 rounded-lg border border-zinc-700 transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-rotate-right" id="botmember-refresh-icon"></i> Làm mới
                         </button>
                     </div>
@@ -519,7 +546,7 @@
 
     <!-- Modal Góp Ý -->
     <div id="feedback-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
-        <div onclick="closeFeedbackModal()" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        <div onclick="closeFeedbackModal()" class="modal-overlay absolute inset-0 bg-black/85"></div>
         <div class="relative w-full max-w-md bg-[#09090b] border border-zinc-800 rounded-2xl p-6 shadow-2xl animate-fade">
             <button onclick="closeFeedbackModal()" class="absolute top-4 right-4 text-zinc-500 hover:text-white transition">
                 <i class="fa-solid fa-xmark"></i>
@@ -543,7 +570,7 @@
     </div>
 
     <!-- Tab thông báo (Toast) -->
-    <div id="toast-notification" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-lg shadow-xl border pointer-events-none text-sm font-medium">
+    <div id="toast-notification" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-lg shadow-xl border pointer-events-none text-sm font-medium">
         <div id="toast-icon"></div>
         <p id="toast-message"></p>
     </div>
@@ -600,7 +627,7 @@
             function tick(now) {
                 const progress = Math.min((now - start) / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
-                el.innerText = Math.round(target * eased).toLocaleString('vi-VN');
+                el.textContent = Math.round(target * eased).toLocaleString('vi-VN');
                 if (progress < 1) requestAnimationFrame(tick);
             }
             requestAnimationFrame(tick);
@@ -615,7 +642,7 @@
                 const data = await res.json();
                 animateCount(el, data.value ?? 0);
             } catch (error) {
-                el.innerText = '—';
+                el.textContent = '—';
             }
         }
 
@@ -630,8 +657,8 @@
 
             const inactiveDesk = "text-zinc-400 hover:text-white hover:bg-zinc-800/50";
 
-            [deskIntro, deskDownload, deskBot].forEach(el => el.className = `px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 ${inactiveDesk}`);
-            [mobIntro, mobDownload, mobBot].forEach(el => el.className = `w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-all ${inactiveDesk}`);
+            [deskIntro, deskDownload, deskBot].forEach(el => el.className = `px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 ${inactiveDesk}`);
+            [mobIntro, mobDownload, mobBot].forEach(el => el.className = `w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200 ${inactiveDesk}`);
 
             // Các trang phụ (about/member share) vẫn làm nổi mục nav gốc tương ứng
             let navTarget = activePage;
@@ -658,16 +685,16 @@
             const target = document.getElementById(`page-${pageName}`);
             if (target) {
                 target.classList.remove('hidden', 'animate-fade');
-                void target.offsetWidth;
+                void target.offsetWidth; // khởi động lại animation
                 target.classList.add('animate-fade');
-                observeReveals(target);
+                requestAnimationFrame(() => observeReveals(target));
             }
 
             if (pageName === 'download' || pageName === 'bot') fetchGithubFiles();
             if (pageName === 'docmember' || pageName === 'botmember') loadMemberFiles();
             updateNavStyles(pageName);
             closeMobileMenu();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
         function closeMobileMenu() {
@@ -679,8 +706,18 @@
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    revealObserver.unobserve(entry.target);
+                    const el = entry.target;
+                    el.classList.add('in-view');
+                    revealObserver.unobserve(el);
+                    // Xong hiệu ứng thì gỡ hẳn class reveal => giải phóng layer GPU, hover không bị delay
+                    const done = (e) => {
+                        if (e && e.propertyName !== 'transform') return;
+                        el.removeEventListener('transitionend', done);
+                        el.classList.remove('reveal-up', 'in-view');
+                        el.style.removeProperty('--reveal-delay');
+                    };
+                    el.addEventListener('transitionend', done);
+                    setTimeout(done, 1500); // dự phòng nếu transitionend không bắn
                 }
             });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -714,6 +751,17 @@
         });
 
         // ================= DANH SÁCH FILE (GITHUB) =================
+        // Debounce: không render lại danh sách sau mỗi phím gõ
+        function debounce(fn, ms = 150) {
+            let t;
+            return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+        }
+        // true chỉ ngay sau khi tải dữ liệu mới => thẻ mới có hiệu ứng vào; gõ tìm kiếm thì không
+        let animateNextRender = false;
+        const enterAttrs = (i) => animateNextRender
+            ? ` item-enter" style="animation-delay:${Math.min(i, 10) * 35}ms`
+            : '';
+
         function sortFiles(files, sortValue) {
             const sorted = [...files];
             switch (sortValue) {
@@ -741,9 +789,9 @@
             renderFileList(document.getElementById('bot-file-list-container'), sorted, keyword ? `Không tìm thấy file.` : 'Trống.');
         }
 
-        document.getElementById('doc-search-input').addEventListener('input', applyDocFilters);
+        document.getElementById('doc-search-input').addEventListener('input', debounce(applyDocFilters));
         document.getElementById('doc-sort-select').addEventListener('change', applyDocFilters);
-        document.getElementById('bot-search-input').addEventListener('input', applyBotFilters);
+        document.getElementById('bot-search-input').addEventListener('input', debounce(applyBotFilters));
         document.getElementById('bot-sort-select').addEventListener('change', applyBotFilters);
 
         function getIconForFile(filename) {
@@ -768,12 +816,12 @@
             }
 
             let html = '';
-            fileArray.forEach(file => {
+            fileArray.forEach((file, i) => {
                 const safeName = escapeHtml(file.name);
                 const sizeStr = file.size < 1048576 ? (file.size / 1024).toFixed(1) + " KB" : (file.size / 1048576).toFixed(2) + " MB";
 
                 html += `
-                    <div class="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 hover:border-zinc-500 rounded-xl transition duration-200 group animate-fade">
+                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 hover:border-zinc-500 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${getIconForFile(file.name)}
                             <div class="min-w-0">
@@ -853,7 +901,18 @@
             }
         }
 
-        async function fetchGithubFiles() {
+        const CACHE_TTL = 60 * 1000; // 60 giây
+        let githubLoadedAt = 0;
+        let githubInflight = null;
+
+        function fetchGithubFiles(force = false) {
+            if (githubInflight) return githubInflight;
+            if (!force && githubLoadedAt && Date.now() - githubLoadedAt < CACHE_TTL) return Promise.resolve();
+            githubInflight = doFetchGithubFiles().finally(() => { githubInflight = null; });
+            return githubInflight;
+        }
+
+        async function doFetchGithubFiles() {
             const docContainer = document.getElementById('file-list-container');
             const botContainer = document.getElementById('bot-file-list-container');
             const refreshIcon = document.getElementById('refresh-icon');
@@ -890,8 +949,11 @@
                 allBotFiles = allFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
                 allDocFiles = allFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
+                githubLoadedAt = Date.now();
+                animateNextRender = true;
                 applyDocFilters();
                 applyBotFilters();
+                animateNextRender = false;
             } catch (err) {
                 const errHtml = `
                     <div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
@@ -908,9 +970,9 @@
 
         // ================= MEMBER SHARE (cộng đồng tự đóng góp file) =================
         // Danh sách hiển thị theo đúng logic phân loại đuôi file như 2 mục của Admin.
-        document.getElementById('docmember-search-input').addEventListener('input', applyMemberDocFilters);
+        document.getElementById('docmember-search-input').addEventListener('input', debounce(applyMemberDocFilters));
         document.getElementById('docmember-sort-select').addEventListener('change', applyMemberDocFilters);
-        document.getElementById('botmember-search-input').addEventListener('input', applyMemberBotFilters);
+        document.getElementById('botmember-search-input').addEventListener('input', debounce(applyMemberBotFilters));
         document.getElementById('botmember-sort-select').addEventListener('change', applyMemberBotFilters);
 
         function renderMemberFileList(container, fileArray, emptyMessage) {
@@ -921,7 +983,7 @@
             }
 
             let html = '';
-            fileArray.forEach(file => {
+            fileArray.forEach((file, i) => {
                 const safeName = escapeHtml(file.name);
                 const safeUploader = escapeHtml(file.uploader || 'Ẩn danh');
                 const sizeStr = file.size < 1048576 ? (file.size / 1024).toFixed(1) + " KB" : (file.size / 1048576).toFixed(2) + " MB";
@@ -929,7 +991,7 @@
                 try { dateStr = new Date(file.uploaded_at).toLocaleDateString('vi-VN'); } catch (e) { }
 
                 html += `
-                    <div class="flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 hover:border-indigo-500/50 rounded-xl transition duration-200 group animate-fade">
+                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/50 border border-zinc-800 hover:border-indigo-500/50 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${getIconForFile(file.name)}
                             <div class="min-w-0">
@@ -964,7 +1026,17 @@
 
         // Tải danh sách file member từ kho lưu chung, rồi tự động phân loại theo đuôi file
         // (dùng chung BOT_EXTENSIONS như 2 mục Admin) trước khi hiển thị.
-        async function loadMemberFiles() {
+        let memberLoadedAt = 0;
+        let memberInflight = null;
+
+        function loadMemberFiles(force = false) {
+            if (memberInflight) return memberInflight;
+            if (!force && memberLoadedAt && Date.now() - memberLoadedAt < CACHE_TTL) return Promise.resolve();
+            memberInflight = doLoadMemberFiles().finally(() => { memberInflight = null; });
+            return memberInflight;
+        }
+
+        async function doLoadMemberFiles() {
             const docIcon = document.getElementById('docmember-refresh-icon');
             const botIcon = document.getElementById('botmember-refresh-icon');
             if (docIcon) docIcon.classList.add('fa-spin');
@@ -993,8 +1065,11 @@
                 allMemberBotFiles = allMemberFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
                 allMemberDocFiles = allMemberFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
+                memberLoadedAt = Date.now();
+                animateNextRender = true;
                 applyMemberDocFilters();
                 applyMemberBotFilters();
+                animateNextRender = false;
             } catch (err) {
                 const errHtml = `<div class="col-span-full p-4 text-center bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs">
                     <i class="fa-solid fa-triangle-exclamation mr-1"></i> Không thể tải danh sách file member. Vui lòng thử lại sau.
@@ -1073,7 +1148,7 @@
 
                 setStatus('Chia sẻ thành công! Cảm ơn bạn đã đóng góp.', true);
                 fileInput.value = '';
-                loadMemberFiles();
+                loadMemberFiles(true);
             } catch (err) {
                 setStatus('Có lỗi khi chia sẻ file, vui lòng thử lại.', false);
             } finally {
@@ -1086,14 +1161,17 @@
         // ================= MODAL GÓP Ý =================
         function openFeedbackModal() { document.getElementById('feedback-modal').classList.remove('hidden'); }
         function closeFeedbackModal() { document.getElementById('feedback-modal').classList.add('hidden'); }
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFeedbackModal(); });
 
+        let toastTimer = null;
         function showToast(message, type = 'error') {
             const toast = document.getElementById('toast-notification');
             const icon = document.getElementById('toast-icon');
-            toast.className = `fixed bottom-5 right-5 transform transition-all duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-lg shadow-xl border text-sm font-medium ${type === 'error' ? 'bg-red-950 border-red-900 text-red-200' : 'bg-emerald-950 border-emerald-900 text-emerald-200'} translate-y-0 opacity-100`;
+            toast.className = `fixed bottom-5 right-5 transform transition duration-300 z-[100] flex items-center gap-3 px-5 py-4 rounded-lg shadow-xl border text-sm font-medium ${type === 'error' ? 'bg-red-950 border-red-900 text-red-200' : 'bg-emerald-950 border-emerald-900 text-emerald-200'} translate-y-0 opacity-100`;
             icon.innerHTML = type === 'error' ? '<i class="fa-solid fa-circle-exclamation"></i>' : '<i class="fa-solid fa-circle-check"></i>';
             document.getElementById('toast-message').innerText = message;
-            setTimeout(() => {
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.add('translate-y-20', 'opacity-0');
                 toast.classList.remove('translate-y-0', 'opacity-100');
             }, 3500);
