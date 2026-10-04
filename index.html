@@ -7,18 +7,14 @@
     <link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
     <link rel="shortcut icon" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
     <link rel="apple-touch-icon" href="https://cdn.phototourl.com/member/2026-09-28-9df9480c-df73-41e8-b98a-056d5aa92531.jpg">
-    <!-- Kết nối sớm tới các CDN để giảm độ trễ tải -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://api.github.com" crossorigin>
     <link rel="preload" as="image" href="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" fetchpriority="high">
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; text-rendering: optimizeSpeed; }
@@ -27,7 +23,6 @@
 
         :root { --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
 
-        /* ========= ANIMATION (chỉ dùng transform + opacity => chạy trên GPU, không gây reflow) ========= */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translate3d(0, 12px, 0); }
             to   { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -38,7 +33,6 @@
         }
         .animate-fade { animation: fadeInUp 0.45s var(--ease-out) backwards; }
 
-        /* Xuất hiện lần lượt (stagger) cho các khối trên hero */
         .stagger-item { animation: fadeInUp 0.7s var(--ease-out) backwards; }
         .stagger-item:nth-child(1) { animation-delay: 0.05s; }
         .stagger-item:nth-child(2) { animation-delay: 0.13s; }
@@ -47,7 +41,6 @@
         .stagger-item:nth-child(5) { animation-delay: 0.37s; }
         .stagger-item:nth-child(6) { animation-delay: 0.45s; }
 
-        /* Ảnh nền zoom rất chậm — được đẩy lên layer GPU riêng */
         @keyframes kenburns {
             from { transform: scale3d(1, 1, 1); }
             to   { transform: scale3d(1.08, 1.08, 1); }
@@ -59,7 +52,6 @@
             transform-origin: center;
         }
 
-        /* Xuất hiện khi cuộn tới (scroll reveal) */
         .reveal-up {
             opacity: 0;
             transform: translate3d(0, 24px, 0);
@@ -72,21 +64,6 @@
             transform: translate3d(0, 0, 0);
         }
 
-        /* Thanh gạch chân link */
-        .link-underline { position: relative; }
-        .link-underline::after {
-            content: '';
-            position: absolute;
-            left: 0; bottom: -2px;
-            width: 100%; height: 1px;
-            background: currentColor;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s var(--ease-out);
-        }
-        .link-underline:hover::after { transform: scaleX(1); }
-
-        /* Nút 3 gạch hamburger */
         .hamburger-icon { width: 22px; height: 16px; position: relative; }
         .hamburger-icon span {
             position: absolute;
@@ -103,7 +80,6 @@
         .hamburger-icon.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
         .hamburger-icon.open span:nth-child(3) { transform: translate3d(0, 0, 0) rotate(-45deg); }
 
-        /* Menu mobile */
         .mobile-menu-panel {
             opacity: 0;
             visibility: hidden;
@@ -144,11 +120,9 @@
 
     <!-- ================= CODING TERMINAL PRELOADER ================= -->
     <div id="app-preloader" class="fixed inset-0 z-[999] bg-[#09090b] flex flex-col items-center justify-center select-none transition-all duration-500 ease-out">
-        <!-- Glow hạt nhân tech phía sau -->
         <div class="absolute w-80 h-80 bg-indigo-600/15 rounded-full blur-[100px] pointer-events-none -z-10 animate-pulse"></div>
 
         <div class="w-full max-w-sm px-5 flex flex-col items-center">
-            <!-- Logo NA phát sáng -->
             <div class="relative mb-5">
                 <div class="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-700/80 flex items-center justify-center text-zinc-100 font-bold text-lg shadow-2xl relative z-10">
                     NA
@@ -156,9 +130,7 @@
                 <div class="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-indigo-500 to-cyan-500 opacity-40 blur-sm animate-pulse"></div>
             </div>
 
-            <!-- Terminal Card -->
             <div class="w-full bg-[#0d0e12] border border-zinc-800 rounded-xl p-4 shadow-2xl font-mono backdrop-blur-md">
-                <!-- Terminal Header Bar -->
                 <div class="flex items-center justify-between border-b border-zinc-800/80 pb-2.5 mb-3">
                     <div class="flex items-center space-x-1.5">
                         <span class="w-2.5 h-2.5 rounded-full bg-red-500/80 inline-block"></span>
@@ -168,11 +140,10 @@
                     <span class="text-[10px] text-zinc-500 tracking-wider">nam-anh@dev-core: ~</span>
                 </div>
 
-                <!-- Terminal Outputs -->
                 <div class="space-y-1.5 text-zinc-300 font-mono text-[11px]">
                     <div class="flex items-center gap-1.5 text-emerald-400">
                         <span class="text-zinc-500">$</span>
-                        <span>init --workspace --tools</span>
+                        <span>init --workspace --full-width</span>
                         <span class="inline-block w-1.5 h-3.5 bg-emerald-400 animate-pulse"></span>
                     </div>
                     <p id="loader-log" class="text-zinc-400 text-[10px] h-4 truncate">
@@ -180,7 +151,6 @@
                     </p>
                 </div>
 
-                <!-- Tech Progress Bar -->
                 <div class="mt-4 pt-1">
                     <div class="flex justify-between text-[10px] text-zinc-500 mb-1.5 font-mono">
                         <span id="loader-status" class="text-indigo-400 uppercase tracking-wider font-semibold">LOADING...</span>
@@ -198,7 +168,6 @@
     <header class="fixed top-0 left-0 w-full z-50 bg-[#09090b]/95 border-b border-zinc-800/50 backdrop-blur-md">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <button onclick="showPage('intro')" class="flex items-center space-x-3 text-left focus:outline-none group">
                     <div class="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-900 font-bold text-sm transition transform group-hover:bg-white shadow-md">
                         NA
@@ -206,7 +175,6 @@
                     <span class="font-semibold text-lg tracking-tight text-zinc-100">Nam Anh Web AI</span>
                 </button>
 
-                <!-- Desktop Nav Links -->
                 <nav class="hidden md:flex space-x-1 text-sm font-medium">
                     <button onclick="showPage('intro')" id="nav-desk-intro" class="px-4 py-2 rounded-lg transition-colors duration-200">
                         Tổng quan
@@ -219,7 +187,6 @@
                     </button>
                 </nav>
 
-                <!-- Hamburger Menu Button Mobile -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-zinc-400 hover:text-white focus:outline-none p-2">
                         <div class="hamburger-icon">
@@ -230,7 +197,6 @@
             </div>
         </div>
 
-        <!-- Dropdown Menu Mobile -->
         <div id="mobile-menu" class="mobile-menu-panel absolute top-16 left-0 w-full bg-[#09090b] border-b border-zinc-800 z-50">
             <div class="flex flex-col p-4 space-y-1">
                 <button onclick="showPage('intro')" id="nav-mob-intro" class="w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200">
@@ -247,18 +213,16 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow">
+    <main class="flex-grow flex flex-col">
 
         <!-- ================= PAGE 1: TỔNG QUAN (INTRO) ================= -->
-        <div id="page-intro" class="block animate-fade">
-            
-            <!-- Hero Section -->
+        <div id="page-intro" class="block animate-fade flex-grow">
             <section class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden isolate">
                 <img src="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" alt="" fetchpriority="high" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
                 <div class="absolute inset-0 bg-gradient-to-b from-[#09090b]/60 via-[#09090b]/55 to-[#09090b] -z-10 pointer-events-none"></div>
-                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <span class="stagger-item inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-700/50 bg-zinc-800/30 text-zinc-300 text-xs font-medium tracking-wide mb-8">
-                        Cập nhật hệ thống mới nhất 2026
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10 py-12">
+                    <span class="stagger-item inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zinc-700/60 bg-zinc-900/60 text-zinc-300 text-xs font-medium tracking-wide mb-8 backdrop-blur-sm shadow">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Cập nhật hệ thống mới nhất 2026
                     </span>
                     <h1 class="stagger-item text-4xl md:text-6xl font-bold tracking-tight mb-6 text-zinc-100 leading-tight">
                         Tối ưu hóa công việc bằng <br class="hidden md:block">
@@ -269,33 +233,31 @@
                     </p>
 
                     <div class="stagger-item flex justify-center mb-10">
-                        <button onclick="showPage('about')" class="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-8 py-3.5 rounded-full transition transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95 shadow-lg">
+                        <button onclick="showPage('about')" class="bg-white text-zinc-900 hover:bg-zinc-200 font-medium px-8 py-3.5 rounded-full transition transform hover:-translate-y-0.5 inline-flex items-center justify-center gap-3 active:scale-95 shadow-xl">
                             Khám phá chi tiết <i class="fa-solid fa-arrow-right text-sm"></i>
                         </button>
                     </div>
 
-                    <!-- 3 mục giới thiệu nhanh -->
                     <div class="stagger-item grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
-                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600">
-                            <i class="fa-solid fa-file-text text-xl text-zinc-100 mb-3"></i>
+                        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600 backdrop-blur-sm">
+                            <i class="fa-solid fa-file-text text-xl text-cyan-400 mb-3"></i>
                             <h3 class="text-sm font-semibold text-zinc-100 mb-1">Tài liệu chuyên sâu</h3>
                             <p class="text-xs text-zinc-400 leading-relaxed">Kiến thức từ cơ bản đến nâng cao về ML & Generative AI.</p>
                         </div>
-                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600">
-                            <i class="fa-solid fa-terminal text-xl text-zinc-100 mb-3"></i>
+                        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600 backdrop-blur-sm">
+                            <i class="fa-solid fa-terminal text-xl text-emerald-400 mb-3"></i>
                             <h3 class="text-sm font-semibold text-zinc-100 mb-1">Tool & Bot tự động</h3>
                             <p class="text-xs text-zinc-400 leading-relaxed">Script sẵn dùng giúp tối ưu công việc, tiết kiệm thời gian.</p>
                         </div>
-                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600">
-                            <i class="fa-solid fa-users text-xl text-zinc-100 mb-3"></i>
+                        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-5 transition duration-300 hover:-translate-y-1 hover:border-zinc-600 backdrop-blur-sm">
+                            <i class="fa-solid fa-users text-xl text-indigo-400 mb-3"></i>
                             <h3 class="text-sm font-semibold text-zinc-100 mb-1">Cộng đồng chia sẻ</h3>
                             <p class="text-xs text-zinc-400 leading-relaxed">Thành viên cùng đóng góp tài liệu và tool cho nhau sử dụng.</p>
                         </div>
                     </div>
 
-                    <!-- Bảng lượt truy cập -->
                     <div class="stagger-item max-w-3xl mx-auto mt-4">
-                        <div class="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6 flex items-center justify-center gap-4 transition duration-300 hover:-translate-y-1 hover:border-zinc-600">
+                        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 flex items-center justify-center gap-4 transition duration-300 hover:-translate-y-1 hover:border-zinc-600 backdrop-blur-sm">
                             <i class="fa-solid fa-chart-line text-3xl text-zinc-100 shrink-0"></i>
                             <div class="text-left">
                                 <p id="visit-count" class="text-3xl font-bold text-zinc-100 leading-tight">...</p>
@@ -308,81 +270,104 @@
         </div>
 
         <!-- ================= PAGE: KHÁM PHÁ CHI TIẾT (ABOUT) ================= -->
-        <div id="page-about" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
-            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1920&auto=format&fit=crop" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/65 via-[#09090b]/75 to-[#09090b] -z-10 pointer-events-none"></div>
-            <div class="max-w-5xl mx-auto px-4 mb-8 relative z-10">
-                <button onclick="showPage('intro')" class="text-sm text-zinc-400 hover:text-white transition inline-flex items-center gap-2">
-                    <i class="fa-solid fa-arrow-left text-xs"></i> Quay lại trang chủ
-                </button>
-            </div>
-            <div class="pt-2 pb-16 relative z-10">
-                <!-- Chuyển hướng các trang tài nguyên -->
-                <div class="max-w-5xl mx-auto px-4 mb-24">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <button onclick="showPage('download')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-600 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300">
-                            <i class="fa-solid fa-file-code text-2xl text-cyan-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Kho Tài Liệu & Văn Bản</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Truy cập hàng trăm trang tài liệu từ cơ bản đến nâng cao về Machine Learning và Generative AI.</p>
-                            <span class="text-xs font-medium text-zinc-300 group-hover:text-white transition flex items-center gap-1">Mở thư mục <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
-                        </button>
+        <div id="page-about" class="hidden min-h-[calc(100vh-4rem)] pt-24 pb-16 relative overflow-hidden isolate flex-grow flex flex-col justify-between">
+            <!-- Background phủ toàn bộ chiều cao -->
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1920&auto=format&fit=crop" alt="" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-[1px] -z-10 pointer-events-none"></div>
 
-                        <button onclick="showPage('bot')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-zinc-600 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.08s">
-                            <i class="fa-solid fa-terminal text-2xl text-emerald-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Mã Nguồn Tool & Bot</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tải về các kịch bản tự động hóa, tool cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc (Python, Node.js).</p>
-                            <span class="text-xs font-medium text-zinc-300 group-hover:text-white transition flex items-center gap-1">Xem mã nguồn <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
-                        </button>
+            <div class="max-w-5xl mx-auto px-4 w-full relative z-10">
+                <div class="mb-6">
+                    <button onclick="showPage('intro')" class="text-sm text-zinc-400 hover:text-white transition inline-flex items-center gap-2 bg-zinc-900/50 px-3 py-1.5 rounded-lg border border-zinc-800">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> Quay lại trang chủ
+                    </button>
+                </div>
 
-                        <button onclick="showPage('docmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.16s">
-                            <i class="fa-solid fa-users text-2xl text-indigo-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Document Member Share</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tài liệu do chính thành viên cộng đồng tự đóng góp — ai cũng có thể ném file của mình vào chia sẻ.</p>
-                            <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1">Xem & đóng góp <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
-                        </button>
+                <!-- 4 khối tài nguyên lớn -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+                    <button onclick="showPage('download')" class="reveal-up group text-left bg-zinc-900/70 border border-zinc-800/90 p-7 rounded-2xl hover:border-cyan-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300 backdrop-blur-md shadow-lg">
+                        <i class="fa-solid fa-file-code text-2xl text-cyan-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-zinc-100 mb-2">Kho Tài Liệu & Văn Bản</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Hàng trăm trang tài liệu từ cơ bản đến nâng cao về Machine Learning và Generative AI.</p>
+                        <span class="text-xs font-medium text-cyan-400 group-hover:text-white transition flex items-center gap-1 font-mono">Mở kho lưu trữ <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
+                    </button>
 
-                        <button onclick="showPage('botmember')" class="reveal-up group text-left bg-zinc-900/50 border border-zinc-800 p-8 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300" style="--reveal-delay: 0.24s">
-                            <i class="fa-solid fa-network-wired text-2xl text-amber-400 mb-4"></i>
-                            <h3 class="text-xl font-semibold text-zinc-100 mb-2">Tool Bot Member Share</h3>
-                            <p class="text-zinc-400 text-sm leading-relaxed mb-4">Script, tool do thành viên tự phát triển và chia sẻ lại cho cộng đồng cùng dùng.</p>
-                            <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1">Xem & đóng góp <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
-                        </button>
+                    <button onclick="showPage('bot')" class="reveal-up group text-left bg-zinc-900/70 border border-zinc-800/90 p-7 rounded-2xl hover:border-emerald-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300 backdrop-blur-md shadow-lg" style="--reveal-delay: 0.08s">
+                        <i class="fa-solid fa-terminal text-2xl text-emerald-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-zinc-100 mb-2">Mã Nguồn Tool & Bot</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Kịch bản tự động hóa, tool cào dữ liệu và các tiện ích hỗ trợ tối ưu công việc (Python, Node.js).</p>
+                        <span class="text-xs font-medium text-emerald-400 group-hover:text-white transition flex items-center gap-1 font-mono">Xem mã nguồn <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
+                    </button>
+
+                    <button onclick="showPage('docmember')" class="reveal-up group text-left bg-zinc-900/70 border border-zinc-800/90 p-7 rounded-2xl hover:border-indigo-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300 backdrop-blur-md shadow-lg" style="--reveal-delay: 0.16s">
+                        <i class="fa-solid fa-users text-2xl text-indigo-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-zinc-100 mb-2">Document Member Share</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Tài liệu do chính thành viên cộng đồng tự đóng góp — ai cũng có thể upload chia sẻ kiến thức.</p>
+                        <span class="text-xs font-medium text-indigo-300 group-hover:text-white transition flex items-center gap-1 font-mono">Xem & đóng góp <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
+                    </button>
+
+                    <button onclick="showPage('botmember')" class="reveal-up group text-left bg-zinc-900/70 border border-zinc-800/90 p-7 rounded-2xl hover:border-amber-500/50 hover:bg-zinc-900 hover:-translate-y-1 transition duration-300 backdrop-blur-md shadow-lg" style="--reveal-delay: 0.24s">
+                        <i class="fa-solid fa-network-wired text-2xl text-amber-400 mb-3"></i>
+                        <h3 class="text-xl font-semibold text-zinc-100 mb-2">Tool Bot Member Share</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed mb-4">Script, tool do thành viên tự phát triển và chia sẻ lại cho cộng đồng cùng thực thi.</p>
+                        <span class="text-xs font-medium text-amber-300 group-hover:text-white transition flex items-center gap-1 font-mono">Xem & đóng góp <i class="fa-solid fa-arrow-right transition group-hover:translate-x-1"></i></span>
+                    </button>
+                </div>
+
+                <!-- Khối Tác Giả -->
+                <div class="reveal-up border border-zinc-800 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left bg-zinc-950/70 backdrop-blur-md mb-10 shadow-2xl">
+                    <div class="w-28 h-28 md:w-36 md:h-36 rounded-full border border-zinc-700 bg-zinc-800 overflow-hidden shrink-0 shadow-lg">
+                        <img src="https://cdn.phototourl.com/member/2026-09-27-9736cbf4-f547-4ab9-a02c-209e1c1c2398.jpg" alt="Nam Anh" loading="lazy" decoding="async" width="160" height="160" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="w-full">
+                        <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span> DEVELOPER & CREATOR
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-semibold text-zinc-100 mb-3">Về Tác Giả — Nam Anh</h3>
+                        <p class="text-zinc-400 text-sm md:text-base leading-relaxed mb-5 max-w-2xl">
+                            Nền tảng này được xây dựng dựa trên kinh nghiệm thực tiễn trong việc phát triển hệ thống tự động hóa và nghiên cứu trí tuệ nhân tạo. Toàn bộ tài nguyên được chia sẻ miễn phí với mục tiêu đóng góp cho cộng đồng công nghệ tại Việt Nam.
+                        </p>
+                        
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                            <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" class="h-9 px-4 rounded-lg bg-zinc-800/80 flex items-center gap-2 text-zinc-200 hover:bg-zinc-700 transition border border-zinc-700 text-xs font-medium">
+                                <i class="fa-brands fa-tiktok text-sm"></i> Tiktok
+                            </a>
+                            <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" class="h-9 px-4 rounded-lg bg-zinc-800/80 flex items-center gap-2 text-zinc-200 hover:bg-zinc-700 transition border border-zinc-700 text-xs font-medium">
+                                <i class="fa-solid fa-qrcode text-sm"></i> Zalo QR
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Author Section -->
-                <section class="max-w-5xl mx-auto px-4 mb-24">
-                    <div class="reveal-up border border-zinc-800 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 text-center md:text-left bg-gradient-to-b from-zinc-900/50 to-transparent">
-                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full border border-zinc-700 bg-zinc-800 overflow-hidden shrink-0">
-                            <img src="https://cdn.phototourl.com/member/2026-09-27-9736cbf4-f547-4ab9-a02c-209e1c1c2398.jpg" alt="Nam Anh" loading="lazy" decoding="async" width="160" height="160" class="w-full h-full object-cover">
-                        </div>
-                        
-                        <div class="w-full">
-                            <h3 class="text-2xl md:text-3xl font-semibold text-zinc-100 mt-1 mb-3">Về Tác Giả — Nam Anh</h3>
-                            <p class="text-zinc-400 text-base leading-relaxed mb-6 max-w-2xl">
-                                Nền tảng này được xây dựng dựa trên kinh nghiệm thực tiễn trong việc phát triển hệ thống tự động hóa và nghiên cứu trí tuệ nhân tạo. Toàn bộ tài nguyên được chia sẻ miễn phí với mục tiêu đóng góp cho cộng đồng công nghệ tại Việt Nam.
-                            </p>
-                            
-                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                                <a href="https://www.tiktok.com/@knoxmc.xyz?_r=1&_t=ZS-99zq8alaHYs" target="_blank" class="h-10 px-5 rounded-lg bg-zinc-800 flex items-center gap-2 text-zinc-200 hover:bg-zinc-700 transition border border-zinc-700 font-medium text-sm">
-                                    <i class="fa-brands fa-tiktok text-base"></i> Tiktok
-                                </a>
-                                <button onclick="forceDownload(event, 'https://i.ibb.co/HfhFpsTp/sharing-image.png', 'QR_Zalo_Nam_Anh.png')" class="h-10 px-5 rounded-lg bg-zinc-800 flex items-center gap-2 text-zinc-200 hover:bg-zinc-700 transition border border-zinc-700 font-medium text-sm">
-                                    <i class="fa-solid fa-qrcode text-base"></i> Zalo QR
-                                </button>
-                            </div>
-                        </div>
+                <!-- Khối bổ trợ: Tech Stack & Cam kết (Giúp trang đầy đặn, không bị trống) -->
+                <div class="reveal-up grid grid-cols-2 sm:grid-cols-4 gap-4 text-center pb-8">
+                    <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-sm">
+                        <p class="text-lg font-bold text-zinc-100 font-mono">100%</p>
+                        <p class="text-xs text-zinc-500">Miễn phí & Mở</p>
                     </div>
-                </section>
+                    <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-sm">
+                        <p class="text-lg font-bold text-zinc-100 font-mono">Real-time</p>
+                        <p class="text-xs text-zinc-500">Đồng bộ GitHub</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-sm">
+                        <p class="text-lg font-bold text-zinc-100 font-mono">Catbox</p>
+                        <p class="text-xs text-zinc-500">Lưu trữ vĩnh viễn</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-sm">
+                        <p class="text-lg font-bold text-zinc-100 font-mono">Community</p>
+                        <p class="text-xs text-zinc-500">Chia sẻ cộng đồng</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- ================= PAGE 2: TẢI DOCUMENT (BANNER: CODING IDE SYNTAX) ================= -->
-        <div id="page-download" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
-            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop" alt="Code IDE Syntax" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/75 via-[#09090b]/65 to-[#09090b] -z-10 pointer-events-none"></div>
-            <section class="max-w-5xl mx-auto px-4 relative z-10">
-                <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
+        <!-- ================= PAGE 2: TẢI DOCUMENT ================= -->
+        <div id="page-download" class="hidden min-h-[calc(100vh-4rem)] pt-24 pb-16 relative overflow-hidden isolate flex-grow flex flex-col justify-between">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop" alt="Code IDE Syntax" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-[1px] -z-10 pointer-events-none"></div>
+
+            <section class="max-w-5xl mx-auto px-4 w-full relative z-10 flex-grow flex flex-col justify-start">
+                <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <div class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 mb-2">
                             <i class="fa-solid fa-code"></i> <span>DOCS_REPOSITORY.ts</span>
@@ -395,13 +380,14 @@
                     </button>
                 </div>
 
-                <div class="reveal-up bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 backdrop-blur-sm">
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <div class="reveal-up bg-zinc-950/70 border border-zinc-800 rounded-2xl p-6 backdrop-blur-md shadow-xl mb-8">
+                    <!-- Ô tìm kiếm & Sắp xếp -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-4">
                         <div class="relative flex-grow">
                             <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
-                            <input type="text" id="doc-search-input" placeholder="Tìm kiếm tài liệu..." class="w-full bg-[#09090b]/80 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-cyan-500 transition">
+                            <input type="text" id="doc-search-input" placeholder="Tìm kiếm tài liệu..." class="w-full bg-[#09090b]/90 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-cyan-500 transition">
                         </div>
-                        <select id="doc-sort-select" class="bg-[#09090b]/80 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-cyan-500 transition">
+                        <select id="doc-sort-select" class="bg-[#09090b]/90 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-cyan-500 transition">
                             <option value="name-asc">Tên (A-Z)</option>
                             <option value="name-desc">Tên (Z-A)</option>
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
@@ -412,25 +398,62 @@
                         </button>
                     </div>
 
-                    <div id="file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="col-span-full text-center py-10 text-zinc-500 font-mono text-xs">
+                    <!-- Thanh Filter Tags nhanh (Tạo cảm giác đầy đặn, xịn sò) -->
+                    <div class="flex flex-wrap items-center gap-2 mb-5 pt-1 text-xs font-mono">
+                        <span class="text-zinc-500 text-[11px] mr-1">Bộ lọc nhanh:</span>
+                        <button onclick="filterByTag('doc', '')" class="px-2.5 py-1 rounded bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50">Tất cả</button>
+                        <button onclick="filterByTag('doc', 'claude')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">Claude</button>
+                        <button onclick="filterByTag('doc', 'jailbreak')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">Jailbreak</button>
+                        <button onclick="filterByTag('doc', 'debug')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">Debug</button>
+                        <button onclick="filterByTag('doc', 'laptrinh')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">Lập trình</button>
+                    </div>
+
+                    <!-- Danh sách File -->
+                    <div id="file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 min-h-[200px]">
+                        <div class="col-span-full text-center py-12 text-zinc-500 font-mono text-xs">
                             <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
                             <p>Loading files from GitHub repo...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khối tiện ích đáy: Giúp web đầy đặn, không có khoảng trống đen -->
+                <div class="reveal-up grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-bolt text-cyan-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Tải Về Trực Tiếp</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Kết nối GitHub Raw API, tải tốc độ tối đa không qua trang quảng cáo.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-shield-halved text-emerald-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Kiểm Tra An Toàn</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Mọi tài liệu và prompt đều được rà soát trước khi đẩy lên repo.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-arrows-rotate text-indigo-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Đồng Bộ Liên Tục</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Tự động cập nhật file mới mỗi khi admin commit vào repository.</p>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- ================= PAGE 3: SHARE TOOL BOT (BANNER: MATRIX CYBER BINARY) ================= -->
-        <div id="page-bot" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
-            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop" alt="Matrix Cyber Rain" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/75 via-[#09090b]/65 to-[#09090b] -z-10 pointer-events-none"></div>
-            <section class="max-w-5xl mx-auto px-4 relative z-10">
-                <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
+        <!-- ================= PAGE 3: SHARE TOOL BOT ================= -->
+        <div id="page-bot" class="hidden min-h-[calc(100vh-4rem)] pt-24 pb-16 relative overflow-hidden isolate flex-grow flex flex-col justify-between">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop" alt="Matrix Cyber Rain" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-[1px] -z-10 pointer-events-none"></div>
+
+            <section class="max-w-5xl mx-auto px-4 w-full relative z-10 flex-grow flex flex-col justify-start">
+                <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 mb-2">
-                            <i class="fa-solid fa-terminal"></i> <span>BOT_ENGINE.py</span>
+                            <i class="fa-solid fa-terminal"></i> <span>BOT_AUTOMATION.py</span>
                         </div>
                         <h1 class="text-3xl font-bold tracking-tight text-zinc-100 mb-2">Mã Nguồn & Công Cụ</h1>
                         <p class="text-zinc-400 text-sm">Các kịch bản tự động hóa, ứng dụng thực thi và dự án mẫu (do Admin đăng).</p>
@@ -440,13 +463,13 @@
                     </button>
                 </div>
 
-                <div class="reveal-up bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 backdrop-blur-sm">
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <div class="reveal-up bg-zinc-950/70 border border-zinc-800 rounded-2xl p-6 backdrop-blur-md shadow-xl mb-8">
+                    <div class="flex flex-col sm:flex-row gap-3 mb-4">
                         <div class="relative flex-grow">
                             <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
-                            <input type="text" id="bot-search-input" placeholder="Tìm kiếm script, tool..." class="w-full bg-[#09090b]/80 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500 transition">
+                            <input type="text" id="bot-search-input" placeholder="Tìm kiếm script, tool..." class="w-full bg-[#09090b]/90 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500 transition">
                         </div>
-                        <select id="bot-sort-select" class="bg-[#09090b]/80 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-emerald-500 transition">
+                        <select id="bot-sort-select" class="bg-[#09090b]/90 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-emerald-500 transition">
                             <option value="name-asc">Tên (A-Z)</option>
                             <option value="name-desc">Tên (Z-A)</option>
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
@@ -457,21 +480,55 @@
                         </button>
                     </div>
 
-                    <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="col-span-full text-center py-10 text-zinc-500 font-mono text-xs">
+                    <div class="flex flex-wrap items-center gap-2 mb-5 pt-1 text-xs font-mono">
+                        <span class="text-zinc-500 text-[11px] mr-1">Bộ lọc đuôi file:</span>
+                        <button onclick="filterByTag('bot', '')" class="px-2.5 py-1 rounded bg-zinc-800/70 hover:bg-zinc-700 text-zinc-300 border border-zinc-700/50">Tất cả</button>
+                        <button onclick="filterByTag('bot', '.py')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">.py</button>
+                        <button onclick="filterByTag('bot', '.js')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">.js</button>
+                        <button onclick="filterByTag('bot', '.sh')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">.sh</button>
+                        <button onclick="filterByTag('bot', '.zip')" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-400 border border-zinc-800">.zip</button>
+                    </div>
+
+                    <div id="bot-file-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 min-h-[200px]">
+                        <div class="col-span-full text-center py-12 text-zinc-500 font-mono text-xs">
                             <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
                             <p>Loading bot scripts...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-up grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-terminal text-emerald-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Sẵn Sàng Thực Thi</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Mã nguồn được cấu trúc rõ ràng, kèm hướng dẫn chạy môi trường dev.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-microchip text-cyan-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Tối Ưu Hiệu Năng</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Script được tinh chỉnh nhẹ, xử lý async và ít tiêu tốn tài nguyên máy tính.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm flex items-start gap-3">
+                        <i class="fa-solid fa-code-branch text-purple-400 mt-1 text-base"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-zinc-200 mb-0.5">Dễ Dàng Tùy Biến</h4>
+                            <p class="text-[11px] text-zinc-500 leading-relaxed">Code clean, chú thích đầy đủ, dễ dàng điều chỉnh theo nhu cầu riêng.</p>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
 
-        <!-- ================= PAGE: DOCUMENT MEMBER SHARE (BANNER: DEV WORKSPACE) ================= -->
-        <div id="page-docmember" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
-            <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1920&auto=format&fit=crop" alt="Developer Workspace" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/75 via-[#09090b]/65 to-[#09090b] -z-10 pointer-events-none"></div>
-            <section class="max-w-5xl mx-auto px-4 relative z-10">
+        <!-- ================= PAGE: DOCUMENT MEMBER SHARE ================= -->
+        <div id="page-docmember" class="hidden min-h-[calc(100vh-4rem)] pt-24 pb-16 relative overflow-hidden isolate flex-grow flex flex-col justify-between">
+            <img src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=1920&auto=format&fit=crop" alt="Developer Workspace" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-[1px] -z-10 pointer-events-none"></div>
+
+            <section class="max-w-5xl mx-auto px-4 w-full relative z-10 flex-grow flex flex-col justify-start">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 mb-2">
@@ -486,7 +543,7 @@
                 </div>
 
                 <!-- Khối upload -->
-                <div class="reveal-up bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-8 backdrop-blur-sm">
+                <div class="reveal-up bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-6 backdrop-blur-md shadow-lg">
                     <h3 class="text-sm font-semibold text-zinc-100 mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i> Đóng góp file của bạn</h3>
                     <p class="text-xs text-zinc-500 mb-4">Chọn file bất kỳ để chia sẻ — hệ thống sẽ tự động nhận diện đuôi file và xếp đúng danh mục (Document hoặc Tool Bot).</p>
                     <div class="flex flex-col sm:flex-row gap-3">
@@ -499,13 +556,14 @@
                     <p id="docmember-upload-status" class="text-xs mt-3 h-4"></p>
                 </div>
 
-                <div class="reveal-up bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 backdrop-blur-sm">
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <!-- Khối danh sách -->
+                <div class="reveal-up bg-zinc-950/70 border border-zinc-800 rounded-2xl p-6 backdrop-blur-md shadow-xl mb-8">
+                    <div class="flex flex-col sm:flex-row gap-3 mb-5">
                         <div class="relative flex-grow">
                             <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
-                            <input type="text" id="docmember-search-input" placeholder="Tìm kiếm tài liệu member..." class="w-full bg-[#09090b]/80 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-indigo-500 transition">
+                            <input type="text" id="docmember-search-input" placeholder="Tìm kiếm tài liệu member..." class="w-full bg-[#09090b]/90 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-indigo-500 transition">
                         </div>
-                        <select id="docmember-sort-select" class="bg-[#09090b]/80 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-indigo-500 transition">
+                        <select id="docmember-sort-select" class="bg-[#09090b]/90 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-indigo-500 transition">
                             <option value="name-asc">Tên (A-Z)</option>
                             <option value="name-desc">Tên (Z-A)</option>
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
@@ -516,21 +574,38 @@
                         </button>
                     </div>
 
-                    <div id="docmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div id="docmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 min-h-[160px]">
                         <div class="col-span-full text-center py-10 text-zinc-500 font-mono text-xs">
                             <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
                             <p>Loading member documents...</p>
                         </div>
                     </div>
                 </div>
+
+                <!-- Hướng dẫn đóng góp cộng đồng -->
+                <div class="reveal-up grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-indigo-400 font-semibold mb-1 block">#01. ĐỊNH DẠNG TÀI LIỆU</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Hỗ trợ các file .pdf, .docx, .txt, .md, .zip chứa tài liệu học tập, prompt.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-indigo-400 font-semibold mb-1 block">#02. LƯU TRỮ VĨNH VIỄN</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Dữ liệu được lưu trữ ẩn danh trên Catbox & Realtime Database không xóa.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-indigo-400 font-semibold mb-1 block">#03. CHIA SẺ VĂN MINH</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Hãy chia sẻ tài liệu hữu ích, ghi rõ nguồn hoặc tên tác giả để cùng phát triển.</p>
+                    </div>
+                </div>
             </section>
         </div>
 
-        <!-- ================= PAGE: TOOL BOT MEMBER SHARE (BANNER: PYTHON & SCRIPT MACRO) ================= -->
-        <div id="page-botmember" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
-            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1920&auto=format&fit=crop" alt="Python Script Automation" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/75 via-[#09090b]/65 to-[#09090b] -z-10 pointer-events-none"></div>
-            <section class="max-w-5xl mx-auto px-4 relative z-10">
+        <!-- ================= PAGE: TOOL BOT MEMBER SHARE ================= -->
+        <div id="page-botmember" class="hidden min-h-[calc(100vh-4rem)] pt-24 pb-16 relative overflow-hidden isolate flex-grow flex flex-col justify-between">
+            <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1920&auto=format&fit=crop" alt="Python Script Automation" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute inset-0 bg-[#09090b]/80 backdrop-blur-[1px] -z-10 pointer-events-none"></div>
+
+            <section class="max-w-5xl mx-auto px-4 w-full relative z-10 flex-grow flex flex-col justify-start">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
                         <div class="inline-flex items-center gap-2 text-xs font-mono text-amber-400 mb-2">
@@ -545,7 +620,7 @@
                 </div>
 
                 <!-- Khối upload -->
-                <div class="reveal-up bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-8 backdrop-blur-sm">
+                <div class="reveal-up bg-indigo-500/5 border border-indigo-500/20 rounded-2xl p-6 mb-6 backdrop-blur-md shadow-lg">
                     <h3 class="text-sm font-semibold text-zinc-100 mb-1 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-indigo-400"></i> Đóng góp file của bạn</h3>
                     <p class="text-xs text-zinc-500 mb-4">Chọn file bất kỳ để chia sẻ — hệ thống sẽ tự động nhận diện đuôi file và xếp đúng danh mục (Document hoặc Tool Bot).</p>
                     <div class="flex flex-col sm:flex-row gap-3">
@@ -558,13 +633,14 @@
                     <p id="botmember-upload-status" class="text-xs mt-3 h-4"></p>
                 </div>
 
-                <div class="reveal-up bg-zinc-900/30 border border-zinc-800 rounded-2xl p-6 backdrop-blur-sm">
-                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <!-- Khối danh sách -->
+                <div class="reveal-up bg-zinc-950/70 border border-zinc-800 rounded-2xl p-6 backdrop-blur-md shadow-xl mb-8">
+                    <div class="flex flex-col sm:flex-row gap-3 mb-5">
                         <div class="relative flex-grow">
                             <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 text-sm"></i>
-                            <input type="text" id="botmember-search-input" placeholder="Tìm kiếm script, tool member..." class="w-full bg-[#09090b]/80 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-amber-500 transition">
+                            <input type="text" id="botmember-search-input" placeholder="Tìm kiếm script, tool member..." class="w-full bg-[#09090b]/90 border border-zinc-800 rounded-lg pl-10 pr-4 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-amber-500 transition">
                         </div>
-                        <select id="botmember-sort-select" class="bg-[#09090b]/80 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-amber-500 transition">
+                        <select id="botmember-sort-select" class="bg-[#09090b]/90 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-300 focus:outline-none focus:border-amber-500 transition">
                             <option value="name-asc">Tên (A-Z)</option>
                             <option value="name-desc">Tên (Z-A)</option>
                             <option value="size-asc">Dung lượng (Tăng dần)</option>
@@ -575,11 +651,26 @@
                         </button>
                     </div>
 
-                    <div id="botmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div id="botmember-list-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 min-h-[160px]">
                         <div class="col-span-full text-center py-10 text-zinc-500 font-mono text-xs">
                             <i class="fa-solid fa-spinner fa-spin text-zinc-400 text-2xl mb-3"></i>
                             <p>Loading member scripts...</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="reveal-up grid grid-cols-1 sm:grid-cols-3 gap-4 pb-8">
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-amber-400 font-semibold mb-1 block">#01. ĐỊNH DẠNG BOT TOOL</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Tự động nhận dạng các file mã nguồn: .py, .js, .sh, .bat, .zip.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-amber-400 font-semibold mb-1 block">#02. BẢO VỆ CỘNG ĐỒNG</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Nghiêm cấm chia sẻ mã độc, trojan hoặc các hành vi phá hoại.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-800/60 backdrop-blur-sm">
+                        <span class="text-xs font-mono text-amber-400 font-semibold mb-1 block">#03. MÃ NGUỒN MỞ</span>
+                        <p class="text-[11px] text-zinc-400 leading-relaxed">Cộng đồng thoải mái tải về tham khảo và đóng góp cải tiến.</p>
                     </div>
                 </div>
             </section>
@@ -594,7 +685,7 @@
     </footer>
 
     <!-- Nút Góp Ý -->
-    <button onclick="openFeedbackModal()" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-zinc-100 hover:bg-white text-zinc-900 flex items-center justify-center shadow-lg transition transform hover:-translate-y-1">
+    <button onclick="openFeedbackModal()" class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-zinc-100 hover:bg-white text-zinc-900 flex items-center justify-center shadow-xl transition transform hover:-translate-y-1">
         <i class="fa-regular fa-comment-dots text-lg"></i>
     </button>
 
@@ -671,7 +762,6 @@
                 }
             }, 30);
 
-            // Dự phòng: luôn kết thúc sau tối đa 1.8 giây nếu mạng chậm
             window.addEventListener('load', () => {
                 setTimeout(() => {
                     if (progress < 100) {
@@ -692,20 +782,18 @@
         const BOT_EXTENSIONS = ['py', 'js', 'sh', 'bat', 'php', 'ts', 'cpp', 'java', 'json', 'pyw', 'zip'];
         const PAGE_IDS = ['intro', 'about', 'download', 'bot', 'docmember', 'botmember'];
 
-        // ---- Cấu hình Member Share ----
         const CATBOX_API_URL = 'https://catbox.moe/user/api.php';
         const FIREBASE_DB_URL = 'https://nanh-11cc6-default-rtdb.firebaseio.com/';
         const MEMBER_SHARE_API_URL = FIREBASE_DB_URL && FIREBASE_DB_URL !== 'PASTE_YOUR_FIREBASE_DATABASE_URL_HERE'
             ? `${FIREBASE_DB_URL.replace(/\/$/, '')}/member_files.json`
             : null;
-        const MAX_MEMBER_FILE_SIZE = 200 * 1024 * 1024; // 200MB
+        const MAX_MEMBER_FILE_SIZE = 200 * 1024 * 1024;
 
         let allDocFiles = [];
         let allBotFiles = [];
         let allMemberDocFiles = [];
         let allMemberBotFiles = [];
 
-        // ================= TIỆN ÍCH =================
         function escapeHtml(str) {
             const div = document.createElement('div');
             div.textContent = String(str ?? '');
@@ -722,7 +810,7 @@
             return filename.split('.').pop().toLowerCase();
         }
 
-        // ================= LƯỢT TRUY CẬP TRANG WEB =================
+        // ================= LƯỢT TRUY CẬP =================
         function animateCount(el, target) {
             const duration = 900;
             const start = performance.now();
@@ -747,7 +835,7 @@
             }
         }
 
-        // ================= ĐIỀU HƯỚNG (SPA) =================
+        // ================= ĐIỀU HƯỚNG SPA =================
         function updateNavStyles(activePage) {
             const deskIntro = document.getElementById('nav-desk-intro');
             const deskDownload = document.getElementById('nav-desk-download');
@@ -802,7 +890,7 @@
             document.getElementById('mobile-menu-btn').querySelector('.hamburger-icon').classList.remove('open');
         }
 
-        // ================= HIỆU ỨNG XUẤT HIỆN KHI CUỘN =================
+        // ================= HIỆU ỨNG SCROLL =================
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -849,7 +937,7 @@
             loadVisitCount();
         });
 
-        // ================= DANH SÁCH FILE (GITHUB) =================
+        // ================= GITHUB FILES =================
         function debounce(fn, ms = 150) {
             let t;
             return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
@@ -870,12 +958,21 @@
             return sorted;
         }
 
+        function filterByTag(type, keyword) {
+            const input = document.getElementById(`${type}-search-input`);
+            if (input) {
+                input.value = keyword;
+                if (type === 'doc') applyDocFilters();
+                if (type === 'bot') applyBotFilters();
+            }
+        }
+
         function applyDocFilters() {
             const keyword = document.getElementById('doc-search-input').value.trim().toLowerCase();
             const sortValue = document.getElementById('doc-sort-select').value;
             const filtered = allDocFiles.filter(f => f.name.toLowerCase().includes(keyword));
             const sorted = sortFiles(filtered, sortValue);
-            renderFileList(document.getElementById('file-list-container'), sorted, keyword ? `Không tìm thấy file.` : 'Trống.');
+            renderFileList(document.getElementById('file-list-container'), sorted, keyword ? `Không tìm thấy file phù hợp với từ khóa "${keyword}".` : 'Chưa có file tài liệu nào.');
         }
 
         function applyBotFilters() {
@@ -883,7 +980,7 @@
             const sortValue = document.getElementById('bot-sort-select').value;
             const filtered = allBotFiles.filter(f => f.name.toLowerCase().includes(keyword));
             const sorted = sortFiles(filtered, sortValue);
-            renderFileList(document.getElementById('bot-file-list-container'), sorted, keyword ? `Không tìm thấy file.` : 'Trống.');
+            renderFileList(document.getElementById('bot-file-list-container'), sorted, keyword ? `Không tìm thấy script phù hợp với từ khóa "${keyword}".` : 'Chưa có script nào.');
         }
 
         document.getElementById('doc-search-input').addEventListener('input', debounce(applyDocFilters));
@@ -908,7 +1005,7 @@
         function renderFileList(container, fileArray, emptyMessage) {
             if (!container) return;
             if (fileArray.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-8 text-zinc-500 text-sm font-mono">${escapeHtml(emptyMessage)}</div>`;
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500 text-sm font-mono bg-zinc-900/30 border border-zinc-800/50 rounded-xl">${escapeHtml(emptyMessage)}</div>`;
                 return;
             }
 
@@ -918,7 +1015,7 @@
                 const sizeStr = file.size < 1048576 ? (file.size / 1024).toFixed(1) + " KB" : (file.size / 1048576).toFixed(2) + " MB";
 
                 html += `
-                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/60 border border-zinc-800 hover:border-zinc-500 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
+                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/80 border border-zinc-800/90 hover:border-zinc-500 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${getIconForFile(file.name)}
                             <div class="min-w-0">
@@ -1070,7 +1167,12 @@
         function renderMemberFileList(container, fileArray, emptyMessage) {
             if (!container) return;
             if (fileArray.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-8 text-zinc-500 text-sm font-mono">${escapeHtml(emptyMessage)}</div>`;
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-10 bg-zinc-900/30 border border-zinc-800/50 rounded-xl">
+                        <i class="fa-solid fa-folder-open text-zinc-600 text-3xl mb-2"></i>
+                        <p class="text-zinc-400 text-xs font-mono mb-2">${escapeHtml(emptyMessage)}</p>
+                        <span class="text-[11px] text-indigo-400">Hãy dùng khung tải lên ở trên để chia sẻ file đầu tiên!</span>
+                    </div>`;
                 return;
             }
 
@@ -1083,7 +1185,7 @@
                 try { dateStr = new Date(file.uploaded_at).toLocaleDateString('vi-VN'); } catch (e) { }
 
                 html += `
-                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/60 border border-zinc-800 hover:border-indigo-500/50 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
+                    <div class="file-card flex items-center justify-between p-4 bg-zinc-900/80 border border-zinc-800/90 hover:border-indigo-500/50 rounded-xl transition-colors duration-200 group${enterAttrs(i)}">
                         <div class="flex items-center gap-3 min-w-0 pr-2">
                             ${getIconForFile(file.name)}
                             <div class="min-w-0">
@@ -1105,7 +1207,7 @@
             const sortValue = document.getElementById('docmember-sort-select').value;
             const filtered = allMemberDocFiles.filter(f => f.name.toLowerCase().includes(keyword));
             const sorted = sortFiles(filtered, sortValue);
-            renderMemberFileList(document.getElementById('docmember-list-container'), sorted, keyword ? 'Không tìm thấy file.' : 'Chưa có ai đóng góp tài liệu. Hãy là người đầu tiên!');
+            renderMemberFileList(document.getElementById('docmember-list-container'), sorted, keyword ? 'Không tìm thấy file nào.' : 'Chưa có ai đóng góp tài liệu.');
         }
 
         function applyMemberBotFilters() {
@@ -1113,7 +1215,7 @@
             const sortValue = document.getElementById('botmember-sort-select').value;
             const filtered = allMemberBotFiles.filter(f => f.name.toLowerCase().includes(keyword));
             const sorted = sortFiles(filtered, sortValue);
-            renderMemberFileList(document.getElementById('botmember-list-container'), sorted, keyword ? 'Không tìm thấy file.' : 'Chưa có ai đóng góp tool/script. Hãy là người đầu tiên!');
+            renderMemberFileList(document.getElementById('botmember-list-container'), sorted, keyword ? 'Không tìm thấy script nào.' : 'Chưa có ai đóng góp tool/script.');
         }
 
         let memberLoadedAt = 0;
