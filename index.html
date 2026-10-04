@@ -204,16 +204,16 @@
     </header>
 
     <!-- Main Content Area -->
-    <main class="flex-grow bg-[#09090b]">
+    <main class="flex-grow">
 
         <!-- ================= PAGE 1: TỔNG QUAN (INTRO) ================= -->
         <div id="page-intro" class="block animate-fade">
             
-            <!-- Hero Section (Giới thiệu khái quát lúc mới vào) -->
-            <section class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
-                <img src="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" alt="" fetchpriority="high" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns">
-                <div class="absolute inset-0 bg-gradient-to-b from-[#09090b]/60 via-[#09090b]/55 to-[#09090b] -z-10"></div>
-                <div class="max-w-4xl mx-auto px-4 text-center">
+            <!-- Hero Section (Đã thêm isolate để giữ Stacking Context ổn định) -->
+            <section class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden isolate">
+                <img src="https://images.viblo.asia/3fcc086e-9425-4861-a164-384d3095b3a0.png" alt="" fetchpriority="high" decoding="async" class="absolute inset-0 w-full h-full object-cover -z-20 bg-kenburns pointer-events-none">
+                <div class="absolute inset-0 bg-gradient-to-b from-[#09090b]/60 via-[#09090b]/55 to-[#09090b] -z-10 pointer-events-none"></div>
+                <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                     <span class="stagger-item inline-flex items-center gap-2 px-3 py-1 rounded-full border border-zinc-700/50 bg-zinc-800/30 text-zinc-300 text-xs font-medium tracking-wide mb-8">
                         Cập nhật hệ thống mới nhất 2026
                     </span>
@@ -266,15 +266,15 @@
         </div>
 
         <!-- ================= PAGE: KHÁM PHÁ CHI TIẾT (ABOUT) ================= -->
-        <div id="page-about" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-0cfaeacb-8148-45fa-a31e-908b556febc7.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
-            <div class="max-w-5xl mx-auto px-4 mb-8">
+        <div id="page-about" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-0cfaeacb-8148-45fa-a31e-908b556febc7.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10 pointer-events-none"></div>
+            <div class="max-w-5xl mx-auto px-4 mb-8 relative z-10">
                 <button onclick="showPage('intro')" class="text-sm text-zinc-400 hover:text-white transition inline-flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left text-xs"></i> Quay lại trang chủ
                 </button>
             </div>
-            <div class="pt-2 pb-16">
+            <div class="pt-2 pb-16 relative z-10">
                 <!-- Chuyển hướng các trang tài nguyên -->
                 <div class="max-w-5xl mx-auto px-4 mb-24">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -336,9 +336,9 @@
         </div>
 
         <!-- ================= PAGE 2: TẢI DOCUMENT ================= -->
-        <div id="page-download" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
+        <div id="page-download" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10 pointer-events-none"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
                     <div>
@@ -378,9 +378,9 @@
         </div>
 
         <!-- ================= PAGE 3: SHARE TOOL BOT ================= -->
-        <div id="page-bot" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
+        <div id="page-bot" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-24183ee0-106c-45bb-b0ef-c7f292720347.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10 pointer-events-none"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-10 flex flex-wrap items-end justify-between gap-4">
                     <div>
@@ -420,9 +420,9 @@
         </div>
 
         <!-- ================= PAGE: DOCUMENT MEMBER SHARE ================= -->
-        <div id="page-docmember" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
+        <div id="page-docmember" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10 pointer-events-none"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
@@ -476,9 +476,9 @@
         </div>
 
         <!-- ================= PAGE: TOOL BOT MEMBER SHARE ================= -->
-        <div id="page-botmember" class="hidden pt-28 pb-16 relative overflow-hidden">
-            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns">
-            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10"></div>
+        <div id="page-botmember" class="hidden pt-28 pb-16 relative overflow-hidden isolate">
+            <img src="https://cdn.phototourl.com/member/2026-09-27-29c2330f-53a8-4027-b419-71f0cd05e4a8.jpg" alt="" loading="lazy" decoding="async" class="absolute top-0 left-0 w-full h-screen object-cover -z-20 bg-kenburns pointer-events-none">
+            <div class="absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-[#09090b]/45 via-[#09090b]/60 to-[#09090b] -z-10 pointer-events-none"></div>
             <section class="max-w-5xl mx-auto px-4 relative z-10">
                 <div class="reveal-up mb-8 flex flex-wrap items-end justify-between gap-4">
                     <div>
@@ -587,16 +587,12 @@
         const PAGE_IDS = ['intro', 'about', 'download', 'bot', 'docmember', 'botmember'];
 
         // ---- Cấu hình Member Share (upload cộng đồng, không qua duyệt) ----
-        // Nơi lưu file member up: catbox.moe (ẩn danh, miễn phí, VĨNH VIỄN không hết hạn)
         const CATBOX_API_URL = 'https://catbox.moe/user/api.php';
-        // Nơi lưu "danh sách" (tên file, link, người up) để mọi người cùng thấy — dùng
-        // Firebase Realtime Database (miễn phí, KHÔNG tự xóa dữ liệu do ít người dùng như jsonblob).
-        // Cần tạo 1 lần: xem hướng dẫn đi kèm, rồi dán URL Database vào đây.
         const FIREBASE_DB_URL = 'https://nanh-11cc6-default-rtdb.firebaseio.com/';
         const MEMBER_SHARE_API_URL = FIREBASE_DB_URL && FIREBASE_DB_URL !== 'PASTE_YOUR_FIREBASE_DATABASE_URL_HERE'
             ? `${FIREBASE_DB_URL.replace(/\/$/, '')}/member_files.json`
             : null;
-        const MAX_MEMBER_FILE_SIZE = 200 * 1024 * 1024; // 200MB, giới hạn ẩn danh của catbox
+        const MAX_MEMBER_FILE_SIZE = 200 * 1024 * 1024; // 200MB
 
         let allDocFiles = [];
         let allBotFiles = [];
@@ -636,7 +632,6 @@
         async function loadVisitCount() {
             const el = document.getElementById('visit-count');
             try {
-                // Mỗi lần tải trang tính là 1 lượt truy cập mới (hit = tăng + trả về số hiện tại)
                 const res = await fetchWithTimeout(`${COUNTAPI_BASE}/hit/${VISIT_SITE_ID}/visits`);
                 if (!res.ok) throw new Error('Lỗi server counter');
                 const data = await res.json();
@@ -660,7 +655,6 @@
             [deskIntro, deskDownload, deskBot].forEach(el => el.className = `px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2 ${inactiveDesk}`);
             [mobIntro, mobDownload, mobBot].forEach(el => el.className = `w-full text-left py-3 px-4 rounded-lg flex items-center gap-3 transition-colors duration-200 ${inactiveDesk}`);
 
-            // Các trang phụ (about/member share) vẫn làm nổi mục nav gốc tương ứng
             let navTarget = activePage;
             if (activePage === 'about') navTarget = 'intro';
             if (activePage === 'docmember') navTarget = 'download';
@@ -685,7 +679,7 @@
             const target = document.getElementById(`page-${pageName}`);
             if (target) {
                 target.classList.remove('hidden', 'animate-fade');
-                void target.offsetWidth; // khởi động lại animation
+                void target.offsetWidth;
                 target.classList.add('animate-fade');
                 requestAnimationFrame(() => observeReveals(target));
             }
@@ -709,7 +703,6 @@
                     const el = entry.target;
                     el.classList.add('in-view');
                     revealObserver.unobserve(el);
-                    // Xong hiệu ứng thì gỡ hẳn class reveal => giải phóng layer GPU, hover không bị delay
                     const done = (e) => {
                         if (e && e.propertyName !== 'transform') return;
                         el.removeEventListener('transitionend', done);
@@ -717,7 +710,7 @@
                         el.style.removeProperty('--reveal-delay');
                     };
                     el.addEventListener('transitionend', done);
-                    setTimeout(done, 1500); // dự phòng nếu transitionend không bắn
+                    setTimeout(done, 1500);
                 }
             });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -751,12 +744,10 @@
         });
 
         // ================= DANH SÁCH FILE (GITHUB) =================
-        // Debounce: không render lại danh sách sau mỗi phím gõ
         function debounce(fn, ms = 150) {
             let t;
             return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
         }
-        // true chỉ ngay sau khi tải dữ liệu mới => thẻ mới có hiệu ứng vào; gõ tìm kiếm thì không
         let animateNextRender = false;
         const enterAttrs = (i) => animateNextRender
             ? ` item-enter" style="animation-delay:${Math.min(i, 10) * 35}ms`
@@ -873,7 +864,6 @@
             }
         }
 
-        // Hàm lấy danh sách các file đính kèm từ mục Releases (dành cho file > 25MB)
         async function fetchGithubReleases() {
             try {
                 const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/releases`);
@@ -901,7 +891,7 @@
             }
         }
 
-        const CACHE_TTL = 60 * 1000; // 60 giây
+        const CACHE_TTL = 60 * 1000;
         let githubLoadedAt = 0;
         let githubInflight = null;
 
@@ -922,7 +912,6 @@
             if (refreshBotIcon) refreshBotIcon.classList.add('fa-spin');
 
             try {
-                // Gọi song song cả API lấy file thông thường và API lấy file từ Releases
                 const [repoResponse, releaseFiles] = await Promise.all([
                     fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/`),
                     fetchGithubReleases()
@@ -934,7 +923,6 @@
                     normalFiles = files.filter(f => f.type === 'file' && !IGNORED_FILES.includes(f.name));
                 }
 
-                // Gộp danh sách file từ Repo và Release lại với nhau, ưu tiên lọc file trùng tên
                 const combinedFilesMap = new Map();
 
                 [...normalFiles, ...releaseFiles].forEach(file => {
@@ -945,7 +933,6 @@
 
                 const allFiles = Array.from(combinedFilesMap.values());
 
-                // Tách file theo extension vào 2 danh sách
                 allBotFiles = allFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
                 allDocFiles = allFiles.filter(f => !BOT_EXTENSIONS.includes(getFileExtension(f.name)));
 
@@ -969,7 +956,6 @@
         }
 
         // ================= MEMBER SHARE (cộng đồng tự đóng góp file) =================
-        // Danh sách hiển thị theo đúng logic phân loại đuôi file như 2 mục của Admin.
         document.getElementById('docmember-search-input').addEventListener('input', debounce(applyMemberDocFilters));
         document.getElementById('docmember-sort-select').addEventListener('change', applyMemberDocFilters);
         document.getElementById('botmember-search-input').addEventListener('input', debounce(applyMemberBotFilters));
@@ -1024,8 +1010,6 @@
             renderMemberFileList(document.getElementById('botmember-list-container'), sorted, keyword ? 'Không tìm thấy file.' : 'Chưa có ai đóng góp tool/script. Hãy là người đầu tiên!');
         }
 
-        // Tải danh sách file member từ kho lưu chung, rồi tự động phân loại theo đuôi file
-        // (dùng chung BOT_EXTENSIONS như 2 mục Admin) trước khi hiển thị.
         let memberLoadedAt = 0;
         let memberInflight = null;
 
@@ -1059,7 +1043,6 @@
                 const res = await fetchWithTimeout(MEMBER_SHARE_API_URL, 8000);
                 if (!res.ok) throw new Error('Không tải được danh sách');
                 const data = await res.json();
-                // Firebase Realtime Database trả về object { "-Nx...": {...}, "-Ny...": {...} } hoặc null nếu rỗng
                 const allMemberFiles = data ? Object.values(data) : [];
 
                 allMemberBotFiles = allMemberFiles.filter(f => BOT_EXTENSIONS.includes(getFileExtension(f.name)));
@@ -1084,9 +1067,6 @@
             }
         }
 
-        // Upload file member: đẩy lên catbox.moe rồi ghi metadata vào kho danh sách chung.
-        // prefix là 'docmember' hoặc 'botmember' — chỉ dùng để biết đọc input/nút nào,
-        // còn việc file rơi vào danh sách Document hay Tool Bot là HOÀN TOÀN tự động theo đuôi file.
         async function submitMemberFile(prefix) {
             const fileInput = document.getElementById(`${prefix}-file-input`);
             const nicknameInput = document.getElementById(`${prefix}-nickname`);
@@ -1130,9 +1110,6 @@
 
                 setStatus('Đang cập nhật danh sách chia sẻ...', true);
 
-                // Ghi thêm 1 bản ghi mới (Firebase tự sinh key riêng cho mỗi lần POST),
-                // KHÔNG đọc rồi đè lại toàn bộ danh sách — nên nhiều người up cùng lúc
-                // sẽ không bao giờ làm mất dữ liệu của nhau.
                 const putRes = await fetch(MEMBER_SHARE_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
